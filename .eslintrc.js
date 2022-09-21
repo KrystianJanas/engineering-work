@@ -10,6 +10,7 @@ module.exports = {
   ],
   plugins: ['unused-imports'],
   rules: {
+    'no-console': 'off',
     'import/no-unresolved': 'off',
     'import/absolute-first': 'off',
     'import/prefer-default-export': 'off',
@@ -17,15 +18,6 @@ module.exports = {
     'react/require-default-props': 'off', // we're using typescript, don't need that
     'react/react-in-jsx-scope': 'off', // from react 17 it's not needed anymore
     'react/jsx-props-no-spreading': 'off', // need it sometimes, for example for _app.tsx next
-    'no-restricted-syntax': [
-      'error',
-      {
-        selector:
-          "ImportDeclaration[source.value='react'][specifiers.0.type='ImportDefaultSpecifier']",
-        message:
-          "Default React import not allowed. Use import * as React from 'react' instead.",
-      }, // https://twitter.com/dan_abramov/status/1308739731551858689
-    ],
     'react/function-component-definition': [
       2,
       { namedComponents: 'arrow-function' },
@@ -90,12 +82,14 @@ module.exports = {
   overrides: [
     {
       files: ['*.ts', '*.tsx'],
-      extends: ['airbnb-typescript'],
+      extends: ['airbnb-typescript', 'prettier'],
+      plugins: ['prettier'],
       parser: '@typescript-eslint/parser',
       parserOptions: {
         project: './tsconfig.json',
       },
       rules: {
+        'eslint-disable prettier/prettier': 'off',
         '@typescript-eslint/comma-dangle': 'off', // prettier will handle this
         'import/no-extraneous-dependencies': 'off', // it's not detecting dev deps properly
         '@typescript-eslint/no-unused-vars': 'warn',
