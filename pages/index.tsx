@@ -2,6 +2,7 @@ import type { NextPage } from 'next';
 
 import styled from '@emotion/styled';
 
+import { Text } from '~/components/atoms/typography';
 import { Layout } from '~/components/molecules/layout';
 
 const StyledLayout = styled(Layout)`
@@ -13,8 +14,16 @@ const StyledLayout = styled(Layout)`
   height: 100vh;
 `;
 
+const StyledTitle = styled(Text)`
+  text-align: center;
+`;
+
 const Home: NextPage = () => {
-  return <StyledLayout>HERE IMAGE</StyledLayout>;
+  return (
+    <StyledLayout>
+      <StyledTitle />
+    </StyledLayout>
+  );
 };
 
 export default Home;
