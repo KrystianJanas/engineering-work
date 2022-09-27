@@ -2,6 +2,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+import styled from '@emotion/styled';
 import type { AppProps } from 'next/app';
 
 import { GlobalStyles } from '~/styles';
@@ -16,12 +17,20 @@ const queryClient = new QueryClient({
   },
 });
 
+const StyledBackground = styled.div`
+  width: 100%;
+  height: 100%;
+  background: #f6f7f9;
+`;
+
 const CustomApp = ({ Component, pageProps }: AppProps) => {
   return (
     <QueryClientProvider client={queryClient}>
       <GlobalStyles />
-      <Header />
-      <Component {...pageProps} />
+      <StyledBackground>
+        <Header />
+        <Component {...pageProps} />
+      </StyledBackground>
     </QueryClientProvider>
   );
 };
