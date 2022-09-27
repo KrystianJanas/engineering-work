@@ -95,12 +95,12 @@ export const mixinBackground = (
   props: LayoutBackgroundProps
 ): SerializedStyles => {
   return css`
-    background: ${props.background ? `${props.background}px` : undefined};
+    background: ${props.background ? `${props.background}` : undefined};
     background-color: ${props.backgroundColor
-      ? `${props.backgroundColor}px`
+      ? `${props.backgroundColor}`
       : undefined};
     background-repeat: ${props.backgroundRepeat
-      ? `${props.backgroundRepeat}px`
+      ? `${props.backgroundRepeat}`
       : undefined};
   `;
 };

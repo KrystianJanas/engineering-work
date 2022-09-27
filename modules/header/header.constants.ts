@@ -13,4 +13,6 @@ export const pageTitles = [
   { href: '/watched', title: 'Rental Service - Watched' },
 
   { href: '/account', title: 'Rental Service - Account' },
+
+  { href: '/property', title: 'Rental Service - Property' },
 ];

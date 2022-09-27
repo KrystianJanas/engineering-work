@@ -8,11 +8,12 @@ export interface TextMixinProps {
     | '1 rem'
     | '1.1rem'
     | '1.25rem'
+    | '1.35rem'
     | '1.5rem'
     | '1.75rem'
     | '2rem';
   color?: 'white' | 'black';
-  fontFamily?: 'Arial' | 'Verdana';
+  fontFamily?: 'Arial' | 'Verdana' | 'Inter';
   textShadow?: '1px 1px 5px black' | '1px 1px 5px white';
 }
 

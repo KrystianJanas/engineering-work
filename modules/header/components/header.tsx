@@ -1,12 +1,10 @@
 import { Nav, Navbar } from 'react-bootstrap';
 
 import styled from '@emotion/styled';
-import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 import { PagesNav } from '../header.constants';
-import { useActiveNavLink } from '../hooks/useActiveNavLink';
 
 const StyledNavbar = styled(Navbar)`
   padding: 0 10px;
@@ -23,9 +21,7 @@ const StyledNavLink = styled(Nav.Link)`
   font-size: 18px;
   line-height: 28px;
 
-  @media (min-width: 992px) {
-    margin: 0 5px;
-  }
+  margin: 0 15px;
 
   &:hover {
     color: #12b9ac;
@@ -40,49 +36,50 @@ const StyledClickedNavLink = styled(Nav.Link)`
   font-size: 18px;
   line-height: 28px;
 
-  @media (min-width: 992px) {
-    margin: 0 5px;
-  }
+  margin: 0 15px;
 `;
 
 export const Header = () => {
   const { pathname } = useRouter();
-  const { pageTitle } = useActiveNavLink(pathname);
 
   return (
-    <>
-      <Head>
-        <title>{pageTitle}</title>
-      </Head>
-      <StyledNavbar collapseOnSelect expand="lg">
-        <Link href="/" passHref>
-          <Navbar.Brand>Serwis Nieruchomości</Navbar.Brand>
-        </Link>
-        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-        <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav className="me-auto">
-            {PagesNav.map((page) => (
-              <Link key={page.href} href={page.href} passHref>
-                {page.href === pathname ? (
-                  <StyledClickedNavLink>{page.pageName}</StyledClickedNavLink>
-                ) : (
-                  <StyledNavLink>{page.pageName}</StyledNavLink>
-                )}
-              </Link>
-            ))}
-          </Nav>
-          <Nav>
-            <Link href="/account" passHref>
-              {pathname === '/account' ? (
-                <StyledClickedNavLink>Twoje konto</StyledClickedNavLink>
+    <StyledNavbar collapseOnSelect expand="lg">
+      <Link href="/" passHref>
+        <Navbar.Brand>Serwis Nieruchomości</Navbar.Brand>
+      </Link>
+      <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+      <Navbar.Collapse id="responsive-navbar-nav">
+        <Nav className="me-auto">
+          {PagesNav.map((page) => (
+            <Link key={page.href} href={page.href} passHref>
+              {page.href === pathname ? (
+                <StyledClickedNavLink>{page.pageName}</StyledClickedNavLink>
               ) : (
-                <StyledNavLink>Twoje konto</StyledNavLink>
+                <StyledNavLink>{page.pageName}</StyledNavLink>
               )}
             </Link>
-          </Nav>
-        </Navbar.Collapse>
-      </StyledNavbar>
-    </>
+          ))}
+        </Nav>
+        <Nav>
+          <Link href="/property" passHref>
+            {pathname === '/property' ? (
+              <StyledClickedNavLink>
+                Zarządzaj Nieruchomością
+              </StyledClickedNavLink>
+            ) : (
+              <StyledNavLink>Zarządzaj Nieruchomością</StyledNavLink>
+            )}
+          </Link>
+          <Link href="/account" passHref>
+            {pathname === '/account' ? (
+              <StyledClickedNavLink>Twoje konto</StyledClickedNavLink>
+            ) : (
+              <StyledNavLink>Twoje konto</StyledNavLink>
+            )}
+          </Link>
+        </Nav>
+      </Navbar.Collapse>
+    </StyledNavbar>
   );
 };
 export default Header;
