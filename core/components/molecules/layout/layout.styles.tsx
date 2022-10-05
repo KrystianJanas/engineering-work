@@ -8,6 +8,7 @@ import {
   LayoutMarginProps,
   LayoutPaddingProps,
   LayoutBackgroundProps,
+  LayoutBorderProps,
 } from '~/components/molecules/layout/layout.types';
 
 export const layoutResetStyles = css`
@@ -102,5 +103,11 @@ export const mixinBackground = (
     background-repeat: ${props.backgroundRepeat
       ? `${props.backgroundRepeat}`
       : undefined};
+  `;
+};
+
+export const mixinBorder = (props: LayoutBorderProps): SerializedStyles => {
+  return css`
+    border-radius: ${props.borderRadius ? `${props.borderRadius}` : undefined};
   `;
 };

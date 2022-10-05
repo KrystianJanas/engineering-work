@@ -22,7 +22,7 @@ const queryClient = new QueryClient({
 
 const StyledBackground = styled.div`
   width: 100%;
-  height: 100%;
+  height: auto;
   background: #f6f7f9;
 `;
 
