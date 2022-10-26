@@ -12,6 +12,7 @@ import {
   mixinMargin,
   mixinPadding,
   mixinBackground,
+  mixinBorder,
 } from '~/components/molecules/layout/layout.styles';
 import { LayoutProps } from '~/components/molecules/layout/layout.types';
 
@@ -24,6 +25,7 @@ const StyledLayout = styled.div<LayoutProps>`
   ${mixinMargin}
   ${mixinPadding}
   ${mixinBackground}
+  ${mixinBorder}
 `;
 
 // eslint-disable-next-line @typescript-eslint/ban-types

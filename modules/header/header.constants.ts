@@ -1,18 +1,21 @@
 export const PagesNav = [
+  { href: '/announcements', pageName: 'Ogłoszenia' },
   { href: '/messages', pageName: 'Wiadomości' },
   { href: '/watched', pageName: 'Obserwowane' },
 ];
 
 export const pageTitles = [
-  { href: '/sign-in', title: 'Rental Service' },
+  { href: '/sign-in', title: 'Serwis ogłoszeń' },
 
-  { href: '/', title: 'Rental Service Dashboard' },
+  { href: '/', title: 'Serwis ogłoszeń - Dashboard' },
 
-  { href: '/messages', title: 'Rental Service - Messages' },
+  { href: '/announcements', title: 'Serwis ogłoszeń - Ogłoszenia' },
 
-  { href: '/watched', title: 'Rental Service - Watched' },
+  { href: '/messages', title: 'Serwis ogłoszeń - Wiadomości' },
 
-  { href: '/account', title: 'Rental Service - Account' },
+  { href: '/watched', title: 'Serwis ogłoszeń - Obserwowane' },
 
-  { href: '/property', title: 'Rental Service - Property' },
+  { href: '/account', title: 'Serwis ogłoszeń - Konto' },
+
+  { href: '/property', title: 'Serwis ogłoszeń - Nieruchomości' },
 ];
