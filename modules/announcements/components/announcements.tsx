@@ -1,6 +1,9 @@
 import styled from '@emotion/styled';
+import Image from 'next/image';
 
+import { Text } from '~/components/atoms/typography';
 import { Layout } from '~/components/molecules/layout';
+import { getRem } from '~/styles/utils';
 
 import { AnnouncementInitialState } from '../announcements.constants';
 
@@ -8,8 +11,6 @@ const StyledLayout = styled(Layout)`
   width: 75%;
   box-shadow: 0 8px 40px rgba(3, 14, 17, 0.1);
 `;
-
-const StyledAvatarLayout = styled(Layout)``;
 
 export const AnnouncementsView = () => {
   return (
@@ -21,25 +22,46 @@ export const AnnouncementsView = () => {
           key={announcement.id}
           margin={[10]}
           display="flex"
-          alignItems="center"
           borderRadius="16px"
           justifyContent="space-between"
         >
-          <StyledAvatarLayout
-            width={165}
-            height={165}
-            margin={[15]}
-            background="rgb(240, 240, 240, 0.5)"
-            borderRadius="16px"
-          >
-            AVATAR WILL BE ADD HERE...
-          </StyledAvatarLayout>
+          <Layout
+            width={180}
+            height={180}
+            margin={[10]}
+            background="rgb(200, 200, 200, 0.5)"
+            borderRadius="10px"
+          />
 
-          <Layout padding={[10]} display="flex">
-            {announcement.title}
+          <Layout padding={[10]} display="flex" flex={1} direction="column">
+            <Layout display="flex" justifyContent="left">
+              <Text color="black" size={getRem(20)}>
+                {announcement.title}
+              </Text>
+            </Layout>
+            <Layout display="flex">
+              <Text color="black" size={getRem(14)}>
+                &nbsp;# {announcement.state}
+              </Text>
+            </Layout>
+            <Layout display="flex" flex={1}>
+              <Text color="black" size={getRem(14)}>
+                &nbsp;# {announcement.size} m^2
+              </Text>
+            </Layout>
+
+            <Text color="black" size={getRem(16)}>
+              {announcement.location} - {announcement.date_add}
+            </Text>
           </Layout>
 
-          <Layout padding={[10]}>{announcement.price} PLN</Layout>
+          <Layout display="flex" direction="column" padding={[10, 15]}>
+            <Layout flex={1}>{announcement.price} PLN</Layout>
+            <Layout display="flex" justifyContent="right">
+              {/* TODO: add possibility to add offert to observed */}
+              <Image src="/heart.png" alt="heart" width={24} height={24} />
+            </Layout>
+          </Layout>
         </StyledLayout>
       ))}
     </Layout>

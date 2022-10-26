@@ -60,6 +60,7 @@ export const mixinFlex = (props: LayoutFlexProps): SerializedStyles => {
       : undefined};
     justify-self: ${props.justifySelf ? `${props.justifySelf}` : undefined};
     gap: ${props.gap ? `${props.gap}` : undefined};
+    flex: ${props.flex ? `${props.flex}` : undefined};
   `;
 };
 export const mixinMargin = (props: LayoutMarginProps): SerializedStyles => {

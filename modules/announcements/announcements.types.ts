@@ -4,10 +4,12 @@ export interface AnnouncementsProps {
 }
 
 export interface Announcement {
-  id: number;
-  title: string;
-  location: string;
-  size: string;
-  price: string;
-  imageUrl?: string;
+  id: number; // id
+  title: string; // tytul
+  location: string; // lokalizacja
+  state: string; // stan deweloperski/umeblowane
+  size: string; // metraż
+  price: string; // cena (odstepne)
+  imageUrl?: string; // avatar
+  date_add: string; // data dodania
 }

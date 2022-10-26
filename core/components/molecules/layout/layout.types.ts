@@ -60,6 +60,7 @@ export interface LayoutFlexProps {
   justifyContent?: Property.JustifyContent;
   justifySelf?: Property.JustifySelf;
   gap?: Property.Gap;
+  flex?: Property.Flex;
 }
 
 export interface LayoutDisplayProps {
