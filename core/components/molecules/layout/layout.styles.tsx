@@ -64,16 +64,35 @@ export const mixinFlex = (props: LayoutFlexProps): SerializedStyles => {
   `;
 };
 export const mixinMargin = (props: LayoutMarginProps): SerializedStyles => {
+  let { marginBottom, marginRight, marginLeft, marginTop } = props;
+  if (marginBottom && marginBottom.toString().includes('auto')) {
+    marginBottom = props.marginBottom;
+  } else {
+    marginBottom = `${props.marginBottom}px`;
+  }
+  if (marginTop && marginTop.toString().includes('auto')) {
+    marginTop = props.marginTop;
+  } else {
+    marginTop = `${props.marginTop}px`;
+  }
+  if (marginLeft && marginLeft.toString().includes('auto')) {
+    marginLeft = props.marginLeft;
+  } else {
+    marginLeft = `${props.marginLeft}px`;
+  }
+  if (marginRight && marginRight.toString().includes('auto')) {
+    marginRight = props.marginRight;
+  } else {
+    marginRight = `${props.marginRight}px`;
+  }
   return css`
     margin: ${props.margin
       ? `${(props.margin as []).join('px ')}px`
       : undefined};
-    margin-top: ${props.marginTop ? `${props.marginTop}px` : undefined};
-    margin-right: ${props.marginRight ? `${props.marginRight}px` : undefined};
-    margin-bottom: ${props.marginBottom
-      ? `${props.marginBottom}px`
-      : undefined};
-    margin-left: ${props.marginLeft ? `${props.marginLeft}px` : undefined}; ;
+    margin-top: ${marginTop};
+    margin-right: ${marginRight};
+    margin-bottom: ${marginBottom};
+    margin-left: ${marginLeft};
   `;
 };
 
