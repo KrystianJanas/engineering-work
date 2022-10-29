@@ -43,7 +43,7 @@ export const Announcement = () => {
               width="75%"
               marginTop="5"
             >
-              {/* <img src={data.imageUrl} aria-hidden alt="" /> */}
+              <img src={data.imageUrl} aria-hidden alt="" />
             </Layout>
           ) : (
             <Layout
