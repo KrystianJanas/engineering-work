@@ -8,8 +8,17 @@ export interface Announcement {
   title: string; // tytul
   location: string; // lokalizacja
   state: string; // stan deweloperski/umeblowane
-  size: string; // metraż
-  price: string; // cena (odstepne)
-  imageUrl?: string; // avatar
+  size: number; // metraż
+  fee: number; // odstępne
+  rent: number; // czynsz
+  imageUrl?: string; // avatar zdjecia
   date_add: string; // data dodania
+  rooms: number; // liczba pokoi
+  description?: string;
+  views?: number;
+
+  advertiser?: {
+    name: string;
+    phone: number;
+  };
 }

@@ -21,7 +21,8 @@ export interface LayoutProps
     LayoutDisplayProps,
     LayoutFlexProps,
     LayoutBackgroundProps,
-    LayoutBorderProps {
+    LayoutBorderProps,
+    LayoutOrdersProps {
   ref?: Ref<any>;
   as?: React.ElementType;
 }
@@ -75,4 +76,8 @@ export interface LayoutBackgroundProps {
 
 export interface LayoutBorderProps {
   borderRadius?: Property.BorderRadius;
+}
+
+export interface LayoutOrdersProps {
+  boxShadow?: Property.BoxShadow;
 }

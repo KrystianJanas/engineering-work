@@ -38,15 +38,15 @@ const Home: NextPage = () => {
         >
           Witaj w serwisie nieruchomości!
         </Text>
-        <Text weight={600}>
+        <Text weight={600} color="white">
           Serwis ten skierowany jest dla osób poszukujących nieruchomości do
           wynajmu.
         </Text>
-        <Text weight={600}>
+        <Text weight={600} color="white">
           Oferujemy możliwość zdalnego zarządzania i rozliczeń nieruchomości,
           wraz z intregracją pomiędzy lokatorami.
         </Text>
-        <Link href="/estates" passHref>
+        <Link href="/announcements" passHref>
           <StyledText
             color="white"
             size="1.25rem"

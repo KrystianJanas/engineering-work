@@ -22,6 +22,7 @@ module.exports = {
       2,
       { namedComponents: 'arrow-function' },
     ],
+    '@next/next/no-img-element': 'off',
     'import/order': [
       'error',
       {

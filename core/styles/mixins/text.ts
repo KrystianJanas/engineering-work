@@ -3,7 +3,7 @@ import { Property } from 'csstype';
 export interface TextMixinProps {
   weight?: Property.FontWeight;
   size?: Property.FontSize;
-  color?: 'white' | 'black';
+  color?: Property.Color;
   fontFamily?: 'Arial' | 'Verdana' | 'Inter';
   textShadow?: '1px 1px 5px black' | '1px 1px 5px white';
 }
@@ -11,7 +11,7 @@ export interface TextMixinProps {
 export const textMixin = ({
   weight = 400,
   size = 'main',
-  color = 'white',
+  color = 'black',
   fontFamily = 'Arial',
   textShadow,
 }: TextMixinProps) => ({

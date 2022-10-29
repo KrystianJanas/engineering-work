@@ -6,21 +6,25 @@ import { Text } from '~/components/atoms/typography';
 import { Layout } from '~/components/molecules/layout';
 import { getRem } from '~/styles/utils';
 
-import { AnnouncementInitialState } from '../announcements.constants';
+import { AnnouncementsInitialState } from '../announcements.constants';
 
 const StyledLayout = styled(Layout)`
-  width: 75%;
-  box-shadow: 0 8px 40px rgba(3, 14, 17, 0.1);
-
   &:hover {
     cursor: pointer;
+  }
+`;
+
+const StyledImage = styled(Image)`
+  &:hover {
+    //TODO: make a color of border
+    background-color: red;
   }
 `;
 
 export const AnnouncementsView = () => {
   return (
     <Layout display="flex" justifyContent="center" wrap="wrap" margin={[10, 0]}>
-      {AnnouncementInitialState.map((announcement) => (
+      {AnnouncementsInitialState.map((announcement) => (
         <Link
           key={announcement.id}
           href={{
@@ -36,6 +40,8 @@ export const AnnouncementsView = () => {
             display="flex"
             borderRadius="16px"
             justifyContent="space-between"
+            boxShadow="0 0 5px #ccc"
+            width="75%"
           >
             <Layout
               width="180px"
@@ -53,12 +59,12 @@ export const AnnouncementsView = () => {
               </Layout>
               <Layout display="flex">
                 <Text color="black" size={getRem(14)}>
-                  &nbsp;# {announcement.state}
+                  # {announcement.state}
                 </Text>
               </Layout>
               <Layout display="flex" flex={1}>
                 <Text color="black" size={getRem(14)}>
-                  &nbsp;# {announcement.size} m^2
+                  # {announcement.size} m^2
                 </Text>
               </Layout>
 
@@ -72,7 +78,12 @@ export const AnnouncementsView = () => {
               <Layout display="flex" justifyContent="right">
                 {/* TODO: add possibility to add offert to observed */}
                 <button type="submit">
-                  <Image src="/heart.png" alt="heart" width={24} height={24} />
+                  <StyledImage
+                    src="/heart.png"
+                    alt="heart"
+                    width={24}
+                    height={24}
+                  />
                 </button>
               </Layout>
             </Layout>

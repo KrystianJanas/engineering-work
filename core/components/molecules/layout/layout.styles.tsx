@@ -9,6 +9,7 @@ import {
   LayoutPaddingProps,
   LayoutBackgroundProps,
   LayoutBorderProps,
+  LayoutOrdersProps,
 } from '~/components/molecules/layout/layout.types';
 
 export const layoutResetStyles = css`
@@ -129,5 +130,11 @@ export const mixinBackground = (
 export const mixinBorder = (props: LayoutBorderProps): SerializedStyles => {
   return css`
     border-radius: ${props.borderRadius ? `${props.borderRadius}` : undefined};
+  `;
+};
+
+export const mixInOrders = (props: LayoutOrdersProps): SerializedStyles => {
+  return css`
+    box-shadow: ${props.boxShadow ? `${props.boxShadow}` : undefined};
   `;
 };
