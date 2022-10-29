@@ -49,6 +49,7 @@ export const AnnouncementsView = () => {
               margin={[10]}
               borderRadius="10px"
               boxShadow="0 0 3px #ccc"
+              display="flex"
             >
               {announcement.imageUrl ? (
                 <Image src={announcement.imageUrl} aria-hidden alt="" />
