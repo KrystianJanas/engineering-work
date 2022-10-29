@@ -72,6 +72,7 @@ export interface LayoutBackgroundProps {
   background?: Property.Background;
   backgroundColor?: Property.BackgroundColor;
   backgroundRepeat?: Property.BackgroundRepeat;
+  backgroundSize?: Property.BackgroundSize;
 }
 
 export interface LayoutBorderProps {

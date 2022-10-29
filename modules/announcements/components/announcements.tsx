@@ -1,5 +1,6 @@
+import { Image } from 'react-bootstrap';
+
 import styled from '@emotion/styled';
-import Image from 'next/image';
 import Link from 'next/link';
 
 import { Text } from '~/components/atoms/typography';
@@ -29,7 +30,6 @@ export const AnnouncementsView = () => {
           key={announcement.id}
           href={{
             pathname: `/announcements/${announcement.id}`,
-            // query: { id: announcement.id },
           }}
           passHref
         >
@@ -44,12 +44,18 @@ export const AnnouncementsView = () => {
             width="75%"
           >
             <Layout
-              width="180px"
-              height="180px"
+              width={180}
+              height={180}
               margin={[10]}
-              background="rgb(200, 200, 200, 0.5)"
               borderRadius="10px"
-            />
+              boxShadow="0 0 3px #ccc"
+            >
+              {announcement.imageUrl ? (
+                <Image src={announcement.imageUrl} aria-hidden alt="" />
+              ) : (
+                <div>no image</div>
+              )}
+            </Layout>
 
             <Layout padding={[10]} display="flex" flex={1} direction="column">
               <Layout display="flex" justifyContent="left">
@@ -74,7 +80,7 @@ export const AnnouncementsView = () => {
             </Layout>
 
             <Layout display="flex" direction="column" padding={[10, 15]}>
-              <Layout flex={1}>{announcement.price} PLN</Layout>
+              <Layout flex={1}>{announcement.fee} PLN</Layout>
               <Layout display="flex" justifyContent="right">
                 {/* TODO: add possibility to add offert to observed */}
                 <button type="submit">

@@ -22,9 +22,20 @@ export const layoutResetStyles = css`
 export const mixinDimensions = (
   props: LayoutDimensionProps
 ): SerializedStyles => {
+  let { width, height } = props;
+  if (
+    !(height?.toString().includes('auto') || height?.toString().includes('%'))
+  ) {
+    height = `${height}px`;
+  }
+  if (
+    !(width?.toString().includes('auto') || width?.toString().includes('%'))
+  ) {
+    width = `${width}px`;
+  }
   return css`
-    width: ${props.width ? `${props.width}` : undefined};
-    height: ${props.height ? `${props.height}px` : undefined};
+    width: ${width};
+    height: ${height};
     min-width: ${props.minWidth ? `${props.minWidth}px` : undefined};
     min-height: ${props.minHeight ? `${props.minHeight}px` : undefined};
     max-width: ${props.maxWidth ? `${props.maxWidth}px` : undefined};
@@ -123,6 +134,9 @@ export const mixinBackground = (
       : undefined};
     background-repeat: ${props.backgroundRepeat
       ? `${props.backgroundRepeat}`
+      : undefined};
+    background-size: ${props.backgroundSize
+      ? `${props.backgroundSize}`
       : undefined};
   `;
 };
