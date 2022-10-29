@@ -2,7 +2,6 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import styled from '@emotion/styled';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -20,11 +19,11 @@ const queryClient = new QueryClient({
   },
 });
 
-const StyledBackground = styled.div`
-  width: 100%;
-  height: auto;
-  background: #f6f7f9;
-`;
+// const StyledBackground = styled.div`
+//   width: 100%;
+//   height: 100%;
+//   background: var(--grey-20);
+// `;
 
 const CustomApp = ({ Component, pageProps }: AppProps) => {
   const { pathname } = useRouter();
@@ -36,11 +35,10 @@ const CustomApp = ({ Component, pageProps }: AppProps) => {
         <title>{pageTitle}</title>
       </Head>
       <GlobalStyles />
-      <StyledBackground>
-        {pathname !== '/sign-in' && <Header />}
 
-        <Component {...pageProps} />
-      </StyledBackground>
+      {pathname !== '/sign-in' && <Header />}
+
+      <Component {...pageProps} />
     </QueryClientProvider>
   );
 };

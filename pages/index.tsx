@@ -12,11 +12,10 @@ const StyledLayout = styled(Layout)`
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-  height: 100vh;
+  height: calc(100% - (100px));
 `;
 
 const StyledContainer = styled(Layout)`
-  height: 100vh;
   text-align: center;
 `;
 
@@ -28,14 +27,8 @@ const StyledText = styled(Text)`
 
 const Home: NextPage = () => {
   return (
-    <StyledLayout>
-      <StyledContainer
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        padding={[10]}
-        direction="column"
-      >
+    <StyledLayout display="flex" justifyContent="center" alignItems="center">
+      <StyledContainer display="flex" padding={[10]} direction="column">
         <Text
           color="white"
           size="1.5rem"

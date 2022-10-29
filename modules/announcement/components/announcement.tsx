@@ -1,18 +1,23 @@
-import { Spinner } from 'react-bootstrap';
-
 import { useRouter } from 'next/router';
 
+import { SpinnerLoading } from '~/components/compounds/Spinner';
 import { Layout } from '~/components/molecules/layout';
 
 export const Announcement = () => {
   const router = useRouter();
   if (router.isReady) {
-    return <div>announcement id: {router.query.id} here...</div>;
+    return (
+      <Layout
+        display="flex"
+        marginLeft="auto"
+        marginRight="auto"
+        width="75%"
+        background="rgb(255,255,255)"
+      >
+        test
+      </Layout>
+    );
   }
-  return (
-    <Layout display="flex" justifyContent="center" alignItems="center">
-      <Spinner animation="border" role="status" />
-    </Layout>
-  );
+  return <SpinnerLoading />;
 };
 export default Announcement;
