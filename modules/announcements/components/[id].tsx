@@ -14,7 +14,7 @@ export const Announcement = () => {
         width="75%"
         background="rgb(255,255,255)"
       >
-        test
+        {router.query.id}
       </Layout>
     );
   }

@@ -24,7 +24,7 @@ export const AnnouncementsView = () => {
         <Link
           key={announcement.id}
           href={{
-            pathname: `/announcement/${announcement.id}`,
+            pathname: `/announcements/${announcement.id}`,
             // query: { id: announcement.id },
           }}
           passHref

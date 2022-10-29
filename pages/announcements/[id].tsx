@@ -1,4 +1,4 @@
-import Announcement from '../../modules/announcement/components/announcement';
+import { Announcement } from '../../modules/announcements/components/[id]';
 
 export const AnnouncementPage = () => {
   return <Announcement />;

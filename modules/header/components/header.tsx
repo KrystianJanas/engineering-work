@@ -52,7 +52,7 @@ export const Header = () => {
         <Nav className="me-auto">
           {PagesNav.map((page) => (
             <Link key={page.href} href={page.href} passHref>
-              {page.href === pathname ? (
+              {page.href === `/${pathname.split('/')[1]}` ? (
                 <StyledClickedNavLink>{page.pageName}</StyledClickedNavLink>
               ) : (
                 <StyledNavLink>{page.pageName}</StyledNavLink>
