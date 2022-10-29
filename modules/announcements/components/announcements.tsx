@@ -26,8 +26,8 @@ export const AnnouncementsView = () => {
           justifyContent="space-between"
         >
           <Layout
-            width={180}
-            height={180}
+            width="180px"
+            height="180px"
             margin={[10]}
             background="rgb(200, 200, 200, 0.5)"
             borderRadius="10px"
@@ -59,7 +59,9 @@ export const AnnouncementsView = () => {
             <Layout flex={1}>{announcement.price} PLN</Layout>
             <Layout display="flex" justifyContent="right">
               {/* TODO: add possibility to add offert to observed */}
-              <Image src="/heart.png" alt="heart" width={24} height={24} />
+              <button type="submit">
+                <Image src="/heart.png" alt="heart" width={24} height={24} />
+              </button>
             </Layout>
           </Layout>
         </StyledLayout>

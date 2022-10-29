@@ -1,4 +1,6 @@
-export const Messages = () => {
-  return <div>Messages here</div>;
+import { Messages } from '../../modules/messages/components/messages';
+
+export const MessagesPage = () => {
+  return <Messages />;
 };
-export default Messages;
+export default MessagesPage;

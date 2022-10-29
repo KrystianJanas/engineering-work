@@ -22,7 +22,7 @@ export const mixinDimensions = (
   props: LayoutDimensionProps
 ): SerializedStyles => {
   return css`
-    width: ${props.width ? `${props.width}px` : undefined};
+    width: ${props.width ? `${props.width}` : undefined};
     height: ${props.height ? `${props.height}px` : undefined};
     min-width: ${props.minWidth ? `${props.minWidth}px` : undefined};
     min-height: ${props.minHeight ? `${props.minHeight}px` : undefined};
