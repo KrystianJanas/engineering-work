@@ -66,6 +66,7 @@ export interface LayoutFlexProps {
 
 export interface LayoutDisplayProps {
   display?: Property.Display;
+  gap?: Property.Gap;
 }
 
 export interface LayoutBackgroundProps {

@@ -46,6 +46,7 @@ export const mixinDimensions = (
 export const mixinDisplay = (props: LayoutDisplayProps): SerializedStyles => {
   return css`
     display: ${props.display ? `${props.display}` : undefined};
+    gap: ${props.gap ? `${props.gap}` : undefined};
   `;
 };
 
