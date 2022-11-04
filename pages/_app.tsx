@@ -19,12 +19,6 @@ const queryClient = new QueryClient({
   },
 });
 
-// const StyledBackground = styled.div`
-//   width: 100%;
-//   height: 100%;
-//   background: var(--grey-20);
-// `;
-
 const CustomApp = ({ Component, pageProps }: AppProps) => {
   const { pathname } = useRouter();
   const { pageTitle } = useActiveNavLink(pathname);

@@ -6,6 +6,8 @@ export const baseStyles = css`
     font-size: var(--font-size-base);
     background: var(--body-bg);
     color: var(--body-font-color);
+
+    background: rgb(245, 245, 245, 1);
   }
 
   button {

@@ -38,13 +38,7 @@ export const Messages = () => {
 
   return (
     <Layout>
-      <Layout
-        padding={[10]}
-        background="rgb(245, 245, 245, 1)"
-        marginLeft="auto"
-        marginRight="auto"
-        width="75%"
-      >
+      <Layout padding={[10]} marginLeft="auto" marginRight="auto" width="75%">
         {/* TOP SECTION */}
         <Layout
           display="flex"

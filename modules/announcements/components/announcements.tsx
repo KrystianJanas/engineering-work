@@ -24,7 +24,12 @@ const StyledImage = styled(Image)`
 
 export const AnnouncementsView = () => {
   return (
-    <Layout display="flex" justifyContent="center" wrap="wrap" margin={[10, 0]}>
+    <Layout
+      display="flex"
+      justifyContent="center"
+      wrap="wrap"
+      padding={[10, 0]}
+    >
       {AnnouncementsInitialState.map((announcement) => (
         <Link
           key={announcement.id}
