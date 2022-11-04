@@ -17,5 +17,5 @@ export const pageTitles = [
 
   { href: '/account', title: 'Serwis ogłoszeń - Konto' },
 
-  { href: '/property', title: 'Serwis ogłoszeń - Nieruchomości' },
+  { href: '/properties', title: 'Serwis ogłoszeń - Nieruchomości' },
 ];
