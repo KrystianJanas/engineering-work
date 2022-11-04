@@ -19,8 +19,7 @@ export const MessagesInitialState: MessagesTypes[] = [
       },
       title: 'Testowe ogłoszenie - tytuł',
       description: 'Tu bedzie opis ogloszenia.......',
-      image_url:
-        'https://waskiel.pl/wp-content/uploads/2019/11/pomysly-na-zdjecia-obraz-wyrozniajacy.jpg',
+      image_url: undefined,
     },
     type: 'send',
     date: '2022-11-02',

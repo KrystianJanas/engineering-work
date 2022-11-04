@@ -34,6 +34,8 @@ export const AnnouncementsInitialState: Announcement[] = [
     fee: 1500,
     rent: 500,
     date_add: '2022-11-10',
+    imageUrl:
+      'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
     rooms: 3,
   },
   {

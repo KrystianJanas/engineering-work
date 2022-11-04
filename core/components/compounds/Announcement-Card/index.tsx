@@ -15,6 +15,10 @@ const StyledLayout = styled(Layout)`
   }
 `;
 
+const StyledImage = styled(Image)`
+  border-radius: 10px;
+`;
+
 const HeartIcon = styled(Image)`
   &:hover {
     //TODO: make a color of border
@@ -54,9 +58,9 @@ export const AnnouncementCard = ({
           display="flex"
         >
           {announcement.imageUrl ? (
-            <Image src={announcement.imageUrl} aria-hidden alt="" />
+            <StyledImage src={announcement.imageUrl} aria-hidden alt="" />
           ) : (
-            <div>no image</div>
+            <StyledImage src="no-image-icon.png" aria-hidden alt="" />
           )}
         </Layout>
 

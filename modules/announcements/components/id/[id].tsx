@@ -130,7 +130,7 @@ export const Announcement = () => {
             <Text size={getRem(12)}>{data.advertiser?.name}</Text>
             <Text size={getRem(12)}>Tel. {data.advertiser?.phone}</Text>
             {contactState ? (
-              <Layout width="100%">
+              <Layout width="100%" marginTop={10}>
                 <FloatingLabel controlId="floatingTextarea2" label="Wiadomość">
                   <Form.Control
                     as="textarea"

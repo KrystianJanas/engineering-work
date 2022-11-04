@@ -10,6 +10,10 @@ const StyledLayout = styled(Layout)`
   }
 `;
 
+const StyledImage = styled.img`
+  border-radius: 10px;
+`;
+
 export const MessageCard = ({ message }: { message: MessagesTypes }) => {
   return (
     <Link
@@ -31,15 +35,23 @@ export const MessageCard = ({ message }: { message: MessagesTypes }) => {
       >
         <Layout
           width={150}
-          height={100}
+          height="auto"
           boxShadow="0 0 16px rgba(0, 0, 0, 0.24)"
           display="flex"
           marginRight={15}
+          borderRadius="10px"
           justifyContent="center"
           alignItems="center"
-          borderRadius="6px"
         >
-          <img src={message.announcement.image_url} alt="" />
+          {message.announcement.image_url ? (
+            <StyledImage
+              src={message.announcement.image_url}
+              aria-hidden
+              alt=""
+            />
+          ) : (
+            <StyledImage src="no-image-icon.png" aria-hidden alt="" />
+          )}
         </Layout>
         <Layout display="flex" direction="column">
           <Layout display="flex" flex={1}>
