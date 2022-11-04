@@ -2,8 +2,7 @@ import styled from '@emotion/styled';
 import Link from 'next/link';
 
 import { Layout } from '~/components/molecules/layout';
-
-import { MessagesTypes } from '../../../../modules/messages';
+import { MessagesTypes } from '~/types/messages.types';
 
 const StyledLayout = styled(Layout)`
   &:hover {

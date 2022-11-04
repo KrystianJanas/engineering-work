@@ -1,21 +1,30 @@
+import { useState } from 'react';
+import { FloatingLabel } from 'react-bootstrap';
+
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
+import Form from 'react-bootstrap/Form';
 
 import { Text } from '~/components/atoms/typography';
 import { SpinnerLoading } from '~/components/compounds/Spinner';
 import { Layout } from '~/components/molecules/layout';
 import { getRem } from '~/styles/utils';
 
-import { AnnouncementInitialState } from '../announcements.constants';
+import { AnnouncementInitialState } from '../../announcements.constants';
 
-const StyledButton = styled.button`
+const StyledLayout = styled(Layout)`
+  border: 2px solid rgba(240, 240, 240);
+
   &:hover {
+    border: 2px solid rgba(18, 185, 172, 0.5);
     cursor: pointer;
   }
 `;
 
 export const Announcement = () => {
   const data = AnnouncementInitialState;
+  const [contactState, setContactState] = useState(false);
+  const [messageValue, setMessageValue] = useState('');
 
   const router = useRouter();
   if (router.isReady) {
@@ -107,7 +116,7 @@ export const Announcement = () => {
           marginTop={25}
           margin={[25, 0]}
           display="flex"
-          width="25%"
+          width="40%"
           background="rgb(255,255,255)"
           borderRadius="8px"
           boxShadow="0 0 10px #ccc"
@@ -120,21 +129,53 @@ export const Announcement = () => {
             </Text>
             <Text size={getRem(12)}>{data.advertiser?.name}</Text>
             <Text size={getRem(12)}>Tel. {data.advertiser?.phone}</Text>
-            <StyledButton>
-              <Layout
+            {contactState ? (
+              <Layout width="100%">
+                <FloatingLabel controlId="floatingTextarea2" label="Wiadomość">
+                  <Form.Control
+                    as="textarea"
+                    style={{ height: '100px', resize: 'none' }}
+                    value={messageValue}
+                    onChange={(e) => {
+                      setMessageValue(e.target.value);
+                    }}
+                  />
+                </FloatingLabel>
+                <StyledLayout
+                  display="flex"
+                  justifyContent="center"
+                  marginLeft="auto"
+                  marginRight="auto"
+                  marginTop={10}
+                  borderRadius="10px"
+                  background="rgb(240, 240, 240)"
+                  padding={[5, 15]}
+                  width={175}
+                  onClick={() => {
+                    console.log(messageValue);
+                    // todo: send to api message
+                  }}
+                >
+                  <Text size={getRem(16)}>Wyślij wiadomość</Text>
+                </StyledLayout>
+              </Layout>
+            ) : (
+              <StyledLayout
                 boxShadow="0 0 3px #ccc"
                 padding={[5]}
                 borderRadius="5px"
                 background="rgb(235, 235, 235)"
                 marginTop={5}
+                onClick={() => {
+                  setContactState(true);
+                }}
               >
                 <Text size={getRem(12)}>
                   {/* TODO: message to advertiser */}
-
                   <b>Skontaktuj się z ogłoszeniodawcą</b>
                 </Text>
-              </Layout>
-            </StyledButton>
+              </StyledLayout>
+            )}
           </Layout>
         </Layout>
       </Layout>
