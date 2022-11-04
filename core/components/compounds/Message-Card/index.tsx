@@ -16,6 +16,9 @@ export const MessageCard = ({ message }: { message: MessagesTypes }) => {
     <Link
       href={{
         pathname: `/messages/${message.id}`,
+        query: {
+          message: message.announcement.title,
+        },
       }}
       passHref
     >
@@ -26,16 +29,16 @@ export const MessageCard = ({ message }: { message: MessagesTypes }) => {
         padding={[10]}
         margin={[20, 15]}
         display="flex"
-        onClick={() => console.log('test')}
       >
         <Layout
           width={150}
           height={100}
           boxShadow="0 0 16px rgba(0, 0, 0, 0.24)"
           display="flex"
-          marginRight={10}
+          marginRight={15}
           justifyContent="center"
           alignItems="center"
+          borderRadius="6px"
         >
           <img src={message.announcement.image_url} alt="" />
         </Layout>
