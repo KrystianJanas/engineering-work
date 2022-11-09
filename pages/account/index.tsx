@@ -1,4 +1,6 @@
-export const Account = () => {
-  return <div>Account here</div>;
+import { Account } from '../../modules/account/components';
+
+export const AccountPage = () => {
+  return <Account />;
 };
-export default Account;
+export default AccountPage;
