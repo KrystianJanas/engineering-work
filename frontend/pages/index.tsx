@@ -39,7 +39,7 @@ const Home: NextPage = () => {
           Witaj w serwisie nieruchomości!
         </Text>
         <Text weight={600} color="white">
-          Serwis ten skierowany jest dla osób poszukujących nieruchomości do
+          Strona skierowana jest dla osób poszukujących nieruchomości do
           wynajmu.
         </Text>
         <Text weight={600} color="white">
