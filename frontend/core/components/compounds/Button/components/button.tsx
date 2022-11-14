@@ -14,7 +14,7 @@ const StyledLayout = styled(Layout)`
 export const Button = ({ text, onSubmit }: ButtonTypes) => {
   return (
     <StyledLayout
-      background="#12b9ac"
+      background="var(--button-background)"
       borderRadius="4px"
       padding={[10, 15]}
       onClick={onSubmit}

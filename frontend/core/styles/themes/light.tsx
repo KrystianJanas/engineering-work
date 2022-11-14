@@ -36,7 +36,5 @@ export const lightTheme = css`
     --border-main: 1px solid var(--border-color);
     --body-font-color: var(--grey-90);
     --headings-color: var(--black);
-
-    --button-background: #12b9ac;
   }
 `;

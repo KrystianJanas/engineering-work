@@ -21,5 +21,7 @@ export const propertiesStyles = css`
     --font-size-smaller: ${getRem(12)};
     --font-size-button: ${getRem(14)};
     --font-size-label: ${getRem(16)};
+
+    --button-background: #12b9ac;
   }
 `;
