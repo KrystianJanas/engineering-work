@@ -1,5 +1,6 @@
 import { Global } from '@emotion/react';
 
+import { colorsStyles } from '~/styles/colors';
 import { lightTheme } from '~/styles/themes';
 
 import { baseStyles } from './base';
@@ -13,5 +14,6 @@ export const GlobalStyles = () => (
     <Global styles={baseStyles} />
     {/* <Global styles={darkTheme} /> */}
     <Global styles={lightTheme} />
+    <Global styles={colorsStyles} />
   </>
 );
