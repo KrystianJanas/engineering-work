@@ -6,6 +6,7 @@ export interface TextMixinProps {
   color?: Property.Color;
   fontFamily?: 'Arial' | 'Verdana' | 'Inter';
   textShadow?: '1px 1px 5px black' | '1px 1px 5px white';
+  lineHeight?: Property.LineHeight;
 }
 
 export const textMixin = ({
@@ -14,6 +15,7 @@ export const textMixin = ({
   color = 'black',
   fontFamily = 'Arial',
   textShadow,
+  lineHeight,
 }: TextMixinProps) => ({
   fontWeight: weight,
   fontSize: `${size}`,
@@ -21,4 +23,5 @@ export const textMixin = ({
   fontFamily: `${fontFamily}`,
   textShadow: `${textShadow}`,
   marginBottom: '0',
+  lineHeight: `${lineHeight}`,
 });
