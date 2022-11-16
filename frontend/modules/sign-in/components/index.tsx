@@ -18,7 +18,11 @@ export const SignIn = () => {
       justifyContent="center"
       alignItems="center"
     >
-      <StyledLayout width={485} height={342} background="rgb(255, 255, 255)">
+      <StyledLayout
+        width={485}
+        height={342}
+        background="var(--background-white)"
+      >
         <Layout display="flex" justifyContent="center" margin={[25, 0]}>
           <Text fontFamily="Inter" weight={600} size="1.35rem" color="black">
             Zaloguj się do serwisu nieruchomości

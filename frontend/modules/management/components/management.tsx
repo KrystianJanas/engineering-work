@@ -39,7 +39,7 @@ export const Management = () => {
         selected={selectedOption}
       />
       <Layout
-        background="rgb(255, 255, 255)"
+        background="var(--background-white)"
         borderTopLeftRadius="8px"
         borderTopRightRadius="8px"
         width="100%"
@@ -49,8 +49,6 @@ export const Management = () => {
         {getSelectedComponent() === 'ManagementAnnouncements' && (
           <ManagementAnnouncements changeNumber={changeNumber} />
         )}
-
-        {/* todo: here should be redirect to changeNumber function - only if actuallyLocation is on 1! */}
       </Layout>
     </Layout>
   );

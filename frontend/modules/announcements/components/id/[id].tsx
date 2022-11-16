@@ -34,7 +34,7 @@ export const Announcement = () => {
           marginTop={25}
           display="flex"
           width="50%"
-          background="rgb(255,255,255)"
+          background="var(--background-white)"
           borderRadius="8px"
           boxShadow="0 0 10px #ccc"
           direction="column"
@@ -117,7 +117,7 @@ export const Announcement = () => {
           margin={[25, 0]}
           display="flex"
           width="40%"
-          background="rgb(255,255,255)"
+          background="var(--background-white)"
           borderRadius="8px"
           boxShadow="0 0 10px #ccc"
           direction="column"

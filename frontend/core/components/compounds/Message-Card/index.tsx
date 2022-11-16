@@ -26,7 +26,7 @@ export const MessageCard = ({ message }: { message: MessagesTypes }) => {
       passHref
     >
       <StyledLayout
-        background="rgb(255, 255, 255)"
+        background="var(--background-white)"
         borderRadius="6px"
         boxShadow="0 0 16px rgba(0, 0, 0, 0.24)"
         padding={[10]}

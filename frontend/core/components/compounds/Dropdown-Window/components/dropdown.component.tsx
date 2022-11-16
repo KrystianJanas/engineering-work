@@ -16,7 +16,7 @@ export const DropdownWindow = ({ children, name }: DropdownWindowTypes) => {
       width="75%"
       marginLeft="auto"
       marginRight="auto"
-      background="rgb(255,255,255)"
+      background="var(--background-white)"
       padding={[10, 25]}
     >
       <Layout display="flex" onClick={() => setExpanded(!expanded)}>

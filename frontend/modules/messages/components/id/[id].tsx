@@ -49,7 +49,7 @@ export const Message = () => {
           {data.messages.map((message) => (
             <Layout
               width="100%"
-              background="rgb(255,255,255)"
+              background="var(--background-white)"
               margin={[10]}
               padding={[10]}
               borderRadius="6px"
@@ -84,7 +84,7 @@ export const Message = () => {
             marginLeft="auto"
             marginRight="auto"
             padding={[10]}
-            background="rgb(255, 255, 255)"
+            background="var(--background-white)"
             borderRadius="6px"
             boxShadow="0 0 16px rgba(0, 0, 0, 0.24)"
             width="75%"

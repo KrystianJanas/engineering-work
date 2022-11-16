@@ -25,7 +25,7 @@ export const Button = ({ text, onSubmit }: ButtonTypes) => {
       <Text
         weight={700}
         size={getRem(14)}
-        color="rgb(255, 255, 255)"
+        color="var(--background-white)"
         lineHeight="138%"
       >
         {text}

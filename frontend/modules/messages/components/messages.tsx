@@ -52,7 +52,7 @@ export const Messages = () => {
               display="flex"
               width={250}
               height={50}
-              background="rgb(255,255,255)"
+              background="var(--background-white)"
               justifyContent="center"
               alignItems="center"
               borderRadius="6px"
@@ -70,7 +70,7 @@ export const Messages = () => {
               display="flex"
               width={250}
               height={50}
-              background="rgb(255,255,255)"
+              background="var(--background-white)"
               justifyContent="center"
               alignItems="center"
               borderRadius="6px"

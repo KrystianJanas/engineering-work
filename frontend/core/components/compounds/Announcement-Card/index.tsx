@@ -40,7 +40,7 @@ export const AnnouncementCard = ({
       passHref
     >
       <StyledLayout
-        background="rgb(255,255,255)"
+        background="var(--background-white)"
         height={200}
         margin={[10]}
         display="flex"
