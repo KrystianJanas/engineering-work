@@ -36,8 +36,8 @@ export const mixinDimensions = (
   return css`
     width: ${width};
     height: ${height};
-    min-width: ${props.minWidth ? `${props.minWidth}px` : undefined};
-    min-height: ${props.minHeight ? `${props.minHeight}px` : undefined};
+    min-width: ${props.minWidth ? `${props.minWidth}` : undefined};
+    min-height: ${props.minHeight ? `${props.minHeight}` : undefined};
     max-width: ${props.maxWidth ? `${props.maxWidth}px` : undefined};
     max-height: ${props.maxHeight ? `${props.maxHeight}px` : undefined};
   `;
@@ -145,6 +145,18 @@ export const mixinBackground = (
 export const mixinBorder = (props: LayoutBorderProps): SerializedStyles => {
   return css`
     border-radius: ${props.borderRadius ? `${props.borderRadius}` : undefined};
+    border-top-left-radius: ${props.borderTopLeftRadius
+      ? `${props.borderTopLeftRadius}`
+      : undefined};
+    border-top-right-radius: ${props.borderTopRightRadius
+      ? `${props.borderTopRightRadius}`
+      : undefined};
+    border-bottom-left-radius: ${props.borderBottomLeftRadius
+      ? `${props.borderBottomLeftRadius}`
+      : undefined};
+    border-bottom-right-radius: ${props.borderBottomRightRadius
+      ? `${props.borderBottomRightRadius}`
+      : undefined};
   `;
 };
 

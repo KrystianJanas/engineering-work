@@ -78,6 +78,10 @@ export interface LayoutBackgroundProps {
 
 export interface LayoutBorderProps {
   borderRadius?: Property.BorderRadius;
+  borderTopLeftRadius?: Property.BorderTopLeftRadius;
+  borderTopRightRadius?: Property.BorderTopRightRadius;
+  borderBottomLeftRadius?: Property.BorderBottomLeftRadius;
+  borderBottomRightRadius?: Property.BorderBottomRightRadius;
 }
 
 export interface LayoutOrdersProps {

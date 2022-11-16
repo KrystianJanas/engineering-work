@@ -61,8 +61,8 @@ export const Header = () => {
           ))}
         </Nav>
         <Nav>
-          <Link href="/properties" passHref>
-            {pathname === '/properties' ? (
+          <Link href="/management" passHref>
+            {pathname === '/management' ? (
               <StyledClickedNavLink>
                 Zarządzaj Nieruchomościami
               </StyledClickedNavLink>
