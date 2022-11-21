@@ -1,9 +1,16 @@
 const express = require("express");
-const test = require("../controllers/api/test");
 const router = express.Router();
 
-const testActions = require("../controllers/api/test");
+const PeopleController = require("../controllers/api/peopleController");
+const UserController = require("../controllers/api/userController");
 
-router.get("/", testActions.homepage);
+router.get("/people", PeopleController.getPeople);
+router.get("/people/:id", PeopleController.getPerson);
+router.post("/people", PeopleController.savePerson);
+router.put("/people/:id", PeopleController.updatePerson);
+router.delete("/people/:id", PeopleController.deletePerson);
+
+router.post("/users", UserController.saveUser);
+router.post("/users/login", UserController.getUser);
 
 module.exports = router;
