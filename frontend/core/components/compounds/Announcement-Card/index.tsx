@@ -89,7 +89,7 @@ export const AnnouncementCard = ({
         <Layout display="flex" direction="column" padding={[10, 15]}>
           <Layout flex={1}>{announcement.fee} PLN</Layout>
           <Layout display="flex" justifyContent="right">
-            {/* TODO: add possibility to add offert to observed */}
+            {/* TODO: new possibility to new offert to observed */}
             <button type="submit">
               <HeartIcon src="/heart.png" alt="heart" width={24} height={24} />
             </button>

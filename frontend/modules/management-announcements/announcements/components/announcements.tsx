@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 import { AddButton } from '~/components/compounds/AddButton/components/add-button';
 import { Layout } from '~/components/molecules/layout';
 
@@ -11,7 +13,9 @@ export const ManagementAnnouncements = ({
   return (
     <Layout>
       <Layout display="flex" justifyContent="right">
-        <AddButton />
+        <Link href="/management/estates/new" passHref>
+          <AddButton />
+        </Link>
       </Layout>
       <Layout display="flex" wrap="wrap" justifyContent="center">
         {optionsAnnouncements.map((option) => (

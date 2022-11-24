@@ -6,6 +6,7 @@ export const colorsStyles = css`
     --button-background: #12b9ac;
 
     --background-white: #ffffff;
+    --background-grey: #e9e9e9;
 
     --text-black: #1a202c;
     --text-grey: #90a3bf;
