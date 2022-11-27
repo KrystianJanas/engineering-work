@@ -30,7 +30,7 @@ const CustomApp = ({ Component, pageProps }: AppProps) => {
       </Head>
       <GlobalStyles />
 
-      {pathname !== '/sign-in' && <Header />}
+      {!pathname.toString().includes('auth') && <Header />}
 
       <Component {...pageProps} />
     </QueryClientProvider>

@@ -78,7 +78,6 @@ export const mixinFlex = (props: LayoutFlexProps): SerializedStyles => {
       ? `${props.justifyContent}`
       : undefined};
     justify-self: ${props.justifySelf ? `${props.justifySelf}` : undefined};
-    gap: ${props.gap ? `${props.gap}` : undefined};
     flex: ${props.flex ? `${props.flex}` : undefined};
   `;
 };

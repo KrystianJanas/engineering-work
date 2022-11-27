@@ -5,7 +5,7 @@ export const PagesNav = [
 ];
 
 export const pageTitles = [
-  { href: '/sign-in', title: 'Serwis ogłoszeń' },
+  { href: '/sign', title: 'Serwis ogłoszeń' },
 
   { href: '/', title: 'Serwis ogłoszeń - Dashboard' },
 

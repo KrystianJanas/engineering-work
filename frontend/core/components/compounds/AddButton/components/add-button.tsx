@@ -14,7 +14,7 @@ const StyledLayout = styled(Layout)`
 export const AddButton = ({ onClick }: AddButtonTypes) => {
   return (
     <StyledLayout
-      background="var(--button-background)"
+      background="var(--background-light-blue)"
       width={40}
       height={40}
       boxShadow="0px 2px 4px rgba(0, 0, 0, 0.16)"

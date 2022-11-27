@@ -7,6 +7,7 @@ export interface TextMixinProps {
   fontFamily?: Property.Font;
   textShadow?: Property.TextShadow;
   lineHeight?: Property.LineHeight;
+  textAlign?: Property.TextAlign;
 }
 
 export const textMixin = ({
@@ -16,12 +17,14 @@ export const textMixin = ({
   fontFamily = 'Inter',
   textShadow,
   lineHeight,
+  textAlign,
 }: TextMixinProps) => ({
   fontWeight: weight,
-  fontSize: `${size}`,
-  color: `${color}`,
-  fontFamily: `${fontFamily}`,
-  textShadow: `${textShadow}`,
+  fontSize: size,
+  color,
+  fontFamily,
+  textShadow,
   marginBottom: '0',
-  lineHeight: `${lineHeight}`,
+  lineHeight,
+  textAlign,
 });
