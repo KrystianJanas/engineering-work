@@ -36,10 +36,18 @@ export const mixinDimensions = (
   return css`
     width: ${width};
     height: ${height};
-    min-width: ${props.minWidth ? `${props.minWidth}` : undefined};
-    min-height: ${props.minHeight ? `${props.minHeight}` : undefined};
-    max-width: ${props.maxWidth ? `${props.maxWidth}px` : undefined};
-    max-height: ${props.maxHeight ? `${props.maxHeight}px` : undefined};
+    if(props.minWidth) {
+      min-width: ${props.minWidth};
+    }
+    if(props.minHeight) {
+      min-height: ${props.minHeight};
+    }
+    if(props.maxWidth) {
+      max-width: ${props.maxWidth};
+    }
+    if(props.maxHeight) {
+      max-height: ${props.maxHeight};
+    }
   `;
 };
 
@@ -102,26 +110,46 @@ export const mixinMargin = (props: LayoutMarginProps): SerializedStyles => {
     margin: ${props.margin
       ? `${(props.margin as []).join('px ')}px`
       : undefined};
-    margin-top: ${marginTop};
-    margin-right: ${marginRight};
-    margin-bottom: ${marginBottom};
-    margin-left: ${marginLeft};
+
+    ${marginTop} && {
+      margin-top: ${marginTop};
+    }
+
+    ${marginRight} && {
+      margin-right: ${marginRight};
+    }
+
+    ${marginBottom} && {
+      margin-bottom: ${marginBottom};
+    }
+
+    ${marginLeft} && {
+      margin-left: ${marginLeft};
+    }
   `;
 };
 
 export const mixinPadding = (props: LayoutPaddingProps): SerializedStyles => {
   return css`
-    padding: ${props.padding
-      ? `${(props.padding as []).join('px ')}px`
-      : undefined};
-    padding-top: ${props.paddingTop ? `${props.paddingTop}px` : undefined};
-    padding-right: ${props.paddingRight
-      ? `${props.paddingRight}px`
-      : undefined};
-    padding-bottom: ${props.paddingBottom
-      ? `${props.paddingBottom}px`
-      : undefined};
-    padding-left: ${props.paddingLeft ? `${props.paddingLeft}px` : undefined};
+    ${props.padding} && {
+      padding: ${props.padding && `${(props.padding as []).join('px ')}px`};
+    }
+
+    ${props.paddingTop} && {
+      padding-top: ${props.paddingTop && `${props.paddingTop}px`};
+    }
+
+    ${props.paddingRight} && {
+      padding-right: ${props.paddingRight && `${props.paddingRight}px`};
+    }
+
+    ${props.paddingBottom} && {
+      padding-bottom: ${props.paddingBottom && `${props.paddingBottom}px`};
+    }
+
+    ${props.paddingLeft} && {
+      padding-left: ${props.paddingLeft && `${props.paddingLeft}px`};
+    }
   `;
 };
 

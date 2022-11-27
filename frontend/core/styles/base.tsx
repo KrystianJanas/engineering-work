@@ -9,6 +9,7 @@ export const baseStyles = css`
     background: var(--body-bg);
     color: var(--body-font-color);
 
+    min-height: 100vh;
     background: rgb(245, 245, 245, 1);
   }
 
