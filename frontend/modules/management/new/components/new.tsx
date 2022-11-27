@@ -8,8 +8,6 @@ import { useForm } from '~/hooks/useForm';
 import { EstateFormInitialState, TypesEstates } from '../new.constants';
 import { NewManagemenetEstates } from '../new.types';
 
-//   estate,
-//   onSubmit
 export const ManagementEstatesForm = ({
   estate,
   onSubmit,
