@@ -33,21 +33,19 @@ export const mixinDimensions = (
   ) {
     width = `${width}px`;
   }
+
   return css`
     width: ${width};
+
     height: ${height};
-    if(props.minWidth) {
-      min-width: ${props.minWidth};
-    }
-    if(props.minHeight) {
-      min-height: ${props.minHeight};
-    }
-    if(props.maxWidth) {
-      max-width: ${props.maxWidth};
-    }
-    if(props.maxHeight) {
-      max-height: ${props.maxHeight};
-    }
+
+    min-width: ${props.minWidth};
+
+    min-height: ${props.minHeight};
+
+    max-width: ${props.maxWidth};
+
+    max-height: ${props.maxHeight};
   `;
 };
 
@@ -111,45 +109,29 @@ export const mixinMargin = (props: LayoutMarginProps): SerializedStyles => {
       ? `${(props.margin as []).join('px ')}px`
       : undefined};
 
-    ${marginTop} && {
-      margin-top: ${marginTop};
-    }
+    margin-top: ${marginTop};
 
-    ${marginRight} && {
-      margin-right: ${marginRight};
-    }
+    margin-right: ${marginRight};
 
-    ${marginBottom} && {
-      margin-bottom: ${marginBottom};
-    }
+    margin-bottom: ${marginBottom};
 
-    ${marginLeft} && {
-      margin-left: ${marginLeft};
-    }
+    margin-left: ${marginLeft};
   `;
 };
 
 export const mixinPadding = (props: LayoutPaddingProps): SerializedStyles => {
   return css`
-    ${props.padding} && {
-      padding: ${props.padding && `${(props.padding as []).join('px ')}px`};
-    }
-
-    ${props.paddingTop} && {
-      padding-top: ${props.paddingTop && `${props.paddingTop}px`};
-    }
-
-    ${props.paddingRight} && {
-      padding-right: ${props.paddingRight && `${props.paddingRight}px`};
-    }
-
-    ${props.paddingBottom} && {
-      padding-bottom: ${props.paddingBottom && `${props.paddingBottom}px`};
-    }
-
-    ${props.paddingLeft} && {
-      padding-left: ${props.paddingLeft && `${props.paddingLeft}px`};
-    }
+    padding: ${props.padding
+      ? `${(props.padding as []).join('px ')}px`
+      : undefined};
+    padding-top: ${props.paddingTop ? `${props.paddingTop}px` : undefined};
+    padding-right: ${props.paddingRight
+      ? `${props.paddingRight}px`
+      : undefined};
+    padding-bottom: ${props.paddingBottom
+      ? `${props.paddingBottom}px`
+      : undefined};
+    padding-left: ${props.paddingLeft ? `${props.paddingLeft}px` : undefined};
   `;
 };
 

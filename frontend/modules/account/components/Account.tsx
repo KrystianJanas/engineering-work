@@ -8,7 +8,12 @@ import { Layout } from '~/components/molecules/layout';
 
 export const Account = () => {
   return (
-    <>
+    <Layout
+      display="flex"
+      direction="column"
+      alignItems="center"
+      justifyContent="center"
+    >
       <DropdownWindow name="Dane kontaktowe">
         <Layout marginBottom={20}>
           <Text weight={600}>Osoba kontaktowa</Text>
@@ -75,6 +80,6 @@ export const Account = () => {
           />
         </Layout>
       </DropdownWindow>
-    </>
+    </Layout>
   );
 };
