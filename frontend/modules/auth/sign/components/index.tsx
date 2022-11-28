@@ -8,7 +8,7 @@ import { useForm } from '~/hooks/useForm';
 import { getRem } from '~/styles/utils';
 
 import { signInitialState } from '../sign.constants';
-import { SignTypes } from '../sign.types';
+import { Sign, SignTypes } from '../sign.types';
 
 const StyledButton = styled(Button)`
   background-color: var(--background-light-blue);
@@ -22,28 +22,57 @@ const StyledButton = styled(Button)`
   }
 `;
 
-const SignUpButton = ({ formData }: any) => {
-  return (
-    <Link href="/auth/sign-up" passHref>
-      <StyledButton variant="contained" onClick={() => console.log(formData)}>
-        Zarejestruj się
-      </StyledButton>
-    </Link>
-  );
-};
-
-const SignInButton = ({ formData, type }: any) => {
-  return (
-    <Link href="/auth/sign-in" passHref>
-      <StyledButton variant="contained" onClick={() => console.log(formData)}>
-        {type === 'register' ? 'Powrót' : 'Zaloguj się'}
-      </StyledButton>
-    </Link>
-  );
-};
-
 export const SignIn = ({ type }: SignTypes) => {
-  const { formData, handleChange } = useForm(signInitialState);
+  const { formData, handleChange } = useForm<Sign>(signInitialState);
+
+  const handleLogin = (data: Sign, typeView: string) => {
+    if (typeView === 'login') {
+      console.log('login to: ', data);
+    }
+  };
+  const handleRegister = (data: Sign, typeView: string) => {
+    if (typeView === 'register') {
+      console.log('register to: ', data);
+    }
+  };
+
+  const SignUpButton = ({
+    data,
+    typeView,
+  }: {
+    data: Sign;
+    typeView: string;
+  }) => {
+    return (
+      <Link href="/auth/sign-up" passHref>
+        <StyledButton
+          variant="contained"
+          onClick={() => handleRegister(data, typeView)}
+        >
+          Zarejestruj się
+        </StyledButton>
+      </Link>
+    );
+  };
+
+  const SignInButton = ({
+    data,
+    typeView,
+  }: {
+    data: Sign;
+    typeView: string;
+  }) => {
+    return (
+      <Link href="/auth/sign-in" passHref>
+        <StyledButton
+          variant="contained"
+          onClick={() => handleLogin(data, typeView)}
+        >
+          {typeView === 'register' ? 'Powrót' : 'Zaloguj się'}
+        </StyledButton>
+      </Link>
+    );
+  };
 
   return (
     <Layout
@@ -119,13 +148,13 @@ export const SignIn = ({ type }: SignTypes) => {
           <Layout display="flex" gap="25px">
             {type === 'login' ? (
               <>
-                <SignUpButton formData={formData} />
-                <SignInButton formData={formData} type={type} />
+                <SignUpButton data={formData} typeView={type} />
+                <SignInButton data={formData} typeView={type} />
               </>
             ) : (
               <>
-                <SignInButton formData={formData} type={type} />
-                <SignUpButton formData={formData} />
+                <SignInButton data={formData} typeView={type} />
+                <SignUpButton data={formData} typeView={type} />
               </>
             )}
           </Layout>
