@@ -18,6 +18,10 @@ const UserSchema = new mongoose.Schema({
       message: "Login must be longer than 4 characters",
     },
   },
+  role: {
+    type: Number,
+    default: 0,
+  },
   created_at: {
     type: Date,
     required: true,
