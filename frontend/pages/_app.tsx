@@ -11,6 +11,9 @@ import { GlobalStyles } from '~/styles';
 import { Header } from '../modules/header/components/header';
 import { useActiveNavLink } from '../modules/header/hooks/useActiveNavLink';
 
+// eslint-disable-next-line import/order
+import { Toaster } from 'react-hot-toast';
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -28,6 +31,7 @@ const CustomApp = ({ Component, pageProps }: AppProps) => {
       <Head>
         <title>{pageTitle}</title>
       </Head>
+      <Toaster />
       <GlobalStyles />
 
       {!pathname.toString().includes('auth') && <Header />}

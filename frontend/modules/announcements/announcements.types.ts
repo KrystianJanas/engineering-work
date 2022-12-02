@@ -6,6 +6,7 @@ export interface AnnouncementsProps {
 export interface Announcement {
   id: number; // id
   title: string; // tytul
+  description?: string;
   location: string; // lokalizacja
   state: string; // stan deweloperski/umeblowane
   size: number; // metraż
@@ -14,8 +15,7 @@ export interface Announcement {
   imageUrl?: string; // avatar zdjecia
   date_add: string; // data dodania
   rooms: number; // liczba pokoi
-  description?: string;
-  views?: number;
+  views?: number; // todo
 
   advertiser?: {
     name: string;

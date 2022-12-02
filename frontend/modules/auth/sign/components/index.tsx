@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { Button, TextField } from '@mui/material';
 import Link from 'next/link';
 
+import { getTestData } from '~/api/get';
 import { Text } from '~/components/atoms/typography';
 import { Layout } from '~/components/molecules/layout';
 import { useForm } from '~/hooks/useForm';
@@ -25,9 +26,10 @@ const StyledButton = styled(Button)`
 export const SignIn = ({ type }: SignTypes) => {
   const { formData, handleChange } = useForm<Sign>(signInitialState);
 
-  const handleLogin = (data: Sign, typeView: string) => {
+  const handleLogin = async (data: Sign, typeView: string) => {
     if (typeView === 'login') {
-      console.log('login to: ', data);
+      const response = await getTestData();
+      console.log(response?.data);
     }
   };
   const handleRegister = (data: Sign, typeView: string) => {
