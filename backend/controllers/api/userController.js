@@ -3,6 +3,17 @@ const bcrypt = require("bcrypt");
 
 class UserController {
   async saveUser(request, response) {
+    // check: if user exist
+    try {
+      const user = await User.findOne({ login: request.body.login });
+      if (user) {
+        return response.status(400).send("User is already exist!");
+      }
+    } catch {
+      return response.status(500).send();
+    }
+
+    // let's create an account
     try {
       const hashedPassword = await bcrypt.hash(request.body.password, 10);
       const user = new User({

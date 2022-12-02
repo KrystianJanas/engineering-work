@@ -27,7 +27,7 @@ class PeopleController {
     let document;
 
     try {
-      document = await Person.find({});
+      document = await Person.find({})
     } catch (error) {
       response.status(500).json({ message: error.message });
     }
@@ -37,25 +37,33 @@ class PeopleController {
 
   async getPerson(request, response) {
     const id = request.params.id;
-    const person = await Person.findOne({ _id: id });
+    const person = await Person.findOne({ _id: id }).populate("user", ["login", "_id"]);
 
+    console.log(person)
     response.status(200).json(person);
   }
 
   async updatePerson(request, response) {
     const id = request.params.id;
-
     const data = request.body;
 
-    const person = await Person.findOne({ _id: id });
-    person.name = data.name;
-    person.city = data.city;
-    person.zip_code = data.zip_code;
-    person.phone_number = data.phone_number;
-    person.avatar_url = data.avatar_url;
-    await person.save();
+    try {
+      const person = await Person.findOne({ _id: id });
+      if(person) {
+        person.name = data.name || person.name;
+        person.city = data.city || person.city;
+        person.zip_code = data.zip_code || person.zip_code;
+        person.phone_number = data.phone_number || person.phone_number;
+        person.avatar_url = data.avatar_url || person.avatar_url;
+        await person.save();
+        response.status(200).json(person);
+      } else {
+        return response.status(422).json({ message: "Person not found" });
+      }
 
-    response.status(201).json(person);
+    } catch (error) {
+      return response.status(422).json({ message: error.message });
+    }
   }
 
   async deletePerson(request, response) {

@@ -5,14 +5,13 @@ const app = express();
 const config = require("./config");
 const apiRouter = require("./routes/api");
 
-// db
+const cors = require("cors");
 require("./db/mongoose");
 
-// parsery
 // content-type: application/json
 app.use(bodyParser.json());
-
-app.use("/api", apiRouter); // globalna sciezka
+app.use(cors({ origin: "http://localhost:3000", credentials: true }));
+app.use("/api", apiRouter);
 
 // server
 app.listen(config.port, function () {

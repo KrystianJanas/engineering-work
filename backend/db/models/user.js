@@ -4,6 +4,7 @@ const UserSchema = new mongoose.Schema({
   login: {
     type: String,
     required: true,
+    unique: true,
     validate: {
       validator: (login) => login.length > 4,
       message: "Login must be longer than 4 characters",

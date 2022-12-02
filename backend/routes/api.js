@@ -10,7 +10,7 @@ router.post("/people", PeopleController.savePerson);
 router.put("/people/:id", PeopleController.updatePerson);
 router.delete("/people/:id", PeopleController.deletePerson);
 
-router.post("/users", UserController.saveUser);
-router.post("/users/login", UserController.getUser);
+router.post("/auth", UserController.saveUser);
+router.post("/auth/login", UserController.getUser);
 
 module.exports = router;
