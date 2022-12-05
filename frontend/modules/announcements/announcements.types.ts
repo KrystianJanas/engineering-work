@@ -13,7 +13,7 @@ export interface Announcement {
   fee: number; // odstępne
   rent: number; // czynsz
   imageUrl?: string; // avatar zdjecia
-  date_add: string; // data dodania
+  date_add?: string; // data dodania
   rooms: number; // liczba pokoi
   views?: number; // todo
 
@@ -21,4 +21,7 @@ export interface Announcement {
     name: string;
     phone: number;
   };
+
+  person: { _id: number; name: string };
+  images: [];
 }
