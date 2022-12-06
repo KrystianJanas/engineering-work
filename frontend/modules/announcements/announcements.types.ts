@@ -9,9 +9,9 @@ export interface Announcement {
   description?: string;
   location: string; // lokalizacja
   state: string; // stan deweloperski/umeblowane
-  size: number; // metraż
+  size: number; // metraż// czynsz
   fee: number; // odstępne
-  rent: number; // czynsz
+  rent: number;
   imageUrl?: string; // avatar zdjecia
   date_add?: string; // data dodania
   rooms: number; // liczba pokoi

@@ -5,12 +5,13 @@ import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import Form from 'react-bootstrap/Form';
 
+import { default_avatar_url } from '~/GLOBAL.constants';
 import { Text } from '~/components/atoms/typography';
 import { SpinnerLoading } from '~/components/compounds/Spinner';
 import { Layout } from '~/components/molecules/layout';
+import { useDateParser } from '~/hooks/useDateParser';
+import { AnnouncementModel } from '~/models/announcement.model';
 import { getRem } from '~/styles/utils';
-
-import { AnnouncementInitialState } from '../../announcements.constants';
 
 const StyledLayout = styled(Layout)`
   border: 2px solid rgba(240, 240, 240);
@@ -21,10 +22,11 @@ const StyledLayout = styled(Layout)`
   }
 `;
 
-export const Announcement = () => {
-  const data = AnnouncementInitialState;
+export const Announcement = ({ data }: { data: AnnouncementModel }) => {
   const [contactState, setContactState] = useState(false);
   const [messageValue, setMessageValue] = useState('');
+
+  const { date } = useDateParser(data.created_at);
 
   const router = useRouter();
   if (router.isReady) {
@@ -44,7 +46,7 @@ export const Announcement = () => {
               {data.title}
             </Text>
           </Layout>
-          {data.imageUrl ? (
+          {data.images ? (
             <Layout
               display="flex"
               marginLeft="auto"
@@ -52,7 +54,11 @@ export const Announcement = () => {
               width="75%"
               marginTop="5"
             >
-              <img src={data.imageUrl} aria-hidden alt="" />
+              <img
+                src={data.images[0] || default_avatar_url}
+                aria-hidden
+                alt=""
+              />
             </Layout>
           ) : (
             <Layout
@@ -70,14 +76,15 @@ export const Announcement = () => {
           )}
           <Layout display="flex" margin={[10, 25]} direction="column">
             <Text size={getRem(12)}>
-              <b>Wyposażenie:</b> {data.state}
-            </Text>
-            <Text size={getRem(12)}>
-              <b>Metraż:</b> {data.size} m^2
-            </Text>
-            <Text size={getRem(12)}>
               <b>Liczba pokoi:</b> {data.rooms}
             </Text>
+            <Text size={getRem(12)}>
+              <b>Wielkość nieruchomości:</b> {data.size} m^2
+            </Text>
+            <Text size={getRem(12)}>
+              <b>Wyposażenie:</b> {data.state}
+            </Text>
+
             <Text size={getRem(12)}>
               <b>Lokalizacja:</b> {data.location}
             </Text>
@@ -105,7 +112,7 @@ export const Announcement = () => {
             marginLeft="auto"
           >
             <Text color="rgb(100, 100, 100)" size={getRem(11)}>
-              <b>Ogłoszenie dodane:</b> {data.date_add}
+              <b>Ogłoszenie dodane:</b> {date}
             </Text>
             <Text color="rgb(100, 100, 100)" size={getRem(11)}>
               <b>Liczba wyświetleń ogłoszenia:</b> {data.views}
@@ -127,8 +134,9 @@ export const Announcement = () => {
             <Text size={getRem(16)} weight={600}>
               KONTAKT Z OGŁOSZENIODAWCĄ
             </Text>
-            <Text size={getRem(12)}>{data.advertiser?.name}</Text>
-            <Text size={getRem(12)}>Tel. {data.advertiser?.phone}</Text>
+            <Text size={getRem(14)}>
+              {data.person.name}, tel. {data.person.phone_number}
+            </Text>
             {contactState ? (
               <Layout width="100%" marginTop={10}>
                 <FloatingLabel controlId="floatingTextarea2" label="Wiadomość">

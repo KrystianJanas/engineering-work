@@ -1,13 +1,15 @@
+import React from 'react';
 import { Image } from 'react-bootstrap';
 
 import styled from '@emotion/styled';
 import Link from 'next/link';
 
+import { default_avatar_url } from '~/GLOBAL.constants';
 import { Text } from '~/components/atoms/typography';
 import { Layout } from '~/components/molecules/layout';
+import { useDateParser } from '~/hooks/useDateParser';
+import { AnnouncementsModel } from '~/models/announcements.model';
 import { getRem } from '~/styles/utils';
-
-import { Announcement } from '../../../../modules/announcements/announcements.types';
 
 const StyledLayout = styled(Layout)`
   &:hover {
@@ -19,83 +21,111 @@ const StyledImage = styled(Image)`
   border-radius: 10px;
 `;
 
-const HeartIcon = styled(Image)`
-  &:hover {
-    //TODO: make a color of border
-    background-color: red;
-  }
-`;
-
 export const AnnouncementCard = ({
-  announcement,
+  announcement: {
+    _id,
+    created_at,
+    fee,
+    rent,
+    images,
+    location,
+    size,
+    state,
+    title,
+  },
 }: {
-  announcement: Announcement;
+  announcement: AnnouncementsModel;
 }) => {
+  const { date } = useDateParser(created_at);
+
   return (
-    <Link
-      key={announcement.id}
-      href={{
-        pathname: `/announcements/${announcement.id}`,
-      }}
-      passHref
+    <Layout
+      background="var(--background-white)"
+      height={200}
+      margin={[10]}
+      display="flex"
+      borderRadius="16px"
+      justifyContent="space-between"
+      boxShadow="0 0 5px #ccc"
+      width="75%"
+      minWidth="1175px"
     >
-      <StyledLayout
-        background="var(--background-white)"
-        height={200}
-        margin={[10]}
-        display="flex"
-        borderRadius="16px"
-        justifyContent="space-between"
-        boxShadow="0 0 5px #ccc"
-        width="75%"
+      <Link
+        key={_id}
+        href={{
+          pathname: `/announcements/${_id}`,
+        }}
+        passHref
       >
-        <Layout
-          width={180}
-          height={180}
-          margin={[10]}
-          borderRadius="10px"
-          boxShadow="0 0 3px #ccc"
-          display="flex"
-        >
-          {announcement.imageUrl ? (
-            <StyledImage src={announcement.imageUrl} aria-hidden alt="" />
-          ) : (
-            <StyledImage src="no-image-icon.png" aria-hidden alt="" />
-          )}
-        </Layout>
-
-        <Layout padding={[10]} display="flex" flex={1} direction="column">
-          <Layout display="flex" justifyContent="left">
-            <Text color="black" size={getRem(20)}>
-              {announcement.title}
-            </Text>
-          </Layout>
-          <Layout display="flex">
-            <Text color="black" size={getRem(14)}>
-              # {announcement.state}
-            </Text>
-          </Layout>
-          <Layout display="flex" flex={1}>
-            <Text color="black" size={getRem(14)}>
-              # {announcement.size} m^2
-            </Text>
+        <StyledLayout display="flex">
+          <Layout
+            width={180}
+            height={180}
+            margin={[10]}
+            borderRadius="10px"
+            boxShadow="0 0 3px #ccc"
+            display="flex"
+          >
+            {images ? (
+              <StyledImage
+                src={images[0] || default_avatar_url}
+                aria-hidden
+                alt=""
+              />
+            ) : (
+              <StyledImage src="no-image-icon.png" aria-hidden alt="" />
+            )}
           </Layout>
 
-          <Text color="black" size={getRem(16)}>
-            {announcement.location} - {announcement.date_add}
-          </Text>
-        </Layout>
-
-        <Layout display="flex" direction="column" padding={[10, 15]}>
-          <Layout flex={1}>{announcement.fee} PLN</Layout>
-          <Layout display="flex" justifyContent="right">
-            {/* TODO: new possibility to new offert to observed */}
-            <button type="submit">
-              <HeartIcon src="/heart.png" alt="heart" width={24} height={24} />
-            </button>
+          <Layout padding={[10]} display="flex" flex={1} direction="column">
+            <Layout display="flex" justifyContent="left">
+              <Text color="black" size={getRem(20)}>
+                {title}
+              </Text>
+            </Layout>
+            {state && (
+              <Layout display="flex">
+                <Text color="black" size={getRem(14)}>
+                  # {state}
+                </Text>
+              </Layout>
+            )}
+            {size && (
+              <Layout display="flex" flex={1}>
+                <Text color="black" size={getRem(14)}>
+                  # {size} m^2
+                </Text>
+              </Layout>
+            )}
+            {location && date && (
+              <Text color="black" size={getRem(16)}>
+                {location} - {date}
+              </Text>
+            )}
           </Layout>
+        </StyledLayout>
+      </Link>
+      <Layout display="flex" direction="column" padding={[10, 15]}>
+        <Text size={getRem(16)}>
+          Odstępne:
+          <br />
+          {fee.toFixed(2)} PLN / miesiąc
+        </Text>
+        <Text flex={1} size={getRem(16)}>
+          Czynsz:
+          <br />
+          {rent.toFixed(2)} PLN / miesiąc
+        </Text>
+        <Layout display="flex" justifyContent="right">
+          {/* TODO: new possibility to new offert to observed */}
+          <button
+            type="submit"
+            onClick={() => console.log('add to observed offerts!')}
+          >
+            <Image src="/heart.png" alt="heart" width={24} height={24} />
+          </button>
         </Layout>
-      </StyledLayout>
-    </Link>
+      </Layout>
+    </Layout>
   );
 };

@@ -9,8 +9,3 @@ export interface PeopleModel {
   created_at: string;
   updated_at: string;
 }
-
-export interface PersonLoginIdModel {
-  _id: string;
-  login: string;
-}

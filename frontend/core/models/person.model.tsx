@@ -1,5 +1,3 @@
-import { PersonLoginIdModel } from '~/models/people.model';
-
 export interface PersonModel {
   _id: string;
   name: string;
@@ -10,4 +8,10 @@ export interface PersonModel {
   user: PersonLoginIdModel;
   created_at: string;
   updated_at: string;
+}
+
+export interface PersonLoginIdModel {
+  _id: string;
+  name: string;
+  phone_number: number;
 }
