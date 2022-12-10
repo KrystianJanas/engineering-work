@@ -14,6 +14,7 @@ import { useActiveNavLink } from '../modules/header/hooks/useActiveNavLink';
 
 // eslint-disable-next-line import/order
 import { Toaster } from 'react-hot-toast';
+// eslint-disable-next-line import/order
 import { useContext } from 'react';
 
 const queryClient = new QueryClient({
