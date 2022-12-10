@@ -28,7 +28,7 @@ class AnnouncementController {
   async getAnnouncements(request, response) {
     let announcements;
     try {
-      announcements = await Announcement.find({});
+      announcements = await Announcement.find({ status: true });
     } catch (error) {
       response.status(500).json({ message: error.message });
     }
@@ -40,10 +40,13 @@ class AnnouncementController {
     const id = request.params.id;
     const announcement = await Announcement.findOne({ _id: id }).populate(
       "person",
-      ["_id", "name"]
+      ["_id", "name", "phone_number"]
     );
 
     response.status(200).json(announcement);
+
+    announcement.views = announcement.views + 1; // make it only max 1 view per 1 visit on page.... ?? FE-SIDE
+    await announcement.save();
   }
 
   async updateAnnouncement(request, response) {
@@ -78,9 +81,19 @@ class AnnouncementController {
   async deleteAnnouncement(request, response) {
     const id = request.params.id;
 
-    await Announcement.deleteOne({ _id: id });
+    try {
+      const announcement = await Announcement.findOne({ _id: id });
+      if (announcement) {
+        announcement.status = false;
 
-    response.sendStatus(204);
+        await announcement.save();
+        response.sendStatus(204);
+      } else {
+        return response.status(422).json({ message: "Announcement not found" });
+      }
+    } catch (error) {
+      return response.status(422).json({ message: error.message });
+    }
   }
 }
 

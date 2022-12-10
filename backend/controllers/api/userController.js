@@ -1,5 +1,7 @@
 const User = require("../../db/models/user");
+const Person = require("../../db/models/person");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 class UserController {
   async saveUser(request, response) {
@@ -21,6 +23,16 @@ class UserController {
         password: hashedPassword,
       });
       await user.save();
+
+      const person = new Person({
+        user: user._id,
+        name: user.login,
+        city: "",
+        zip_code: "",
+        phone_number: "",
+        avatar_url: "",
+      });
+      await person.save();
       response.status(201).send();
     } catch {
       response.status(500).send();
@@ -29,16 +41,28 @@ class UserController {
 
   async getUser(request, response) {
     const user = await User.findOne({ login: request.body.login });
-
     if (user == null) {
-      return response.status(400).send("Cannot find user");
+      return response.status(404).send("Username or password is incorrect");
+    }
+
+    const person = await Person.findOne({ user: user._id });
+    if (person == null) {
+      return response.status(404).send("Cannot find person associated to user");
     }
 
     try {
       if (await bcrypt.compare(request.body.password, user.password)) {
-        response.send("Success");
+        const accessToken = jwt.sign(
+          { login: request.body.login },
+          process.env.ACCESS_TOKEN_SECRET
+        );
+        response.status(200).json({
+          accessToken: accessToken,
+          user_id: user._id,
+          person_id: person._id,
+        });
       } else {
-        response.send("Not allowed");
+        response.status(404).send("Username or password is incorrect");
       }
     } catch {
       response.status(500).send();

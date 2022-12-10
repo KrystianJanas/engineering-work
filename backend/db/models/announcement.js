@@ -18,6 +18,8 @@ const AnnouncementSchema = new mongoose.Schema({
   created_at: { type: Date, default: Date.now },
   updated_at: { type: Date, default: Date.now },
   views: { type: Number, default: 0 },
+
+  status: { type: Boolean, default: true },
 });
 
 const Announcement = mongoose.model("Announcement", AnnouncementSchema);
