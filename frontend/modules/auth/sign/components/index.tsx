@@ -1,13 +1,18 @@
+import { useContext, useEffect } from 'react';
+import toast from 'react-hot-toast';
+
 import styled from '@emotion/styled';
 import { Button, TextField } from '@mui/material';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
-import { getTestData } from '~/api/get';
 import { Text } from '~/components/atoms/typography';
 import { Layout } from '~/components/molecules/layout';
+import AuthContext from '~/hooks/useContextProvider';
 import { useForm } from '~/hooks/useForm';
 import { getRem } from '~/styles/utils';
 
+import { signIn, signUp } from '../api/conversations';
 import { signInitialState } from '../sign.constants';
 import { Sign, SignTypes } from '../sign.types';
 
@@ -24,17 +29,48 @@ const StyledButton = styled(Button)`
 `;
 
 export const SignIn = ({ type }: SignTypes) => {
+  const router = useRouter();
   const { formData, handleChange } = useForm<Sign>(signInitialState);
+  const { saveTokens, isLogged } = useContext(AuthContext);
+
+  useEffect(() => {
+    console.log(isLogged);
+    if (!isLogged) {
+      return;
+    }
+    router.push('/');
+  }, [saveTokens]);
 
   const handleLogin = async (data: Sign, typeView: string) => {
     if (typeView === 'login') {
-      const response = await getTestData();
-      console.log(response?.data);
+      const { errors, user } = await signIn(data.login, data.password);
+      if (errors && errors.length > 0) {
+        toast.error(errors);
+      }
+      if (user) {
+        saveTokens({
+          userId: user.user_id,
+          personId: user.person_id,
+          accessToken: user.accessToken,
+        });
+        toast.success('Pomyślnie zalogowano.');
+      }
     }
   };
-  const handleRegister = (data: Sign, typeView: string) => {
+  const handleRegister = async (data: Sign, typeView: string) => {
     if (typeView === 'register') {
-      console.log('register to: ', data);
+      const { errors, success } = await signUp(
+        data.login,
+        data.password,
+        data.rePassword
+      );
+
+      if (errors && errors.length === 0) {
+        await router.push('/auth/sign-in');
+        toast.success('Udało się zarejestrować! Możesz się zalogować.');
+      } else {
+        toast.error(errors);
+      }
     }
   };
 
