@@ -22,15 +22,18 @@ export const AnnouncementsForm = ({
     <Layout display="flex" justifyContent="center" marginTop={15}>
       <Layout
         borderRadius="6px"
-        width={640}
+        width="75%"
+        minWidth="800px"
         display="flex"
+        direction="column"
+        alignItems="center"
         justifyContent="center"
         boxShadow="0 0 16px rgba(0, 0, 0, 0.24)"
         padding={[25]}
         wrap="wrap"
         gap="15px"
       >
-        <Layout width={500}>
+        <Layout width={750}>
           <TextField
             id="outlined-basic"
             label="Tytuł ogłoszenia"
@@ -41,7 +44,7 @@ export const AnnouncementsForm = ({
             size="medium"
           />
         </Layout>
-        <Layout width={500}>
+        <Layout width={750}>
           <TextField
             id="outlined-basic"
             type="number"
@@ -49,11 +52,11 @@ export const AnnouncementsForm = ({
             variant="outlined"
             fullWidth
             value={formData.rent}
-            onChange={(e) => handleChange('rent', e.target.value)}
+            onChange={(e) => handleChange('rent', +e.target.value)}
             size="medium"
           />
         </Layout>
-        <Layout width={500}>
+        <Layout width={750}>
           <TextField
             id="outlined-basic"
             type="number"
@@ -61,11 +64,11 @@ export const AnnouncementsForm = ({
             variant="outlined"
             fullWidth
             value={formData.fee}
-            onChange={(e) => handleChange('fee', e.target.value)}
+            onChange={(e) => handleChange('fee', +e.target.value)}
             size="medium"
           />
         </Layout>
-        <Layout width={500}>
+        <Layout width={750}>
           <TextField
             id="outlined-basic"
             type="number"
@@ -73,11 +76,23 @@ export const AnnouncementsForm = ({
             variant="outlined"
             fullWidth
             value={formData.size}
-            onChange={(e) => handleChange('size', e.target.value)}
+            onChange={(e) => handleChange('size', +e.target.value)}
             size="medium"
           />
         </Layout>
-        <Layout width={500}>
+        <Layout width={750}>
+          <TextField
+            id="outlined-basic"
+            type="number"
+            label="Ilość pokoi"
+            variant="outlined"
+            fullWidth
+            value={formData.rooms}
+            onChange={(e) => handleChange('rooms', +e.target.value)}
+            size="medium"
+          />
+        </Layout>
+        <Layout width={750}>
           <TextField
             id="outlined-basic"
             label="Lokalizacja"
@@ -88,7 +103,7 @@ export const AnnouncementsForm = ({
             size="medium"
           />
         </Layout>
-        <Layout width={500}>
+        <Layout width={750}>
           <TextField
             id="outlined-select-currency"
             select
@@ -105,7 +120,18 @@ export const AnnouncementsForm = ({
             ))}
           </TextField>
         </Layout>
-        <Layout width={500}>
+        <Layout width={750}>
+          <TextField
+            id="outlined-multiline-static"
+            label="Opis"
+            multiline
+            rows={4}
+            value={formData.description}
+            onChange={(e) => handleChange('description', e.target.value)}
+            fullWidth
+          />
+        </Layout>
+        <Layout width={750}>
           / here add option to choose default profile photo to our estate \
         </Layout>
         <Layout width={250} display="flex" wrap="wrap" gap="15px">

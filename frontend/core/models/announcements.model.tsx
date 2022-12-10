@@ -10,7 +10,7 @@ export interface AnnouncementsModel {
   fee: number;
   rent: number;
   images: string[];
-  views: number;
-  created_at: string;
-  updated_at: string;
+  views?: number;
+  created_at?: string;
+  updated_at?: string;
 }

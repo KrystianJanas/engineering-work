@@ -6,8 +6,11 @@ import { Layout } from '~/components/molecules/layout';
 import { getRem } from '~/styles/utils';
 
 const StyledLayout = styled(Layout)`
+  text-decoration: none;
+
   &:hover {
     cursor: pointer;
+    text-decoration: none;
   }
 `;
 

@@ -36,7 +36,7 @@ export const AnnouncementCard = ({
 }: {
   announcement: AnnouncementsModel;
 }) => {
-  const { date } = useDateParser(created_at);
+  const { date } = useDateParser(created_at || '');
 
   return (
     <Layout

@@ -1,6 +1,6 @@
-import { Announcement } from './announcements.types';
+import { AnnouncementsModel } from '~/models/announcements.model';
 
 export interface AnnouncementsFormTypes {
-  announcement?: Announcement;
-  onSubmit: (data: Announcement) => void;
+  announcement: AnnouncementsModel;
+  onSubmit: (data: AnnouncementsModel) => void;
 }

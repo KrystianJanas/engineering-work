@@ -1,11 +1,8 @@
-import { Announcement } from './announcements.types';
+import { AnnouncementsModel } from '~/models/announcements.model';
 
-export const AnnouncementsInitialState: Announcement = {
-  id: 0,
-  person: {
-    _id: 0,
-    name: '',
-  },
+export const AnnouncementsInitialState: AnnouncementsModel = {
+  _id: '0',
+  person: '0',
   title: '',
   description: '',
   location: '',
