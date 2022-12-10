@@ -1,9 +1,8 @@
 import styled from '@emotion/styled';
 
-import { Text } from '~/components/atoms/typography';
 import { AddButtonTypes } from '~/components/compounds/AddButton/add-button.types';
+import { PlusIcon } from '~/components/icons/plus';
 import { Layout } from '~/components/molecules/layout';
-import { getRem } from '~/styles/utils';
 
 const StyledLayout = styled(Layout)`
   text-decoration: none;
@@ -27,9 +26,7 @@ export const AddButton = ({ onClick }: AddButtonTypes) => {
       alignItems="center"
       justifyContent="center"
     >
-      <Text color="var(--white)" weight={300} size={getRem(32)}>
-        +
-      </Text>
+      <PlusIcon />
     </StyledLayout>
   );
 };

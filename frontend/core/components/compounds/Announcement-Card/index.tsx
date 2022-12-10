@@ -120,7 +120,9 @@ export const AnnouncementCard = ({
           {/* TODO: new possibility to new offert to observed */}
           <button
             type="submit"
-            onClick={() => console.log('add to observed offerts!')}
+            onClick={() =>
+              console.log('add to observed offerts announcement id ', _id)
+            }
           >
             <Image src="/heart.png" alt="heart" width={24} height={24} />
           </button>

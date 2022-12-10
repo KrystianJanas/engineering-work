@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { FloatingLabel } from 'react-bootstrap';
 
 import styled from '@emotion/styled';
+import Link from 'next/link';
 import Form from 'react-bootstrap/Form';
 
 import { default_avatar_url } from '~/GLOBAL.constants';
@@ -27,9 +28,18 @@ export const Announcement = ({ data }: { data: AnnouncementModel }) => {
   const { date } = useDateParser(data.created_at);
 
   return (
-    <Layout display="flex" direction="column" alignItems="center">
+    <Layout
+      display="flex"
+      direction="column"
+      alignItems="center"
+      marginTop={25}
+    >
+      <Layout display="flex" justifyContent="left">
+        <Link href="/announcements" passHref>
+          <Text size={getRem(16)}>(( Powrót do tabeli ogłoszeń ))</Text>
+        </Link>
+      </Layout>
       <Layout
-        marginTop={25}
         display="flex"
         width="70%"
         minWidth="1000px"
@@ -93,14 +103,12 @@ export const Announcement = ({ data }: { data: AnnouncementModel }) => {
             </Text>
           </Layout>
         </Layout>
-
         <Layout display="flex" margin={[10, 25]} direction="column">
           <Text size={getRem(12)}>
             <b>Opis:</b>
           </Text>
           <Text size={getRem(12)}>{data.description}</Text>
         </Layout>
-
         <Layout
           display="flex"
           margin={[10, 25]}
