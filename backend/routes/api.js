@@ -16,6 +16,7 @@ router.delete("/people/:id", PeopleController.deletePerson);
 
 router.post("/auth", UserController.saveUser);
 router.post("/auth/login", UserController.getUser);
+router.post("/auth/updatePassword", UserController.updatePassword); // check, if it works - delete this comment
 
 router.get("/announcements", AnnouncementController.getAnnouncements);
 router.get("/announcements/:id", AnnouncementController.getAnnouncement);

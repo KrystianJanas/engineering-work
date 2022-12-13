@@ -68,6 +68,31 @@ class UserController {
       response.status(500).send();
     }
   }
+
+  async updatePassword(request, response) {
+    const data = request.body;
+
+    const user = await User.findOne({ _id: data.user_id });
+    if (user == null) {
+      return response
+        .status(404)
+        .send("Error: we can't find user. Please log out and log in again.");
+    }
+
+    try {
+      if (await bcrypt.compare(data.password, user.password)) {
+        const hashedNewPassword = await bcrypt.hash(data.newPassword, 10);
+        user.password = hashedNewPassword;
+
+        await user.save();
+        response.status(200).json(user);
+      } else {
+        response.status(404).send("Actually password is incorrect");
+      }
+    } catch {
+      response.status(500).send();
+    }
+  }
 }
 
 module.exports = new UserController();
