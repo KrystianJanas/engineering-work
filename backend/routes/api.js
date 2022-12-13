@@ -4,6 +4,7 @@ const router = express.Router();
 const PeopleController = require("../controllers/api/peopleController");
 const UserController = require("../controllers/api/userController");
 const AnnouncementController = require("../controllers/api/announcementController");
+const ConversationController = require("../controllers/api/conversationController");
 
 router.get("/people", PeopleController.getPeople);
 router.get("/people/:id", PeopleController.getPerson);
@@ -19,5 +20,13 @@ router.get("/announcements/:id", AnnouncementController.getAnnouncement);
 router.post("/announcements", AnnouncementController.saveAnnouncement);
 router.put("/announcements/:id", AnnouncementController.updateAnnouncement);
 router.delete("/announcements/:id", AnnouncementController.deleteAnnouncement);
+
+router.get(
+  "/conversations/from/:id",
+  ConversationController.getConversationsFrom
+);
+router.get("/conversations/to/:id", ConversationController.getConversationsTo);
+router.post("/conversations", ConversationController.saveConversation);
+router.delete("/conversations/:id", ConversationController.deleteConversation);
 
 module.exports = router;
