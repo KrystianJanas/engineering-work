@@ -18,6 +18,18 @@ class ConversationController {
     response.status(201).json(conversation);
   }
 
+  async getConversations(request, response) {
+    let conversations;
+
+    try {
+      conversations = await Conversation.find({});
+    } catch (error) {
+      response.status(500).json({ message: error.message });
+    }
+
+    return response.status(200).json(conversations);
+  }
+
   async getConversationsFrom(request, response) {
     let conversations;
     const id = request.params.id;

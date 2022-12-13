@@ -5,6 +5,7 @@ const PeopleController = require("../controllers/api/peopleController");
 const UserController = require("../controllers/api/userController");
 const AnnouncementController = require("../controllers/api/announcementController");
 const ConversationController = require("../controllers/api/conversationController");
+const MessageController = require("../controllers/api/messageController");
 
 router.get("/people", PeopleController.getPeople);
 router.get("/people/:id", PeopleController.getPerson);
@@ -26,7 +27,11 @@ router.get(
   ConversationController.getConversationsFrom
 );
 router.get("/conversations/to/:id", ConversationController.getConversationsTo);
+router.get("/conversations/", ConversationController.getConversations);
 router.post("/conversations", ConversationController.saveConversation);
 router.delete("/conversations/:id", ConversationController.deleteConversation);
+
+router.get("/messages/:id", MessageController.getMessages);
+router.post("/messages", MessageController.saveMessage);
 
 module.exports = router;
