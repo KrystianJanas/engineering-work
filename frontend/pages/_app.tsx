@@ -31,7 +31,7 @@ const CustomApp = ({ Component, pageProps }: AppProps) => {
 
   const { isLogged } = useContext(AuthContext);
 
-  console.log('isLogged:', isLogged);
+  // console.log('isLogged:', isLogged); // todo: console.log
 
   return (
     <QueryClientProvider client={queryClient}>

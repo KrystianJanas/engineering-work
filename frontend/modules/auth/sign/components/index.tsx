@@ -34,7 +34,7 @@ export const SignIn = ({ type }: SignTypes) => {
   const { saveTokens, isLogged } = useContext(AuthContext);
 
   useEffect(() => {
-    console.log(isLogged);
+    // console.log(isLogged); // todo: console.log
     if (!isLogged) {
       return;
     }

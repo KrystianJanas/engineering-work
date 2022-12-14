@@ -1,16 +1,17 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { FloatingLabel } from 'react-bootstrap';
 
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import Form from 'react-bootstrap/Form';
 
+import { getPage } from '~/api/get';
 import { Text } from '~/components/atoms/typography';
-import Spinner from '~/components/compounds/Spinner';
+import { SpinnerLoading } from '~/components/compounds/Spinner';
 import { Layout } from '~/components/molecules/layout';
+import { parseData, parseHour } from '~/hooks/useDateParser';
 import { getRem } from '~/styles/utils';
-
-import { MessageInitialState } from '../../messages.constants';
+import { MessageConversationType } from '~/types/messages.types';
 
 const StyledLayout = styled(Layout)`
   border: 2px solid rgba(240, 240, 240);
@@ -21,15 +22,29 @@ const StyledLayout = styled(Layout)`
   }
 `;
 
-export const Message = () => {
+export const Conversation = () => {
   const router = useRouter();
   const [messageFieldStatus, setMessageFieldStatus] = useState(false);
   const [messageValue, setMessageValue] = useState('');
 
-  if (router.isReady) {
-    const data = MessageInitialState;
+  const [data, setData] = useState<[]>();
+  const [isLoaded, setIsLoaded] = useState(true);
 
-    if (data) {
+  const getData = async () => {
+    setIsLoaded(false);
+    setData(await getPage('messages', router.query.id?.toString()));
+  };
+
+  console.log(data);
+
+  useMemo(() => {
+    if (router.isReady) {
+      getData().then(null);
+    }
+  }, [router]);
+
+  if (router.isReady) {
+    if (!isLoaded && data) {
       return (
         <Layout
           background="rgb(245,245,245,1)"
@@ -46,7 +61,7 @@ export const Message = () => {
               {router.query.message}
             </Text>
           </Layout>
-          {data.messages.map((message) => (
+          {data.map((message: MessageConversationType) => (
             <Layout
               width="100%"
               background="var(--background-white)"
@@ -54,20 +69,29 @@ export const Message = () => {
               padding={[10]}
               borderRadius="6px"
               boxShadow="0 0 16px rgba(0, 0, 0, 0.24)"
-              key={message.id}
+              key={message._id}
             >
               <Layout marginBottom={10}>
                 <Layout display="flex">
                   <Layout flex={1}>
-                    <Text size={getRem(14)}>
-                      Wiadomość z dnia <b>{message.date}</b>
-                      &nbsp; od <b>{message.from}</b>
+                    <Text size={getRem(14)} textAlign="center">
+                      Wiadomość od <b>{message.person.name}</b> z dnia&nbsp;
+                      <b>{parseData(message.created_at)}</b>, godzina&nbsp;
+                      <b>{parseHour(message.created_at)}</b>
                     </Text>
+                    <Layout
+                      marginLeft="auto"
+                      marginRight="auto"
+                      marginTop={3}
+                      marginBottom={3}
+                      width="100%"
+                      background="rgb(0,0,0)"
+                      height={1}
+                    />
                   </Layout>
-                  <Layout>#{message.id}</Layout>
                 </Layout>
               </Layout>
-              <Text size={getRem(18)}>{message.message}</Text>
+              <Text size={getRem(18)}>{message.content}</Text>
             </Layout>
           ))}
           <Layout
@@ -152,5 +176,5 @@ export const Message = () => {
       );
     }
   }
-  return <Spinner />;
+  return <SpinnerLoading />;
 };

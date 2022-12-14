@@ -1,13 +1,14 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import styled from '@emotion/styled';
 
+import { getPage } from '~/api/get';
 import { Text } from '~/components/atoms/typography';
-import { MessageCard } from '~/components/compounds/Message-Card';
+import { ConversationCard } from '~/components/compounds/Message-Card';
+import { SpinnerLoading } from '~/components/compounds/Spinner';
 import { Layout } from '~/components/molecules/layout';
+import { ConversationTypes } from '~/models/conversation.model';
 import { getRem } from '~/styles/utils';
-
-import { MessagesInitialState } from '../messages.constants';
 
 const StyledLayout = styled(Layout)<{
   checkedOption: string;
@@ -29,15 +30,36 @@ const StyledButton = styled.button`
   }
 `;
 
-export const Messages = () => {
-  const [optionMessage, setOptionMessage] = useState('send'); // true: send messages | false: received messages
+export const Conversations = () => {
+  const [optionMessage, setOptionMessage] = useState('send'); // true: send conversations | false: received conversations
+  const personId = '638a765c53adff6e06432323'; // TODO: change person id after authentication
+  // const personId = '638fb4c573eedbc3f53f214e';
 
   const changeOptionMessage = (option: string) => {
     setOptionMessage(option);
   };
 
-  return (
-    <Layout>
+  const [data, setData] = useState<[]>();
+  const [isLoaded, setIsLoaded] = useState(true);
+
+  const getData = async (restEndpoint: string) => {
+    setIsLoaded(false);
+    setData(await getPage('conversations', restEndpoint));
+  };
+
+  useMemo(() => {
+    if (optionMessage === 'send') {
+      getData(`from/${personId}`);
+    } else if (optionMessage === 'received') {
+      getData(`to/${personId}`);
+    }
+  }, [optionMessage]);
+
+  if (isLoaded || !data) {
+    return <SpinnerLoading />;
+  }
+  if (data) {
+    return (
       <Layout padding={[10]} marginLeft="auto" marginRight="auto" width="75%">
         {/* TOP SECTION */}
         <Layout
@@ -85,14 +107,22 @@ export const Messages = () => {
           </StyledButton>
         </Layout>
         {/* BOTTOM SECTION */}
-        {MessagesInitialState.map((message) => {
-          if (message.type === optionMessage) {
-            return <MessageCard key={message.id} message={message} />;
-          }
-          return null;
-        })}
+        {data.length > 0 ? (
+          data.map((conversation: ConversationTypes) => {
+            return (
+              <ConversationCard
+                key={conversation._id}
+                conversation={conversation}
+              />
+            );
+          })
+        ) : (
+          <Text textAlign="center">
+            Nie znaleziono żadnych wiadomości w tej sekcji.
+          </Text>
+        )}
       </Layout>
-    </Layout>
-  );
+    );
+  }
+  return null;
 };
-export default Messages;

@@ -16,3 +16,9 @@ export interface AnnouncementModel {
   created_at: string;
   updated_at: string;
 }
+
+export interface AnnouncementConversationsModel {
+  _id: string;
+  title: string;
+  images: string[];
+}

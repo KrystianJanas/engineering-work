@@ -1,8 +1,10 @@
 import styled from '@emotion/styled';
 import Link from 'next/link';
 
+import { Text } from '~/components/atoms/typography';
 import { Layout } from '~/components/molecules/layout';
-import { MessagesTypes } from '~/types/messages.types';
+import { useDateParser } from '~/hooks/useDateParser';
+import { ConversationTypes } from '~/models/conversation.model';
 
 const StyledLayout = styled(Layout)`
   &:hover {
@@ -14,14 +16,19 @@ const StyledImage = styled.img`
   border-radius: 10px;
 `;
 
-export const MessageCard = ({ message }: { message: MessagesTypes }) => {
+export const ConversationCard = ({
+  conversation,
+}: {
+  conversation: ConversationTypes;
+}) => {
+  const { date } = useDateParser(conversation.created_at);
   return (
     <Link
       href={{
-        pathname: `/messages/${message.id}`,
+        pathname: `/conversations/${conversation._id}`,
         query: {
-          message: message.announcement.title,
-        },
+          message: conversation.announcement.title,
+        }, // this is to edit - we want to get object announcement-name into conversations/:id
       }}
       passHref
     >
@@ -43,9 +50,9 @@ export const MessageCard = ({ message }: { message: MessagesTypes }) => {
           justifyContent="center"
           alignItems="center"
         >
-          {message.announcement.image_url ? (
+          {conversation.announcement.images[0] ? (
             <StyledImage
-              src={message.announcement.image_url}
+              src={conversation.announcement.images[0]}
               aria-hidden
               alt=""
             />
@@ -55,15 +62,20 @@ export const MessageCard = ({ message }: { message: MessagesTypes }) => {
         </Layout>
         <Layout display="flex" direction="column">
           <Layout display="flex" flex={1}>
-            {message.announcement.title}
+            {conversation.announcement.title}
           </Layout>
-          <Layout display="flex">
-            <b>Liczba wiadomości:</b>&nbsp;{message.messages} |
-            <b>&nbsp;Data rozpoczęcia konwersacji:</b>&nbsp;{message.date}
+          <Layout>
+            <Layout display="flex" gap="5px">
+              <Text weight={600}>Ogłoszeniodawca:</Text>
+              <Text>{conversation.person_to.name}</Text>
+            </Layout>
+            <Layout display="flex" gap="5px">
+              <Text weight={600}>Data rozpoczęcia konwersacji:</Text>
+              <Text>{date}</Text>
+            </Layout>
           </Layout>
         </Layout>
       </StyledLayout>
     </Link>
   );
 };
-export default MessageCard;

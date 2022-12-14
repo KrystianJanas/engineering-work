@@ -15,3 +15,7 @@ export interface PersonLoginIdModel {
   name: string;
   phone_number: number;
 }
+
+export interface PersonConversationsModel {
+  name: string;
+}

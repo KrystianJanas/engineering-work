@@ -1,3 +1,4 @@
+import { PersonConversationsModel } from '~/models/person.model';
 import { AnnouncementsTypes } from '~/types/announcements.types';
 import { PersonTypes } from '~/types/person.types';
 
@@ -22,4 +23,13 @@ export interface MessageType {
   messages_id: number;
   announcement_id: number;
   messages: Message[];
+}
+
+export interface MessageConversationType {
+  announcement: string;
+  content: string;
+  conversation: string;
+  created_at: string;
+  person: PersonConversationsModel;
+  _id: string;
 }

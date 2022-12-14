@@ -33,7 +33,7 @@ export const AuthContextProvider = ({
 
   const [tokens, setTokens] = useState<AuthTokens>(null);
   const isLogged = !!tokens;
-  console.log('auth: ', tokens);
+  // console.log('auth: ', tokens); // todo: console.log
 
   const saveTokens = (authTokens: AuthTokens) => {
     const { userId, personId, accessToken } = authTokens!;

@@ -10,6 +10,7 @@ module.exports = {
   ],
   plugins: ['unused-imports'],
   rules: {
+    'no-underscore-dangle': 'off',
     'no-console': 'off',
     'import/no-unresolved': 'off',
     'import/absolute-first': 'off',
