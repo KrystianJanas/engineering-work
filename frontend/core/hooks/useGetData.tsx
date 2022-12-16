@@ -1,22 +1,42 @@
 import { useEffect, useState } from 'react';
 
+import { useRouter } from 'next/router';
+
 import { getPage } from '~/api/get';
 
-export const useGetData = (
+export const useGetData = <FormType,>(
+  initialState: FormType,
   pageEndpoint: string,
   restEndpoint?: string,
   params?: any
 ) => {
-  const [data, setData] = useState({ data: [], isLoading: true });
+  const [updateState, setUpdateState] = useState(false);
+  const router = useRouter();
+  const [data, setData] = useState<{ data: FormType; isLoading: boolean }>({
+    data: initialState,
+    isLoading: true,
+  });
 
   const fetchData = async () => {
     const result = await getPage(pageEndpoint, restEndpoint, params);
     setData({ data: result, isLoading: false });
+    console.log('useGetData()');
   };
 
+  // eslint-disable-next-line consistent-return
   useEffect(() => {
-    fetchData();
-  }, []);
+    if (updateState) {
+      return setUpdateState(false);
+    }
+    if (router.isReady) {
+      fetchData();
+    }
+  }, [router.isReady, updateState]);
 
-  return { data: data.data, isLoading: data.isLoading };
+  return {
+    data: data.data,
+    isLoading: data.isLoading,
+    updateState,
+    setUpdateState,
+  };
 };

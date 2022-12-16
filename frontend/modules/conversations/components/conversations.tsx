@@ -2,12 +2,15 @@ import { useMemo, useState } from 'react';
 
 import styled from '@emotion/styled';
 
-import { getPage } from '~/api/get';
 import { Text } from '~/components/atoms/typography';
 import { ConversationCard } from '~/components/compounds/Message-Card';
 import { SpinnerLoading } from '~/components/compounds/Spinner';
 import { Layout } from '~/components/molecules/layout';
-import { ConversationTypes } from '~/models/conversation.model';
+import { useGetData } from '~/hooks/useGetData';
+import {
+  ConversationTypes,
+  ConversationTypesInitialState,
+} from '~/models/conversation.model';
 import { getRem } from '~/styles/utils';
 
 const StyledLayout = styled(Layout)<{
@@ -33,29 +36,31 @@ const StyledButton = styled.button`
 export const Conversations = () => {
   const [optionMessage, setOptionMessage] = useState('send'); // true: send conversations | false: received conversations
   const personId = '638a765c53adff6e06432323'; // TODO: change person id after authentication
-  // const personId = '638fb4c573eedbc3f53f214e';
+  // const personId2 = '638fb4c573eedbc3f53f214e'; // TODO: change person id after authentication
 
   const changeOptionMessage = (option: string) => {
     setOptionMessage(option);
   };
 
-  const [data, setData] = useState<[]>();
-  const [isLoaded, setIsLoaded] = useState(true);
+  const [restEndpoint, setRestEndpoint] = useState(`from/${personId}`);
 
-  const getData = async (restEndpoint: string) => {
-    setIsLoaded(false);
-    setData(await getPage('conversations', restEndpoint));
-  };
+  const { data, isLoading, setUpdateState } = useGetData<ConversationTypes[]>(
+    [ConversationTypesInitialState],
+    'conversations',
+    restEndpoint
+  );
 
   useMemo(() => {
     if (optionMessage === 'send') {
-      getData(`from/${personId}`);
+      setRestEndpoint(`from/${personId}`);
+      setUpdateState(true);
     } else if (optionMessage === 'received') {
-      getData(`to/${personId}`);
+      setRestEndpoint(`to/${personId}`);
+      setUpdateState(true);
     }
   }, [optionMessage]);
 
-  if (isLoaded || !data) {
+  if (isLoading) {
     return <SpinnerLoading />;
   }
   if (data) {

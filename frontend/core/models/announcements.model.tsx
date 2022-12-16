@@ -16,3 +16,22 @@ export interface AnnouncementsModel {
 
   status?: boolean;
 }
+
+export const AnnouncementsModelInitialState: AnnouncementsModel = {
+  _id: '',
+  person: '',
+  title: '',
+  description: '',
+  location: '',
+  state: '',
+  size: 0,
+  rooms: 0,
+  fee: 0,
+  rent: 0,
+  images: [],
+  views: 0,
+  created_at: '',
+  updated_at: '',
+
+  status: false,
+};

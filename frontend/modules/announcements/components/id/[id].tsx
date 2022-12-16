@@ -3,13 +3,19 @@ import { FloatingLabel } from 'react-bootstrap';
 
 import styled from '@emotion/styled';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import Form from 'react-bootstrap/Form';
 
 import { default_avatar_url } from '~/GLOBAL.constants';
 import { Text } from '~/components/atoms/typography';
+import SpinnerLoading from '~/components/compounds/Spinner';
 import { Layout } from '~/components/molecules/layout';
 import { useDateParser } from '~/hooks/useDateParser';
-import { AnnouncementModel } from '~/models/announcement.model';
+import { useGetData } from '~/hooks/useGetData';
+import {
+  AnnouncementModel,
+  AnnouncementModelInitialState,
+} from '~/models/announcement.model';
 import { getRem } from '~/styles/utils';
 
 const StyledLayout = styled(Layout)`
@@ -21,11 +27,21 @@ const StyledLayout = styled(Layout)`
   }
 `;
 
-export const Announcement = ({ data }: { data: AnnouncementModel }) => {
+export const Announcement = () => {
+  const router = useRouter();
   const [contactState, setContactState] = useState(false);
   const [messageValue, setMessageValue] = useState('');
 
-  const { date } = useDateParser(data.created_at);
+  const { data, isLoading } = useGetData<AnnouncementModel>(
+    AnnouncementModelInitialState,
+    'announcements',
+    `${router.query.id}`
+  );
+  const { date } = useDateParser(data?.created_at || '');
+
+  if (isLoading) {
+    return <SpinnerLoading />;
+  }
 
   return (
     <Layout

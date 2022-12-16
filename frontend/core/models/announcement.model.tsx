@@ -1,4 +1,7 @@
-import { PersonLoginIdModel } from '~/models/person.model';
+import {
+  PersonLoginIdModel,
+  PersonLoginIdModelInitialState,
+} from '~/models/person.model';
 
 export interface AnnouncementModel {
   _id: string;
@@ -22,3 +25,37 @@ export interface AnnouncementConversationsModel {
   title: string;
   images: string[];
 }
+
+export interface AnnouncementTitleModel {
+  title: string;
+}
+
+// ------- INITIAL STATES
+
+export const AnnouncementConversationsModelInitialState: AnnouncementConversationsModel =
+  {
+    _id: '',
+    title: '',
+    images: [],
+  };
+
+export const AnnouncementModelInitialState: AnnouncementModel = {
+  _id: '',
+  person: PersonLoginIdModelInitialState,
+  title: '',
+  description: '',
+  location: '',
+  state: '',
+  size: 0,
+  rooms: 0,
+  fee: 0,
+  rent: 0,
+  images: [],
+  views: 0,
+  created_at: '',
+  updated_at: '',
+};
+
+export const AnnouncementTitleModelInitialState = {
+  title: '',
+};

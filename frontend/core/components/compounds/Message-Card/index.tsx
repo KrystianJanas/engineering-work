@@ -26,9 +26,6 @@ export const ConversationCard = ({
     <Link
       href={{
         pathname: `/conversations/${conversation._id}`,
-        query: {
-          message: conversation.announcement.title,
-        }, // this is to edit - we want to get object announcement-name into conversations/:id
       }}
       passHref
     >
