@@ -6,7 +6,7 @@ import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
-import AuthContext, { AuthContextProvider } from '~/hooks/useContextProvider';
+import { AuthContextProvider } from '~/hooks/useContextProvider';
 import { GlobalStyles } from '~/styles';
 
 import { Header } from '../modules/header/components/header';
@@ -15,7 +15,6 @@ import { useActiveNavLink } from '../modules/header/hooks/useActiveNavLink';
 // eslint-disable-next-line import/order
 import { Toaster } from 'react-hot-toast';
 // eslint-disable-next-line import/order
-import { useContext } from 'react';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -29,7 +28,7 @@ const CustomApp = ({ Component, pageProps }: AppProps) => {
   const { pathname } = useRouter();
   const { pageTitle } = useActiveNavLink(pathname);
 
-  const { isLogged } = useContext(AuthContext);
+  // const { isLogged } = useContext(AuthContext);
 
   // console.log('isLogged:', isLogged); // todo: console.log
 
