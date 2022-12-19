@@ -1,13 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Image } from 'react-bootstrap';
+import toast from 'react-hot-toast';
 
 import styled from '@emotion/styled';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import Link from 'next/link';
 
 import { default_avatar_url } from '~/GLOBAL.constants';
+import { deleteQuery } from '~/api/delete';
+import { postQuery } from '~/api/post';
 import { Text } from '~/components/atoms/typography';
 import { Layout } from '~/components/molecules/layout';
-import { useDateParser } from '~/hooks/useDateParser';
+import { parseData, parseHour } from '~/hooks/useDateParser';
 import { AnnouncementsModel } from '~/models/announcements.model';
 import { getRem } from '~/styles/utils';
 
@@ -21,22 +26,57 @@ const StyledImage = styled(Image)`
   border-radius: 10px;
 `;
 
+const StyledFavoriteIcon = styled(FavoriteIcon)`
+  color: red;
+
+  &:hover {
+    color: rgba(255, 0, 0, 0.75);
+  }
+`;
+
+const StyledFavoriteBorderIcon = styled(FavoriteBorderIcon)`
+  &:hover {
+    color: red;
+  }
+`;
+
 export const AnnouncementCard = ({
-  announcement: {
-    _id,
-    created_at,
-    fee,
-    rent,
-    images,
-    location,
-    size,
-    state,
-    title,
-  },
+  announcement,
+  typeView,
+  rest,
 }: {
   announcement: AnnouncementsModel;
+  typeView?: string;
+  rest?: any;
 }) => {
-  const { date } = useDateParser(created_at || '');
+  const [del, setDel] = useState(false);
+
+  const date = `dodano ${parseData(
+    announcement.created_at || ''
+  )} o godzinie ${parseHour(announcement.created_at || '')}`;
+
+  const personId = '638fb4c573eedbc3f53f214e'; // todo: add user/person id CHANGE IT
+
+  const addToObserved = async (id: string) => {
+    const result = await postQuery('observed', {
+      announcement: id,
+      person: personId,
+    });
+    if (result) {
+      toast.success('Pomyślnie dodano ogłoszenie do ulubionych.');
+    }
+  };
+
+  const removeFromObserved = async (id: string) => {
+    if (!del) {
+      setDel(!del);
+      const result = await deleteQuery('observed', id);
+      if (result) {
+        toast.success('Pomyślnie usunięto ogłoszenie z ulubionych.');
+        window.location.reload();
+      }
+    }
+  };
 
   return (
     <Layout
@@ -51,9 +91,9 @@ export const AnnouncementCard = ({
       minWidth="1175px"
     >
       <Link
-        key={_id}
+        key={announcement._id}
         href={{
-          pathname: `/announcements/${_id}`,
+          pathname: `/announcements/${announcement._id}`,
         }}
         passHref
       >
@@ -66,9 +106,9 @@ export const AnnouncementCard = ({
             boxShadow="0 0 3px #ccc"
             display="flex"
           >
-            {images ? (
+            {announcement.images ? (
               <StyledImage
-                src={images[0] || default_avatar_url}
+                src={announcement.images[0] || default_avatar_url}
                 aria-hidden
                 alt=""
               />
@@ -80,26 +120,26 @@ export const AnnouncementCard = ({
           <Layout padding={[10]} display="flex" flex={1} direction="column">
             <Layout display="flex" justifyContent="left">
               <Text color="black" size={getRem(20)}>
-                {title}
+                {announcement.title}
               </Text>
             </Layout>
-            {state && (
+            {announcement.state && (
               <Layout display="flex">
                 <Text color="black" size={getRem(14)}>
-                  # {state}
+                  # {announcement.state}
                 </Text>
               </Layout>
             )}
-            {size && (
+            {announcement.size && (
               <Layout display="flex" flex={1}>
                 <Text color="black" size={getRem(14)}>
-                  # {size} m^2
+                  # {announcement.size} m^2
                 </Text>
               </Layout>
             )}
-            {location && date && (
+            {announcement.location && date && (
               <Text color="black" size={getRem(16)}>
-                {location} - {date}
+                {announcement.location} - {date}
               </Text>
             )}
           </Layout>
@@ -109,23 +149,28 @@ export const AnnouncementCard = ({
         <Text size={getRem(16)}>
           Odstępne:
           <br />
-          {fee.toFixed(2)} PLN / miesiąc
+          {announcement.fee.toFixed(2)} PLN / miesiąc
         </Text>
         <Text flex={1} size={getRem(16)}>
           Czynsz:
           <br />
-          {rent.toFixed(2)} PLN / miesiąc
+          {announcement.rent.toFixed(2)} PLN / miesiąc
         </Text>
         <Layout display="flex" justifyContent="right">
-          {/* TODO: new possibility to new offert to observed */}
-          <button
-            type="submit"
-            onClick={() =>
-              console.log('add to observed offerts announcement id ', _id)
-            }
-          >
-            <Image src="/heart.png" alt="heart" width={24} height={24} />
-          </button>
+          {typeView ? (
+            <Layout>
+              <StyledFavoriteIcon
+                onClick={() => removeFromObserved(rest._id)}
+              />
+            </Layout>
+          ) : (
+            <button
+              type="submit"
+              onClick={() => addToObserved(announcement._id)}
+            >
+              <StyledFavoriteBorderIcon />
+            </button>
+          )}
         </Layout>
       </Layout>
     </Layout>

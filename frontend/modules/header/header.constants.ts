@@ -1,7 +1,7 @@
 export const PagesNav = [
   { href: '/announcements', pageName: 'Ogłoszenia' },
   { href: '/conversations', pageName: 'Wiadomości' },
-  { href: '/watched', pageName: 'Obserwowane' },
+  { href: '/observed', pageName: 'Obserwowane' },
 ];
 
 export const pageTitles = [
@@ -13,7 +13,7 @@ export const pageTitles = [
 
   { href: '/conversations', title: 'Serwis ogłoszeń - Wiadomości' },
 
-  { href: '/watched', title: 'Serwis ogłoszeń - Obserwowane' },
+  { href: '/observed', title: 'Serwis ogłoszeń - Obserwowane' },
 
   { href: '/account', title: 'Serwis ogłoszeń - Konto' },
 

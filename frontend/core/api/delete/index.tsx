@@ -2,10 +2,10 @@ import toast from 'react-hot-toast';
 
 import axios from 'axios';
 
-export const postQuery = async (pageEndpoint: string, data: any) => {
+export const deleteQuery = async (pageEndpoint: string, id: string) => {
   try {
     return await axios
-      .post(`http://localhost:3001/api/${pageEndpoint}`, data)
+      .delete(`http://localhost:3001/api/${pageEndpoint}/${id}`)
       .catch((e) => {
         toast.error(e.response.data?.message);
       });

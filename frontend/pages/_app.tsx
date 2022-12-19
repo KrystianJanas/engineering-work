@@ -1,6 +1,7 @@
 import { QueryClient, QueryClientProvider } from 'react-query';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import '@mui/icons-material';
 
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
