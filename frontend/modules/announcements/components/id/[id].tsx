@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { FloatingLabel } from 'react-bootstrap';
+import toast from 'react-hot-toast';
 
 import styled from '@emotion/styled';
 import Link from 'next/link';
@@ -7,8 +8,10 @@ import { useRouter } from 'next/router';
 import Form from 'react-bootstrap/Form';
 
 import { default_avatar_url } from '~/GLOBAL.constants';
+import { getData } from '~/api/get';
+import { postQuery } from '~/api/post';
 import { Text } from '~/components/atoms/typography';
-import SpinnerLoading from '~/components/compounds/Spinner';
+import { SpinnerLoading } from '~/components/compounds/Spinner';
 import { Layout } from '~/components/molecules/layout';
 import { useDateParser } from '~/hooks/useDateParser';
 import { useGetData } from '~/hooks/useGetData';
@@ -42,6 +45,44 @@ export const Announcement = () => {
   if (isLoading) {
     return <SpinnerLoading />;
   }
+  // 638fb4c573eedbc3f53f214e
+  // 638a765c53adff6e06432323
+  const personId = '638a765c53adff6e06432323'; // todo: add user/person id CHANGE IT
+  const addMessage = async () => {
+    if (messageValue.trim().length < 4) {
+      return toast.error('Wiadomość powinna być dłuższa niż 4 znaki.');
+    }
+
+    const result = await getData(
+      'conversations',
+      `checkExistFrom/${data._id}/${personId}`
+    );
+    if (result) {
+      // konwersacja znaleziona, wiec wysylamy tylko wiadomosc
+      const message = await postQuery('messages', {
+        conversation: result[0]._id,
+        announcement: result[0].announcement,
+        person: personId,
+        content: messageValue,
+      });
+      if (message) {
+        toast.success('Wiadomość została wysłana.');
+        setMessageValue('');
+        setContactState(false);
+      }
+    } else {
+      // konwersacji nie ma -> tworzymy konwersacje, a nastepnie wiadomosc...
+      const conversation = await postQuery('conversations', {
+        announcement: data._id,
+        person_from: personId,
+        person_to: data.person._id,
+      });
+      if (conversation) {
+        addMessage();
+      }
+    }
+    return null;
+  };
 
   return (
     <Layout
@@ -179,10 +220,7 @@ export const Announcement = () => {
                 background="rgb(240, 240, 240)"
                 padding={[5, 15]}
                 width={175}
-                onClick={() => {
-                  console.log(messageValue);
-                  // todo: send to api message
-                }}
+                onClick={addMessage}
               >
                 <Text size={getRem(16)}>Wyślij wiadomość</Text>
               </StyledLayout>

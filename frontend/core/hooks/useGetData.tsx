@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { useRouter } from 'next/router';
 
-import { getPage } from '~/api/get';
+import { getData } from '~/api/get';
 
 export const useGetData = <FormType,>(
   initialState: FormType,
@@ -18,7 +18,7 @@ export const useGetData = <FormType,>(
   });
 
   const fetchData = async () => {
-    const result = await getPage(pageEndpoint, restEndpoint, params);
+    const result = await getData(pageEndpoint, restEndpoint, params);
     setData({ data: result, isLoading: false });
     console.log('useGetData()');
   };

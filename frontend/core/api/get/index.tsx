@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const getPage = async (
+export const getData = async (
   pageEndpoint: string,
   restEndpoint?: string,
   params?: any

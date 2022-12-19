@@ -51,10 +51,6 @@ export const AnnouncementCard = ({
 }) => {
   const [del, setDel] = useState(false);
 
-  const date = `dodano ${parseData(
-    announcement.created_at || ''
-  )} o godzinie ${parseHour(announcement.created_at || '')}`;
-
   const personId = '638fb4c573eedbc3f53f214e'; // todo: add user/person id CHANGE IT
 
   const addToObserved = async (id: string) => {
@@ -77,6 +73,10 @@ export const AnnouncementCard = ({
       }
     }
   };
+
+  const date = `dodano ${parseData(
+    announcement.created_at || ''
+  )} o godzinie ${parseHour(announcement.created_at || '')}`;
 
   return (
     <Layout

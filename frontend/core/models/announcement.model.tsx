@@ -28,6 +28,7 @@ export interface AnnouncementConversationsModel {
 
 export interface AnnouncementTitleModel {
   title: string;
+  _id?: string;
 }
 
 // ------- INITIAL STATES
