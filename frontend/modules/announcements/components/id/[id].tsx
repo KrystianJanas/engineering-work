@@ -7,10 +7,10 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Form from 'react-bootstrap/Form';
 
-import { default_avatar_url } from '~/GLOBAL.constants';
 import { getData } from '~/api/get';
 import { postQuery } from '~/api/post';
 import { Text } from '~/components/atoms/typography';
+import { Images } from '~/components/compounds/Images';
 import { SpinnerLoading } from '~/components/compounds/Spinner';
 import { Layout } from '~/components/molecules/layout';
 import { useDateParser } from '~/hooks/useDateParser';
@@ -110,34 +110,10 @@ export const Announcement = () => {
             {data.title}
           </Text>
         </Layout>
-        {data.images ? (
-          <Layout
-            display="flex"
-            marginLeft="auto"
-            marginRight="auto"
-            marginTop="5"
-            maxWidth="510px"
-          >
-            <img
-              src={data.images[0] || default_avatar_url}
-              aria-hidden
-              alt=""
-            />
-          </Layout>
-        ) : (
-          <Layout
-            display="flex"
-            borderRadius="8px"
-            background="rgb(230,230,230,0.5)"
-            marginLeft="auto"
-            marginRight="auto"
-            width="95%"
-            margin={[10]}
-            justifyContent="center"
-          >
-            <Text size={getRem(16)}>BRAK ZDJĘCIA</Text>
-          </Layout>
-        )}
+
+        <Layout marginLeft="auto" marginRight="auto" marginTop="5">
+          <Images images={data.images} maxWidth="510px" />
+        </Layout>
         <Layout display="flex" margin={[10, 25]} direction="column">
           <Text size={getRem(12)}>
             <b>Liczba pokoi:</b> {data.rooms}

@@ -1,4 +1,5 @@
-import { Pagination } from '~/components/compounds/Pagination';
+import { testImageUrl } from '~/GLOBAL.constants';
+import { Images } from '~/components/compounds/Images';
 import { Layout } from '~/components/molecules/layout';
 import { usePagination } from '~/hooks/usePagination';
 
@@ -13,11 +14,16 @@ export const TestPage = () => {
       margin={[50]}
       gap="25px"
     >
-      <Pagination
-        maxPage={maxPage}
-        page={page}
-        onPreviousPage={onPreviousPage}
-        onNextPage={onNextPage}
+      {/* <Pagination */}
+      {/*  maxPage={maxPage} */}
+      {/*  page={page} */}
+      {/*  onPreviousPage={onPreviousPage} */}
+      {/*  onNextPage={onNextPage} */}
+      {/* /> */}
+
+      <Images
+        images={[testImageUrl, 'testImageUrl', testImageUrl, 'testImageUrl']}
+        maxWidth="450px"
       />
     </Layout>
   );

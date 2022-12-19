@@ -1,3 +1,11 @@
+import styled from '@emotion/styled';
+
+const StyledImg = styled.img`
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
 export const ArrowRight = ({
   width,
   height,
@@ -6,7 +14,7 @@ export const ArrowRight = ({
   height?: number;
 }) => {
   return (
-    <img
+    <StyledImg
       src="arrow-right.png"
       width={width && width}
       height={height && height}
