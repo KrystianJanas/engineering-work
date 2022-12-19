@@ -18,6 +18,10 @@ export const AnnouncementsNewPage = () => {
     if (result && result.status === 201) {
       await router.push('/announcements');
       toast.success('Pozytywnie stworzono nowe ogłoszenie.');
+    } else {
+      toast.error(
+        'Coś poszło nie tak... Spróbuj przeładować stronę i dodać dane ponownie.'
+      );
     }
   };
 
@@ -26,10 +30,12 @@ export const AnnouncementsNewPage = () => {
       announcement={AnnouncementsInitialState}
       onSubmit={({ _id, person, images, ...rest }) => {
         const dataToApi: any = {
-          person: '638a765c53adff6e06432323', // TODO: GET person/user ID FROM DATABASE
+          person: '638a765c53adff6e06432323', // TODO: person_id
           images: [testImageUrl, testImageUrl], // TODO: convert images array to string array list
           ...rest,
         };
+
+        console.log(dataToApi);
 
         const { error } = AnnouncementsValidation(dataToApi);
         if (error) {

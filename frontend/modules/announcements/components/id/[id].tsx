@@ -116,6 +116,7 @@ export const Announcement = () => {
             marginLeft="auto"
             marginRight="auto"
             marginTop="5"
+            maxWidth="510px"
           >
             <img
               src={data.images[0] || default_avatar_url}
