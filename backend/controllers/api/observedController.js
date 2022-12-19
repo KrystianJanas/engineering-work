@@ -2,19 +2,30 @@ const Observed = require("../../db/models/observed");
 
 class ObservedController {
   async saveObserved(request, response) {
+    let observed;
+
     const data = request.body;
 
-    let observed;
     try {
-      observed = new Observed({
+      observed = await Observed.find({
         announcement: data.announcement,
         person: data.person,
       });
-      await observed.save();
+      if (observed && observed.length > 0) {
+        return response
+          .status(422)
+          .json({ message: "Ogłoszenie jest juz dodane do ulubionych." });
+      } else {
+        observed = new Observed({
+          announcement: data.announcement,
+          person: data.person,
+        });
+        await observed.save();
+        response.status(201).json(observed);
+      }
     } catch (error) {
-      return response.status(422).json({ message: error.message });
+      return response.status(422).json({ message: "Wystąpił błąd." });
     }
-    response.status(201).json(observed);
   }
 
   async getObserved(request, response) {
@@ -23,7 +34,7 @@ class ObservedController {
 
     try {
       if (id) {
-        observed = await Observed.find({ person: id });
+        observed = await Observed.find({ person: id }).populate("announcement");
       } else {
         observed = await Observed.find({});
       }
@@ -45,7 +56,7 @@ class ObservedController {
       } else {
         return response
           .status(422)
-          .json({ message: "Observed announcement not found" });
+          .json({ message: "Nie znaleziono obserwowanego ogłoszenia." });
       }
     } catch (error) {
       return response.status(422).json({ message: error.message });

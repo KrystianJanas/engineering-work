@@ -34,7 +34,10 @@ class ConversationController {
     let conversations;
     const id = request.params.id;
     try {
-      conversations = await Conversation.find({ person_from: id });
+      conversations = await Conversation.find({ person_from: id })
+        .populate("person_from", ["name"])
+        .populate("person_to", ["name"])
+        .populate("announcement", ["title", "images"]);
     } catch (error) {
       response.status(500).json({ message: error.message });
     }
@@ -46,7 +49,10 @@ class ConversationController {
     let conversations;
     const id = request.params.id;
     try {
-      conversations = await Conversation.find({ person_to: id });
+      conversations = await Conversation.find({ person_to: id })
+        .populate("person_from", ["name"])
+        .populate("person_to", ["name"])
+        .populate("announcement", ["title", "images"]);
     } catch (error) {
       response.status(500).json({ message: error.message });
     }

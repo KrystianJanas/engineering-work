@@ -24,7 +24,9 @@ class MessageController {
     const id = request.params.id;
 
     try {
-      messages = await Message.find({ conversation: id });
+      messages = await Message.find({ conversation: id })
+        .populate("person", ["name"])
+        .populate("announcement", ["title"]);
     } catch (error) {
       response.status(500).json({ message: error.message });
     }
