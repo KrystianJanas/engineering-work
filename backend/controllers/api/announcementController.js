@@ -45,7 +45,7 @@ class AnnouncementController {
 
     response.status(200).json(announcement);
 
-    announcement.views = announcement.views + 1; // make it only max 1 view per 1 visit on page.... ?? FE-SIDE
+    // announcement.views = announcement.views + 1; // make it only max 1 view per 1 visit on page.... ?? FE-SIDE
     await announcement.save();
   }
 

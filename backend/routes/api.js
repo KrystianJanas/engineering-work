@@ -29,6 +29,10 @@ router.get(
   ConversationController.getConversationsFrom
 );
 router.get("/conversations/to/:id", ConversationController.getConversationsTo);
+router.get(
+  "/conversations/checkExistFrom/:announcement_id/:person_from",
+  ConversationController.getConversationsCheckExistFrom
+);
 router.get("/conversations/", ConversationController.getConversations);
 router.post("/conversations", ConversationController.saveConversation);
 router.delete("/conversations/:id", ConversationController.deleteConversation);

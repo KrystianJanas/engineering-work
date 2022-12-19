@@ -45,6 +45,26 @@ class ConversationController {
     return response.status(200).json(conversations);
   }
 
+  async getConversationsCheckExistFrom(request, response) {
+    let conversations;
+    const body = request.params;
+    try {
+      conversations = await Conversation.find({
+        announcement: body.announcement_id,
+        person_from: body.person_from,
+      });
+      if (conversations.length === 0) {
+        return response
+          .status(422)
+          .json({ message: "Nie znaleziono rozpoczętej konwersacji." });
+      }
+    } catch (error) {
+      response.status(500).json({ message: error.message });
+    }
+
+    return response.status(200).json(conversations);
+  }
+
   async getConversationsTo(request, response) {
     let conversations;
     const id = request.params.id;
