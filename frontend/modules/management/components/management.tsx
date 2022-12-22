@@ -5,6 +5,7 @@ import { options } from '~/components/compounds/Left-Sidebar/left-sidebar.consta
 import { SpinnerLoading } from '~/components/compounds/Spinner';
 import { Layout } from '~/components/molecules/layout';
 
+import { YourAnnouncements } from '../../announcements/your-announcements';
 import { ManagementAnnouncements } from '../../management-announcements/announcements/components/announcements';
 
 export const Management = () => {
@@ -46,6 +47,9 @@ export const Management = () => {
         height="100%"
         padding={[40]}
       >
+        {getSelectedComponent() === 'GetYourAnnouncements' && (
+          <YourAnnouncements />
+        )}
         {getSelectedComponent() === 'ManagementAnnouncements' && (
           <ManagementAnnouncements changeNumber={changeNumber} />
         )}

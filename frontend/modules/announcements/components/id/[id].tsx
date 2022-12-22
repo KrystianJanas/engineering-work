@@ -13,7 +13,7 @@ import { Text } from '~/components/atoms/typography';
 import { Images } from '~/components/compounds/Images';
 import { SpinnerLoading } from '~/components/compounds/Spinner';
 import { Layout } from '~/components/molecules/layout';
-import { useDateParser } from '~/hooks/useDateParser';
+import { parseData, parseHour, useDateParser } from '~/hooks/useDateParser';
 import { useGetData } from '~/hooks/useGetData';
 import {
   AnnouncementModel,
@@ -150,7 +150,8 @@ export const Announcement = () => {
           marginLeft="auto"
         >
           <Text color="rgb(100, 100, 100)" size={getRem(11)}>
-            <b>Ogłoszenie dodane:</b> {date}
+            <b>Ogłoszenie dodane:</b> {parseData(data.created_at)} -&nbsp;
+            {parseHour(data.created_at)}
           </Text>
           <Text color="rgb(100, 100, 100)" size={getRem(11)}>
             <b>Liczba wyświetleń ogłoszenia:</b> {data.views}

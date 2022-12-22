@@ -1,5 +1,5 @@
-import { testImageUrl } from '~/GLOBAL.constants';
-import { Images } from '~/components/compounds/Images';
+import React from 'react';
+
 import { Layout } from '~/components/molecules/layout';
 import { usePagination } from '~/hooks/usePagination';
 
@@ -21,10 +21,21 @@ export const TestPage = () => {
       {/*  onNextPage={onNextPage} */}
       {/* /> */}
 
-      <Images
-        images={[testImageUrl, 'testImageUrl', testImageUrl, 'testImageUrl']}
-        maxWidth="450px"
-      />
+      {/* <Images */}
+      {/*  images={[testImageUrl, 'testImageUrl', testImageUrl, 'testImageUrl']} */}
+      {/*  maxWidth="450px" */}
+      {/* /> */}
+
+      {/* <ModalComponent */}
+      {/*  title="Usuwanie ogłoszenia" */}
+      {/*  description="Czy na pewno chcesz usunąć ogłoszenie: testowe ogloszenie nr 2?" */}
+      {/*  onHide={() => console.log('cofaj')} */}
+      {/*  onConfirm={() => console.log('potwierdzenie')} */}
+      {/*  cancelButton */}
+      {/*  cancelText="Anuluj" */}
+      {/*  confirmButton */}
+      {/*  confirmText="Usuń" */}
+      {/* /> */}
     </Layout>
   );
 };

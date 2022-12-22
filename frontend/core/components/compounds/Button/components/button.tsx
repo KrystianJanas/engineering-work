@@ -8,10 +8,11 @@ import { getRem } from '~/styles/utils';
 const StyledLayout = styled(Layout)`
   &:hover {
     cursor: pointer;
+    box-shadow: 0 0 8px #ccc;
   }
 `;
 
-export const Button = ({ text, onSubmit }: ButtonTypes) => {
+export const Button = ({ text, onSubmit, width }: ButtonTypes) => {
   return (
     <StyledLayout
       background="var(--background-light-blue)"
@@ -21,6 +22,7 @@ export const Button = ({ text, onSubmit }: ButtonTypes) => {
       display="flex"
       justifyContent="center"
       alignItems="center"
+      width={width && width}
     >
       <Text
         weight={700}

@@ -58,7 +58,7 @@ export const mixinDisplay = (props: LayoutDisplayProps): SerializedStyles => {
 
 export const mixinPosition = (props: LayoutPositionProps): SerializedStyles => {
   return css`
-    display: ${props.position ? `${props.position}` : undefined};
+    position: ${props.position ? `${props.position}` : undefined};
     top: ${props.top ? `${props.top}px` : undefined};
     right: ${props.right ? `${props.right}px` : undefined};
     bottom: ${props.bottom ? `${props.bottom}px` : undefined};

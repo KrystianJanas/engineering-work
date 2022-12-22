@@ -1,9 +1,15 @@
 export const options = {
   1: [
     {
+      name: 'Twoje ogłoszenia',
+      placeholder: 'Wybierz ogłoszenie',
+      href: '1',
+      component: 'GetYourAnnouncements',
+    },
+    {
       name: 'Nieruchomości',
       placeholder: 'Wybierz nieruchomość',
-      href: '1',
+      href: '2',
       component: 'ManagementAnnouncements',
     },
   ],

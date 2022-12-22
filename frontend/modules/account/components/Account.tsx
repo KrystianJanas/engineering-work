@@ -126,7 +126,7 @@ export const Account = () => {
         <Layout display="flex">
           <Button
             text="Zmień hasło"
-            onSubmit={() => console.log('zmień hasło!')}
+            onSubmit={() => console.log('zmień hasło!')} // todo: add possibility to change password
           />
         </Layout>
       </DropdownWindow>

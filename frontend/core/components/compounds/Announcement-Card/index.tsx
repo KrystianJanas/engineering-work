@@ -3,6 +3,8 @@ import { Image } from 'react-bootstrap';
 import toast from 'react-hot-toast';
 
 import styled from '@emotion/styled';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import Link from 'next/link';
@@ -11,6 +13,8 @@ import { default_avatar_url } from '~/GLOBAL.constants';
 import { deleteQuery } from '~/api/delete';
 import { postQuery } from '~/api/post';
 import { Text } from '~/components/atoms/typography';
+import { ModalComponent } from '~/components/compounds/ModalComponent';
+import { useModalComponent } from '~/components/compounds/ModalComponent/useModalComponent';
 import { Layout } from '~/components/molecules/layout';
 import { parseData, parseHour } from '~/hooks/useDateParser';
 import { AnnouncementsModel } from '~/models/announcements.model';
@@ -40,16 +44,45 @@ const StyledFavoriteBorderIcon = styled(FavoriteBorderIcon)`
   }
 `;
 
+const StyledEditIcon = styled(EditIcon)`
+  color: rgba(0, 0, 0, 0.5);
+
+  &:hover {
+    color: rgba(0, 0, 0, 1);
+    cursor: pointer;
+  }
+`;
+
+const StyledDeleteIcon = styled(DeleteIcon)`
+  color: rgba(0, 0, 0, 0.5);
+
+  &:hover {
+    color: rgba(0, 0, 0, 1);
+    cursor: pointer;
+  }
+`;
+
 export const AnnouncementCard = ({
   announcement,
   typeView,
   rest,
+  edit,
+  noObserved,
+  minWidth,
+  width,
 }: {
   announcement: AnnouncementsModel;
   typeView?: string;
   rest?: any;
+  edit?: boolean;
+  noObserved?: boolean;
+  minWidth?: string;
+  width?: string;
 }) => {
   const [del, setDel] = useState(false);
+
+  const { modalActive, setModalActive, modalData, setModalData } =
+    useModalComponent();
 
   const personId = '638fb4c573eedbc3f53f214e'; // todo: add user/person id CHANGE IT
 
@@ -74,105 +107,153 @@ export const AnnouncementCard = ({
     }
   };
 
-  const date = `dodano ${parseData(
+  const setDeleteAnnouncement = async (id: string) => {
+    setModalActive(false);
+    const response = await deleteQuery('announcements', id);
+    if (response) {
+      window.location.reload();
+      toast.success('Pomyślnie usunięto ogłoszenie.');
+    }
+  };
+
+  let date = `dodano ${parseData(
     announcement.created_at || ''
-  )} o godzinie ${parseHour(announcement.created_at || '')}`;
+  )} - godzina ${parseHour(announcement.created_at || '')}`;
+
+  if (noObserved) {
+    date += `, zakończono ${parseData(
+      announcement.updated_at || ''
+    )} - godzina ${parseHour(announcement.updated_at || '')}`;
+  }
 
   return (
-    <Layout
-      background="var(--background-white)"
-      height={200}
-      margin={[10]}
-      display="flex"
-      borderRadius="16px"
-      justifyContent="space-between"
-      boxShadow="0 0 5px #ccc"
-      width="75%"
-      minWidth="1175px"
-    >
-      <Link
-        key={announcement._id}
-        href={{
-          pathname: `/announcements/${announcement._id}`,
-        }}
-        passHref
+    <>
+      <Layout
+        background="var(--background-white)"
+        height={200}
+        margin={[10]}
+        display="flex"
+        borderRadius="16px"
+        justifyContent="space-between"
+        boxShadow="0 0 5px #ccc"
+        width={width || '75%'}
+        minWidth={minWidth || '1175px'}
       >
-        <StyledLayout display="flex">
-          <Layout
-            width={180}
-            height={180}
-            margin={[10]}
-            borderRadius="10px"
-            boxShadow="0 0 3px #ccc"
-            display="flex"
-          >
-            {announcement.images ? (
-              <StyledImage
-                src={announcement.images[0] || default_avatar_url}
-                aria-hidden
-                alt=""
-              />
-            ) : (
-              <StyledImage src="no-image-icon.png" aria-hidden alt="" />
-            )}
-          </Layout>
-
-          <Layout padding={[10]} display="flex" flex={1} direction="column">
-            <Layout display="flex" justifyContent="left">
-              <Text color="black" size={getRem(20)}>
-                {announcement.title}
-              </Text>
+        <Link
+          key={announcement._id}
+          href={{
+            pathname: `/announcements/${announcement._id}`,
+          }}
+          passHref
+        >
+          <StyledLayout display="flex">
+            <Layout
+              width={180}
+              height={180}
+              margin={[10]}
+              borderRadius="10px"
+              boxShadow="0 0 3px #ccc"
+              display="flex"
+            >
+              {announcement.images ? (
+                <StyledImage
+                  src={announcement.images[0] || default_avatar_url}
+                  aria-hidden
+                  alt=""
+                />
+              ) : (
+                <StyledImage src="no-image-icon.png" aria-hidden alt="" />
+              )}
             </Layout>
-            {announcement.state && (
-              <Layout display="flex">
-                <Text color="black" size={getRem(14)}>
-                  # {announcement.state}
+
+            <Layout padding={[10]} display="flex" flex={1} direction="column">
+              <Layout display="flex" justifyContent="left">
+                <Text color="black" size={getRem(20)}>
+                  {announcement.title}
                 </Text>
               </Layout>
-            )}
-            {announcement.size && (
-              <Layout display="flex" flex={1}>
-                <Text color="black" size={getRem(14)}>
-                  # {announcement.size} m^2
+              {announcement.state && (
+                <Layout display="flex">
+                  <Text color="black" size={getRem(14)}>
+                    # {announcement.state}
+                  </Text>
+                </Layout>
+              )}
+              {announcement.size && (
+                <Layout display="flex" flex={1}>
+                  <Text color="black" size={getRem(14)}>
+                    # {announcement.size} m^2
+                  </Text>
+                </Layout>
+              )}
+              {announcement.location && date && (
+                <Text color="black" size={getRem(16)}>
+                  {announcement.location} - {date}
                 </Text>
+              )}
+            </Layout>
+          </StyledLayout>
+        </Link>
+        <Layout display="flex" direction="column" padding={[10, 15]}>
+          <Text size={getRem(16)}>
+            Odstępne:
+            <br />
+            {announcement.fee.toFixed(2)} PLN / miesiąc
+          </Text>
+          <Text flex={1} size={getRem(16)}>
+            Czynsz:
+            <br />
+            {announcement.rent.toFixed(2)} PLN / miesiąc
+          </Text>
+          {edit ? (
+            <Layout display="flex" justifyContent="right" gap="10px">
+              <StyledEditIcon />
+              <Layout
+                onClick={() => {
+                  setModalData({
+                    id: announcement._id,
+                    description: announcement.title,
+                  });
+                  setModalActive(true);
+                }}
+              >
+                <StyledDeleteIcon />
               </Layout>
-            )}
-            {announcement.location && date && (
-              <Text color="black" size={getRem(16)}>
-                {announcement.location} - {date}
-              </Text>
-            )}
-          </Layout>
-        </StyledLayout>
-      </Link>
-      <Layout display="flex" direction="column" padding={[10, 15]}>
-        <Text size={getRem(16)}>
-          Odstępne:
-          <br />
-          {announcement.fee.toFixed(2)} PLN / miesiąc
-        </Text>
-        <Text flex={1} size={getRem(16)}>
-          Czynsz:
-          <br />
-          {announcement.rent.toFixed(2)} PLN / miesiąc
-        </Text>
-        <Layout display="flex" justifyContent="right">
-          {typeView ? (
-            <Layout>
-              <StyledFavoriteIcon
-                onClick={() => removeFromObserved(rest._id)}
-              />
             </Layout>
           ) : (
-            <button
-              type="submit"
-              onClick={() => addToObserved(announcement._id)}
-            >
-              <StyledFavoriteBorderIcon />
-            </button>
+            !noObserved && (
+              <Layout display="flex" justifyContent="right">
+                {typeView ? (
+                  <Layout>
+                    <StyledFavoriteIcon
+                      onClick={() => removeFromObserved(rest._id)}
+                    />
+                  </Layout>
+                ) : (
+                  <button
+                    type="submit"
+                    onClick={() => addToObserved(announcement._id)}
+                  >
+                    <StyledFavoriteBorderIcon />
+                  </button>
+                )}
+              </Layout>
+            )
           )}
         </Layout>
       </Layout>
-    </Layout>
+      {modalActive && modalData && (
+        <ModalComponent
+          title="Usuwanie ogłoszenia"
+          description={`Czy na pewno chcesz usunąć ogłoszenie: ${modalData.description}?`}
+          onHide={() => setModalActive(false)}
+          onConfirm={() => setDeleteAnnouncement(modalData.id)}
+          cancelButton
+          cancelText="Anuluj"
+          confirmButton
+          confirmText="Usuń"
+        />
+      )}
+    </>
   );
 };
