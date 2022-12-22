@@ -207,7 +207,9 @@ export const AnnouncementCard = ({
           </Text>
           {edit ? (
             <Layout display="flex" justifyContent="right" gap="10px">
-              <StyledEditIcon />
+              <Link href={`announcements/edit/${announcement._id}`} passHref>
+                <StyledEditIcon />
+              </Link>
               <Layout
                 onClick={() => {
                   setModalData({

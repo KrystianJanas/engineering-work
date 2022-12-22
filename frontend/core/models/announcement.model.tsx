@@ -20,6 +20,11 @@ export interface AnnouncementModel {
   updated_at: string;
 }
 
+export interface AnnouncementEdit {
+  announcement: AnnouncementModel;
+  onSubmit: (data: AnnouncementModel) => void;
+}
+
 export interface AnnouncementConversationsModel {
   _id: string;
   title: string;

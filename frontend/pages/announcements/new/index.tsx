@@ -4,8 +4,8 @@ import { useRouter } from 'next/router';
 
 import { testImageUrl } from '~/GLOBAL.constants';
 import { postQuery } from '~/api/post';
+import { AnnouncementModelInitialState } from '~/models/announcement.model';
 
-import { AnnouncementsInitialState } from '../../../modules/announcements/announcements-form.constants';
 import { AnnouncementsForm } from '../../../modules/announcements/components/announcements-form';
 import { AnnouncementsValidation } from '../../../modules/announcements/components/announcements.validation';
 
@@ -27,7 +27,7 @@ export const AnnouncementsNewPage = () => {
 
   return (
     <AnnouncementsForm
-      announcement={AnnouncementsInitialState}
+      announcement={AnnouncementModelInitialState}
       onSubmit={({ _id, person, images, ...rest }) => {
         const dataToApi: any = {
           person: '638a765c53adff6e06432323', // TODO: person_id

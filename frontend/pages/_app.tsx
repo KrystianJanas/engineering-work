@@ -15,7 +15,6 @@ import { useActiveNavLink } from '../modules/header/hooks/useActiveNavLink';
 
 // eslint-disable-next-line import/order
 import { Toaster } from 'react-hot-toast';
-// eslint-disable-next-line import/order
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -32,7 +31,6 @@ const CustomApp = ({ Component, pageProps }: AppProps) => {
   // const { isLogged } = useContext(AuthContext);
 
   // console.log('isLogged:', isLogged); // todo: console.log
-
   return (
     <QueryClientProvider client={queryClient}>
       <Head>

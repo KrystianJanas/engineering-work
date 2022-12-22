@@ -4,16 +4,16 @@ import Link from 'next/link';
 import { Button } from '~/components/compounds/Button';
 import { Layout } from '~/components/molecules/layout';
 import { useForm } from '~/hooks/useForm';
+import { AnnouncementEdit } from '~/models/announcement.model';
 
 import { TypesEstates } from 'modules/management/new/new.constants';
 
 import { AnnouncementsInitialState } from '../announcements-form.constants';
-import { AnnouncementsFormTypes } from '../announcements-form.types';
 
 export const AnnouncementsForm = ({
   announcement,
   onSubmit,
-}: AnnouncementsFormTypes) => {
+}: AnnouncementEdit) => {
   const { handleChange, formData } = useForm(
     announcement || AnnouncementsInitialState
   );

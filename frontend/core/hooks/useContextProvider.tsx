@@ -18,6 +18,7 @@ const AuthContext = React.createContext({
   logIn: () => {},
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   saveTokens: (authTokens: AuthTokens) => {},
+  personID: {},
 });
 
 export const useAuth = () => {
@@ -30,6 +31,8 @@ export const AuthContextProvider = ({
   children?: React.ReactNode;
 }) => {
   const router = useRouter();
+
+  const [personID] = useState('638a765c53adff6e06432323'); // todo: get user_id from database after login
 
   const [tokens, setTokens] = useState<AuthTokens>(null);
   const isLogged = !!tokens;
@@ -64,6 +67,7 @@ export const AuthContextProvider = ({
       logOut: logOutHandler,
       saveTokens,
       setTokens,
+      personID,
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [tokens]
