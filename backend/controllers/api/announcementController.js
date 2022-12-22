@@ -49,6 +49,22 @@ class AnnouncementController {
     await announcement.save();
   }
 
+  async getAnnouncementsByPerson(request, response) {
+    let announcements;
+    const person = request.params.id;
+    const status = request.params.status || true;
+    try {
+      announcements = await Announcement.find({
+        person,
+        status,
+      });
+    } catch (error) {
+      response.status(500).json({ message: error.message });
+    }
+
+    response.status(200).json(announcements);
+  }
+
   async updateAnnouncement(request, response) {
     const id = request.params.id;
     const data = request.body;
@@ -85,6 +101,7 @@ class AnnouncementController {
       const announcement = await Announcement.findOne({ _id: id });
       if (announcement) {
         announcement.status = false;
+        announcement.updated_at = Date.now();
 
         await announcement.save();
         response.sendStatus(204);

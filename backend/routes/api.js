@@ -20,6 +20,10 @@ router.post("/auth/updatePassword", UserController.updatePassword); // check, if
 
 router.get("/announcements", AnnouncementController.getAnnouncements);
 router.get("/announcements/:id", AnnouncementController.getAnnouncement);
+router.get(
+  "/announcements/person/:id/:status",
+  AnnouncementController.getAnnouncementsByPerson
+);
 router.post("/announcements", AnnouncementController.saveAnnouncement);
 router.put("/announcements/:id", AnnouncementController.updateAnnouncement);
 router.delete("/announcements/:id", AnnouncementController.deleteAnnouncement);
