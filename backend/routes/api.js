@@ -7,6 +7,7 @@ const AnnouncementController = require("../controllers/api/announcementControlle
 const ConversationController = require("../controllers/api/conversationController");
 const MessageController = require("../controllers/api/messageController");
 const ObservedController = require("../controllers/api/observedController");
+const EstateController = require("../controllers/api/estateController");
 
 router.get("/people", PeopleController.getPeople);
 router.get("/people/:id", PeopleController.getPerson);
@@ -48,5 +49,13 @@ router.get("/observed", ObservedController.getObserved);
 router.get("/observed/:id", ObservedController.getObserved);
 router.post("/observed", ObservedController.saveObserved);
 router.delete("/observed/:id", ObservedController.deleteObserved);
+
+router.get("/estates", EstateController.getEstates);
+router.get("/estates/:id", EstateController.getEstate);
+router.get("/estates/person/:id/:status", EstateController.getEstatesByPerson);
+router.get("/estates/renter/:id/:status", EstateController.getEstatesByRenter);
+router.post("/estates", EstateController.saveEstate);
+router.put("/estates/:id", EstateController.updateEstate);
+router.delete("/estates/:id", EstateController.deleteEstate);
 
 module.exports = router;
