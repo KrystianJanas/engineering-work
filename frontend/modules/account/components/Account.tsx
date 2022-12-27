@@ -6,6 +6,7 @@ import { Text } from '~/components/atoms/typography';
 import { Button } from '~/components/compounds/Button/components/button';
 import { DropdownWindow } from '~/components/compounds/Dropdown-Window';
 import { FormTextfieldComponent } from '~/components/compounds/Form-Textfield';
+import { LeftSidebar, options } from '~/components/compounds/Left-Sidebar';
 import { SpinnerLoading } from '~/components/compounds/Spinner';
 import { Layout } from '~/components/molecules/layout';
 import { useForm } from '~/hooks/useForm';
@@ -54,82 +55,87 @@ export const Account = () => {
   // todo: add avatar url? change possibility
 
   return (
-    <Layout
-      display="flex"
-      direction="column"
-      alignItems="center"
-      justifyContent="center"
-    >
-      <DropdownWindow name="Dane kontaktowe">
-        <Layout marginBottom={20}>
-          <Text weight={600}>Osoba kontaktowa</Text>
-          <FormTextfieldComponent
-            value={userData.name}
-            placeholder="Osoba kontaktowa"
-            onChange={(text) => handleChangeUserData('name', text)}
-          />
+    <Layout display="flex" direction="row" minWidth="100%" paddingTop={15}>
+      <LeftSidebar options={options[1]} />
+      <Layout width="100%">
+        <Layout
+          display="flex"
+          direction="column"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <DropdownWindow name="Dane kontaktowe">
+            <Layout marginBottom={20}>
+              <Text weight={600}>Osoba kontaktowa</Text>
+              <FormTextfieldComponent
+                value={userData.name}
+                placeholder="Osoba kontaktowa"
+                onChange={(text) => handleChangeUserData('name', text)}
+              />
+            </Layout>
+            <Layout marginBottom={20}>
+              <Text weight={600}>Kod pocztowy</Text>
+              <FormTextfieldComponent
+                value={userData.zip_code}
+                placeholder="Kod pocztowy"
+                onChange={(text) => handleChangeUserData('zip_code', text)}
+              />
+            </Layout>
+            <Layout marginBottom={20}>
+              <Text weight={600}>Miejscowość</Text>
+              <FormTextfieldComponent
+                value={userData.city}
+                placeholder="Miejscowość"
+                onChange={(text) => handleChangeUserData('city', text)}
+              />
+            </Layout>
+            <Layout marginBottom={20}>
+              <Text weight={600}>Numer telefonu do kontaktu</Text>
+              <FormTextfieldComponent
+                value={userData.phone_number}
+                placeholder="Numer telefonu"
+                onChange={(text) => handleChangeUserData('phone_number', text)}
+              />
+            </Layout>
+            <Layout display="flex">
+              <Button
+                text="Zapisz dane kontaktowe"
+                onSubmit={() => changePersonalData()}
+              />
+            </Layout>
+          </DropdownWindow>
+          <DropdownWindow name="Hasło">
+            <Layout marginBottom={20}>
+              <Text weight={600}>Aktulne hasło</Text>
+              <FormTextfieldComponent
+                placeholder="Aktualne hasło"
+                onChange={(text) => console.log('Aktualne hasło: ', text)}
+              />
+            </Layout>
+            <Layout marginBottom={20}>
+              <Text weight={600}>Nowe hasło</Text>
+              <FormTextfieldComponent
+                placeholder="Nowe hasło"
+                onChange={(text) => console.log('Nowe hasło: ', text)}
+              />
+            </Layout>
+            <Layout marginBottom={20}>
+              <Text weight={600}>Powtórz nowe hasło</Text>
+              <Form.Control
+                type="password"
+                placeholder="Powtórz nowe hasło"
+                onChange={(text) => console.log('Powtórz nowe hasło: ', text)}
+              />
+            </Layout>
+            <Layout display="flex">
+              <Button
+                text="Zmień hasło"
+                onSubmit={() => console.log('zmień hasło!')} // todo: add possibility to change password
+              />
+            </Layout>
+          </DropdownWindow>
         </Layout>
-        <Layout marginBottom={20}>
-          <Text weight={600}>Kod pocztowy</Text>
-          <FormTextfieldComponent
-            value={userData.zip_code}
-            placeholder="Kod pocztowy"
-            onChange={(text) => handleChangeUserData('zip_code', text)}
-          />
-        </Layout>
-        <Layout marginBottom={20}>
-          <Text weight={600}>Miejscowość</Text>
-          <FormTextfieldComponent
-            value={userData.city}
-            placeholder="Miejscowość"
-            onChange={(text) => handleChangeUserData('city', text)}
-          />
-        </Layout>
-        <Layout marginBottom={20}>
-          <Text weight={600}>Numer telefonu do kontaktu</Text>
-          <FormTextfieldComponent
-            value={userData.phone_number}
-            placeholder="Numer telefonu"
-            onChange={(text) => handleChangeUserData('phone_number', text)}
-          />
-        </Layout>
-        <Layout display="flex">
-          <Button
-            text="Zapisz dane kontaktowe"
-            onSubmit={() => changePersonalData()}
-          />
-        </Layout>
-      </DropdownWindow>
-      <DropdownWindow name="Hasło">
-        <Layout marginBottom={20}>
-          <Text weight={600}>Aktulne hasło</Text>
-          <FormTextfieldComponent
-            placeholder="Aktualne hasło"
-            onChange={(text) => console.log('Aktualne hasło: ', text)}
-          />
-        </Layout>
-        <Layout marginBottom={20}>
-          <Text weight={600}>Nowe hasło</Text>
-          <FormTextfieldComponent
-            placeholder="Nowe hasło"
-            onChange={(text) => console.log('Nowe hasło: ', text)}
-          />
-        </Layout>
-        <Layout marginBottom={20}>
-          <Text weight={600}>Powtórz nowe hasło</Text>
-          <Form.Control
-            type="password"
-            placeholder="Powtórz nowe hasło"
-            onChange={(text) => console.log('Powtórz nowe hasło: ', text)}
-          />
-        </Layout>
-        <Layout display="flex">
-          <Button
-            text="Zmień hasło"
-            onSubmit={() => console.log('zmień hasło!')} // todo: add possibility to change password
-          />
-        </Layout>
-      </DropdownWindow>
+      </Layout>
     </Layout>
   );
 };

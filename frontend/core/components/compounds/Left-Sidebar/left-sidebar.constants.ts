@@ -1,37 +1,37 @@
 export const options = {
   1: [
     {
+      href: 'management/announcements',
       name: 'Twoje ogłoszenia',
-      placeholder: 'Wybierz ogłoszenie',
-      href: '1',
-      component: 'GetYourAnnouncements',
+      placeholder: 'Wybierz z listy',
     },
     {
+      href: 'management/estates',
       name: 'Nieruchomości',
-      placeholder: 'Wybierz nieruchomość',
-      href: '2',
-      component: 'ManagementAnnouncements',
+      placeholder: 'Wybierz z listy',
+    },
+    {
+      href: 'management/account',
+      name: 'Dane osobowe',
+      placeholder: 'Wybierz z listy',
     },
   ],
 
   2: [
     {
+      href: 'management/announcements/test1',
       name: 'Lokatorzy',
       placeholder: 'Zarządzaj lokatorami',
-      href: '2-1',
-      component: 'here-component 2-1',
     },
     {
+      href: 'management/announcements/test2',
       name: 'Rozliczenia',
       placeholder: 'Zarządzaj rozliczeniami',
-      href: '2-2',
-      component: 'here-component 2-2',
     },
     {
+      href: 'management/announcements/test3',
       name: 'Faktury',
       placeholder: 'Zarządzaj fakturami',
-      href: '2-3',
-      component: 'here-component 2-3',
     },
   ],
 };

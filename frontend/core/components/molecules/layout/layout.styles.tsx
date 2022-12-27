@@ -24,7 +24,11 @@ export const mixinDimensions = (
 ): SerializedStyles => {
   let { width, height } = props;
   if (
-    !(height?.toString().includes('auto') || height?.toString().includes('%'))
+    !(
+      height?.toString().includes('auto') ||
+      height?.toString().includes('%') ||
+      height?.toString().includes('content')
+    )
   ) {
     height = `${height}px`;
   }

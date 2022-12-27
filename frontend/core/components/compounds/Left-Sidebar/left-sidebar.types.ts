@@ -1,11 +1,9 @@
 export interface LeftSidebarOption {
+  href: string;
   name: string;
   placeholder: string;
-  href: string;
 }
 
 export interface LeftSidebarTypes {
   options: LeftSidebarOption[];
-  onClick: (selected: string) => void;
-  selected: string;
 }

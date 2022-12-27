@@ -63,18 +63,16 @@ export const Header = () => {
         <Nav>
           <Link href="/management" passHref>
             {pathname === '/management' ? (
-              <StyledClickedNavLink>
-                Zarządzaj Nieruchomościami
-              </StyledClickedNavLink>
+              <StyledClickedNavLink>Twoje konto</StyledClickedNavLink>
             ) : (
-              <StyledNavLink>Zarządzaj Nieruchomościami</StyledNavLink>
+              <StyledNavLink>Twoje konto</StyledNavLink>
             )}
           </Link>
           <Link href="/account" passHref>
             {pathname === '/account' ? (
-              <StyledClickedNavLink>Twoje konto</StyledClickedNavLink>
+              <StyledClickedNavLink>Twoje konto US</StyledClickedNavLink>
             ) : (
-              <StyledNavLink>Twoje konto</StyledNavLink>
+              <StyledNavLink>Twoje konto US</StyledNavLink>
             )}
           </Link>
         </Nav>
