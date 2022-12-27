@@ -1,6 +1,6 @@
-import { ManagementAnnouncements } from '../../../modules/management-announcements/announcements/components/announcements';
+import { ManagementEstates } from '../../../modules/management-estates/announcements/components/announcements';
 
 export const ManagementEstatesPage = () => {
-  return <ManagementAnnouncements />;
+  return <ManagementEstates />;
 };
 export default ManagementEstatesPage;

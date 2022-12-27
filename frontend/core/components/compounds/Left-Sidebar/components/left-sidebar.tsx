@@ -16,7 +16,7 @@ export const LeftSidebar = ({ options }: LeftSidebarTypes) => {
   };
 
   return (
-    <Layout width={200} display="flex" direction="column" marginLeft={25}>
+    <Layout width={300} display="flex" direction="column" marginLeft={25}>
       <Layout marginBottom={25}>
         <Text
           weight={600}

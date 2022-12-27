@@ -7,7 +7,7 @@ export const PlusIcon = ({
 }) => {
   return (
     <img
-      src="plusicon.png"
+      src="/plusicon.png"
       width={width && width}
       height={height && height}
       alt=""

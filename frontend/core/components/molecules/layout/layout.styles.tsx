@@ -25,7 +25,7 @@ export const mixinDimensions = (
   let { width, height } = props;
   if (
     !(
-      height?.toString().includes('auto') ||
+      height?.toString().includes('px') ||
       height?.toString().includes('%') ||
       height?.toString().includes('content')
     )
@@ -142,7 +142,7 @@ export const mixinBackground = (
   props: LayoutBackgroundProps
 ): SerializedStyles => {
   return css`
-    background: ${props.background ? `${props.background}` : undefined};
+    background: ${props.background && `${props.background}`};
     background-color: ${props.backgroundColor
       ? `${props.backgroundColor}`
       : undefined};

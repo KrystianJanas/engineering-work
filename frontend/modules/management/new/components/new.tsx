@@ -1,18 +1,38 @@
+import toast from 'react-hot-toast';
+
 import { MenuItem, TextField } from '@mui/material';
 import Link from 'next/link';
 
 import { Button } from '~/components/compounds/Button';
 import { Layout } from '~/components/molecules/layout';
 import { useForm } from '~/hooks/useForm';
+import {
+  EstatesModelInitialState,
+  ManagementEstateForm,
+} from '~/models/estates.model';
 
-import { EstateFormInitialState, TypesEstates } from '../new.constants';
-import { NewManagemenetEstates } from '../new.types';
+import { TypesEstates } from '../new.constants';
+import { ManagementEstatesFormValidation } from '../new.validation';
 
 export const ManagementEstatesForm = ({
   estate,
   onSubmit,
-}: NewManagemenetEstates) => {
-  const { handleChange, formData } = useForm(estate || EstateFormInitialState);
+}: ManagementEstateForm) => {
+  const { handleChange, formData } = useForm(
+    estate || EstatesModelInitialState
+  );
+
+  const onValidate = () => {
+    const error = ManagementEstatesFormValidation(formData);
+    if (error) {
+      return toast.error(error);
+    }
+    toast.success('sukces');
+    if (onSubmit) {
+      onSubmit(formData);
+    }
+    return null;
+  };
 
   return (
     <Layout display="flex" justifyContent="center" marginTop={15}>
@@ -29,11 +49,11 @@ export const ManagementEstatesForm = ({
         <Layout width={500}>
           <TextField
             id="outlined-basic"
-            label="Nazwa nieruchomości"
+            label="Tytuł nieruchomości"
             variant="outlined"
             fullWidth
-            value={formData.name}
-            onChange={(e) => handleChange('name', e.target.value)}
+            value={formData.title}
+            onChange={(e) => handleChange('title', e.target.value)}
             size="medium"
           />
         </Layout>
@@ -41,19 +61,7 @@ export const ManagementEstatesForm = ({
           <TextField
             id="outlined-basic"
             type="number"
-            label="Odstępne"
-            variant="outlined"
-            fullWidth
-            value={formData.price}
-            onChange={(e) => handleChange('price', e.target.value)}
-            size="medium"
-          />
-        </Layout>
-        <Layout width={500}>
-          <TextField
-            id="outlined-basic"
-            type="number"
-            label="Czynsz"
+            label="Odstępne (miesięcznie, w PLN)"
             variant="outlined"
             fullWidth
             value={formData.fee}
@@ -65,7 +73,19 @@ export const ManagementEstatesForm = ({
           <TextField
             id="outlined-basic"
             type="number"
-            label="Kaucja zwrotna"
+            label="Czynsz (miesięcznie, w PLN)"
+            variant="outlined"
+            fullWidth
+            value={formData.rent}
+            onChange={(e) => handleChange('rent', e.target.value)}
+            size="medium"
+          />
+        </Layout>
+        <Layout width={500}>
+          <TextField
+            id="outlined-basic"
+            type="number"
+            label="Kaucja zwrotna (jednorazowo, w PLN)"
             variant="outlined"
             fullWidth
             value={formData.caution}
@@ -77,11 +97,23 @@ export const ManagementEstatesForm = ({
           <TextField
             id="outlined-basic"
             type="number"
-            label="Metraż nieruchomości"
+            label="Metraż nieruchomości (w metrach)"
             variant="outlined"
             fullWidth
             value={formData.size}
             onChange={(e) => handleChange('size', e.target.value)}
+            size="medium"
+          />
+        </Layout>
+        <Layout width={500}>
+          <TextField
+            id="outlined-basic"
+            type="number"
+            label="Ilość pokoi"
+            variant="outlined"
+            fullWidth
+            value={formData.rooms}
+            onChange={(e) => handleChange('rooms', e.target.value)}
             size="medium"
           />
         </Layout>
@@ -101,8 +133,8 @@ export const ManagementEstatesForm = ({
             id="outlined-select-currency"
             select
             label="Stan wyposażenia nieruchomości"
-            value={formData.type}
-            onChange={(e) => handleChange('type', e.target.value)}
+            value={formData.state}
+            onChange={(e) => handleChange('state', e.target.value)}
             fullWidth
             size="medium"
           >
@@ -115,6 +147,7 @@ export const ManagementEstatesForm = ({
         </Layout>
         <Layout width={500}>
           / here add option to choose default profile photo to our estate \
+          {/* // TODO photo */}
         </Layout>
         <Layout width={500}>
           <TextField
@@ -124,15 +157,15 @@ export const ManagementEstatesForm = ({
             maxRows={4}
             fullWidth
             multiline
-            value={formData.information}
-            onChange={(e) => handleChange('information', e.target.value)}
+            value={formData.info}
+            onChange={(e) => handleChange('info', e.target.value)}
             size="medium"
           />
         </Layout>
         <Layout width={250} display="flex" wrap="wrap" gap="15px">
           <Link
             href={{
-              pathname: `/management`,
+              pathname: `/management/estates`,
             }}
             passHref
           >
@@ -140,10 +173,7 @@ export const ManagementEstatesForm = ({
               <Button text="Anuluj" onSubmit={() => null} />
             </a>
           </Link>
-          <Button
-            text="Zatwierdź zmiany"
-            onSubmit={() => (onSubmit ? onSubmit(formData) : null)}
-          />
+          <Button text="Zatwierdź zmiany" onSubmit={() => onValidate()} />
         </Layout>
       </Layout>
     </Layout>

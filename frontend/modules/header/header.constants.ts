@@ -15,7 +15,7 @@ export const pageTitles = [
 
   { href: '/observed', title: 'Serwis ogłoszeń - Obserwowane' },
 
-  { href: '/account', title: 'Serwis ogłoszeń - Konto' },
+  { href: '/management-account', title: 'Serwis ogłoszeń - Konto' },
 
   { href: '/management', title: 'Serwis ogłoszeń - Nieruchomości' },
 ];

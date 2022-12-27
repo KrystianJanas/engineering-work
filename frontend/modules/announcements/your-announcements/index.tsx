@@ -55,8 +55,9 @@ export const YourAnnouncements = () => {
   return (
     <Layout display="flex" direction="row" minWidth="100%" paddingTop={15}>
       <LeftSidebar options={options[1]} />
-      <Layout>
-        {activeAnnouncements.length > 0 || desactiveAnnouncements.length > 0 ? (
+      <Layout width="100%">
+        {(activeAnnouncements && activeAnnouncements.length > 0) ||
+        (desactiveAnnouncements && desactiveAnnouncements.length > 0) ? (
           <>
             <Layout display="flex" justifyContent="center" gap="50px">
               <StyledText

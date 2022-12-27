@@ -8,7 +8,12 @@ export const options = {
     },
     {
       href: 'management/estates',
-      name: 'Nieruchomości',
+      name: 'Twoje nieruchomości',
+      placeholder: 'Wybierz z listy',
+    },
+    {
+      href: 'management/other-estates',
+      name: 'Inne nieruchomości',
       placeholder: 'Wybierz z listy',
     },
     {
