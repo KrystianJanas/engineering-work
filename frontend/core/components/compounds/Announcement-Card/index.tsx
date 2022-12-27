@@ -207,7 +207,7 @@ export const AnnouncementCard = ({
           </Text>
           {edit ? (
             <Layout display="flex" justifyContent="right" gap="10px">
-              <Link href={`announcements/edit/${announcement._id}`} passHref>
+              <Link href={`/announcements/edit/${announcement._id}`} passHref>
                 <StyledEditIcon />
               </Link>
               <Layout
