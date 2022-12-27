@@ -1,4 +1,3 @@
-import { router } from 'next/client';
 import { useRouter } from 'next/router';
 
 import { Text } from '~/components/atoms/typography';
@@ -8,9 +7,9 @@ import { Layout } from '~/components/molecules/layout';
 import { getRem } from '~/styles/utils';
 
 export const LeftSidebar = ({ options }: LeftSidebarTypes) => {
-  const { pathname } = useRouter();
+  const router = useRouter();
 
-  const pathName = pathname.slice(1, pathname.length);
+  const pathName = router.pathname.slice(1, router.pathname.length);
 
   const getSelectedItem = () => {
     return options.find((option) => option.href === pathName);
@@ -42,7 +41,7 @@ export const LeftSidebar = ({ options }: LeftSidebarTypes) => {
             marginTop={15}
             marginBottom={15}
             key={option.href}
-            onClick={() => router.push(`/${option.href}`)}
+            onClick={() => router.isReady && router.push(`/${option.href}`)}
           >
             {getSelectedItem()?.name === option.name
               ? getSelectedText(option.name, 'var(--text-green)')

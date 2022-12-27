@@ -75,4 +75,3 @@ export const Header = () => {
     </StyledNavbar>
   );
 };
-export default Header;

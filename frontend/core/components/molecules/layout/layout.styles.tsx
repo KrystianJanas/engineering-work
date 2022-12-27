@@ -30,12 +30,12 @@ export const mixinDimensions = (
       height?.toString().includes('content')
     )
   ) {
-    height = `${height}px`;
+    height = height && `${height}px`;
   }
   if (
     !(width?.toString().includes('auto') || width?.toString().includes('%'))
   ) {
-    width = `${width}px`;
+    width = width && `${width}px`;
   }
 
   return css`
@@ -55,7 +55,7 @@ export const mixinDimensions = (
 
 export const mixinDisplay = (props: LayoutDisplayProps): SerializedStyles => {
   return css`
-    display: ${props.display ? `${props.display}` : undefined};
+    display: ${props.display && `${props.display}`};
     gap: ${props.gap ? `${props.gap}` : undefined};
   `;
 };
@@ -90,22 +90,22 @@ export const mixinMargin = (props: LayoutMarginProps): SerializedStyles => {
   if (marginBottom && marginBottom.toString().includes('auto')) {
     marginBottom = props.marginBottom;
   } else {
-    marginBottom = `${props.marginBottom}px`;
+    marginBottom = props.marginBottom && `${props.marginBottom}px`;
   }
   if (marginTop && marginTop.toString().includes('auto')) {
     marginTop = props.marginTop;
   } else {
-    marginTop = `${props.marginTop}px`;
+    marginTop = props.marginTop && `${props.marginTop}px`;
   }
   if (marginLeft && marginLeft.toString().includes('auto')) {
     marginLeft = props.marginLeft;
   } else {
-    marginLeft = `${props.marginLeft}px`;
+    marginLeft = props.marginLeft && `${props.marginLeft}px`;
   }
   if (marginRight && marginRight.toString().includes('auto')) {
     marginRight = props.marginRight;
   } else {
-    marginRight = `${props.marginRight}px`;
+    marginRight = props.marginRight && `${props.marginRight}px`;
   }
   return css`
     margin: ${props.margin
