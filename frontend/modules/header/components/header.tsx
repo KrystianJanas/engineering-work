@@ -4,36 +4,38 @@ import styled from '@emotion/styled';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
+import { getRem } from '~/styles/utils';
+
 import { PagesNav } from '../header.constants';
 
 const StyledNavbar = styled(Navbar)`
   padding: 0 10px;
   height: 100px;
-  border: 1px solid #c3d4e966;
+  border: 1px solid var(--border-grey);
   background: white;
 `;
 
 const StyledNavLink = styled(Nav.Link)`
-  color: #333333;
+  color: var(--text-grey-black);
   font-family: 'Inter', sans-serif;
   font-style: normal;
   font-weight: 600;
-  font-size: 18px;
+  font-size: ${getRem(18)};
   line-height: 28px;
 
   margin: 0 15px;
 
   &:hover {
-    color: #12b9ac;
+    color: var(--text-green);
   }
 `;
 
 const StyledClickedNavLink = styled(Nav.Link)`
-  color: #12b9ac !important;
+  color: var(--text-green) !important;
   font-family: 'Inter', sans-serif;
   font-style: normal;
   font-weight: 600;
-  font-size: 18px;
+  font-size: ${getRem(18)};
   line-height: 28px;
 
   margin: 0 15px;
@@ -62,17 +64,10 @@ export const Header = () => {
         </Nav>
         <Nav>
           <Link href="/management" passHref>
-            {pathname === '/management' ? (
+            {pathname.includes('/management') ? (
               <StyledClickedNavLink>Twoje konto</StyledClickedNavLink>
             ) : (
               <StyledNavLink>Twoje konto</StyledNavLink>
-            )}
-          </Link>
-          <Link href="/account" passHref>
-            {pathname === '/account' ? (
-              <StyledClickedNavLink>Twoje konto US</StyledClickedNavLink>
-            ) : (
-              <StyledNavLink>Twoje konto US</StyledNavLink>
             )}
           </Link>
         </Nav>

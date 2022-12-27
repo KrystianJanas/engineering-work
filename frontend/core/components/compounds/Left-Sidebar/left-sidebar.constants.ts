@@ -1,4 +1,5 @@
 export const options = {
+  // sekcja: ogolne
   1: [
     {
       href: 'management/announcements',
@@ -17,6 +18,7 @@ export const options = {
     },
   ],
 
+  // sekcja: nieruchomosc do wynajecia
   2: [
     {
       href: 'management/announcements/test1',
