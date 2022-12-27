@@ -8,6 +8,7 @@ import { AnnouncementCard } from '~/components/compounds/Announcement-Card';
 import { LeftSidebar, options } from '~/components/compounds/Left-Sidebar';
 import { SpinnerLoading } from '~/components/compounds/Spinner';
 import { Layout } from '~/components/molecules/layout';
+import { useAuth } from '~/hooks/useContextProvider';
 import { useGetData } from '~/hooks/useGetData';
 import {
   AnnouncementsModel,
@@ -27,8 +28,7 @@ const StyledText = styled(Text)`
 `;
 
 export const YourAnnouncements = () => {
-  // 638a765c53adff6e06432323 / 638fb4c573eedbc3f53f214e
-  const personID = '638a765c53adff6e06432323'; // todo: change person_id (personID)
+  const { personID } = useAuth();
 
   const [typeAnnouncements, setTypeAnnouncements] = useState(true); // true: ogloszenia aktywne ; false: nieaktywne
 

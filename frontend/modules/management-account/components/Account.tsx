@@ -9,6 +9,7 @@ import { FormTextfieldComponent } from '~/components/compounds/Form-Textfield';
 import { LeftSidebar, options } from '~/components/compounds/Left-Sidebar';
 import { SpinnerLoading } from '~/components/compounds/Spinner';
 import { Layout } from '~/components/molecules/layout';
+import { useAuth } from '~/hooks/useContextProvider';
 import { useForm } from '~/hooks/useForm';
 import { useGetData } from '~/hooks/useGetData';
 import { AccountModel, AccountModelInitialState } from '~/models/account.model';
@@ -19,7 +20,7 @@ export const Account = () => {
   const { formData: userData, handleChange: handleChangeUserData } =
     useForm<AccountModel>(AccountModelInitialState);
 
-  const personID = '638fb4c573eedbc3f53f214e'; // todo: change personID (person_id)
+  const { personID } = useAuth();
 
   const { data, isLoading, updateState, setUpdateState } =
     useGetData<AccountModel>(AccountModelInitialState, `people/${personID}`);

@@ -16,6 +16,7 @@ import { Text } from '~/components/atoms/typography';
 import { ModalComponent } from '~/components/compounds/ModalComponent';
 import { useModalComponent } from '~/components/compounds/ModalComponent/useModalComponent';
 import { Layout } from '~/components/molecules/layout';
+import { useAuth } from '~/hooks/useContextProvider';
 import { parseData, parseHour } from '~/hooks/useDateParser';
 import { AnnouncementsModel } from '~/models/announcements.model';
 import { getRem } from '~/styles/utils';
@@ -84,12 +85,12 @@ export const AnnouncementCard = ({
   const { modalActive, setModalActive, modalData, setModalData } =
     useModalComponent();
 
-  const personId = '638fb4c573eedbc3f53f214e'; // todo: add user/person id CHANGE IT
+  const { personID } = useAuth();
 
   const addToObserved = async (id: string) => {
     const result = await postQuery('observed', {
       announcement: id,
-      person: personId,
+      person: personID,
     });
     if (result) {
       toast.success('Pomyślnie dodano ogłoszenie do ulubionych.');

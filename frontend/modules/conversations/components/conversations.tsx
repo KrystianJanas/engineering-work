@@ -6,6 +6,7 @@ import { Text } from '~/components/atoms/typography';
 import { ConversationCard } from '~/components/compounds/Message-Card';
 import { SpinnerLoading } from '~/components/compounds/Spinner';
 import { Layout } from '~/components/molecules/layout';
+import { useAuth } from '~/hooks/useContextProvider';
 import { useGetData } from '~/hooks/useGetData';
 import {
   ConversationTypes,
@@ -35,14 +36,14 @@ const StyledButton = styled.button`
 
 export const Conversations = () => {
   const [optionMessage, setOptionMessage] = useState('send'); // true: send conversations | false: received conversations
-  const personId = '638a765c53adff6e06432323'; // TODO: change person id after authentication
-  // const personId2 = '638fb4c573eedbc3f53f214e'; // TODO: change person id after authentication
+
+  const { personID } = useAuth();
 
   const changeOptionMessage = (option: string) => {
     setOptionMessage(option);
   };
 
-  const [restEndpoint, setRestEndpoint] = useState(`from/${personId}`);
+  const [restEndpoint, setRestEndpoint] = useState(`from/${personID}`);
 
   const { data, isLoading, setUpdateState } = useGetData<ConversationTypes[]>(
     [ConversationTypesInitialState],
@@ -52,10 +53,10 @@ export const Conversations = () => {
 
   useMemo(() => {
     if (optionMessage === 'send') {
-      setRestEndpoint(`from/${personId}`);
+      setRestEndpoint(`from/${personID}`);
       setUpdateState(true);
     } else if (optionMessage === 'received') {
-      setRestEndpoint(`to/${personId}`);
+      setRestEndpoint(`to/${personID}`);
       setUpdateState(true);
     }
   }, [optionMessage]);

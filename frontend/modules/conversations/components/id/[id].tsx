@@ -10,6 +10,7 @@ import { postQuery } from '~/api/post';
 import { Text } from '~/components/atoms/typography';
 import { SpinnerLoading } from '~/components/compounds/Spinner';
 import { Layout } from '~/components/molecules/layout';
+import { useAuth } from '~/hooks/useContextProvider';
 import { parseData, parseHour } from '~/hooks/useDateParser';
 import { useGetData } from '~/hooks/useGetData';
 import { getRem } from '~/styles/utils';
@@ -42,7 +43,7 @@ export const Conversation = () => {
     return <SpinnerLoading />;
   }
 
-  const personID = '638a765c53adff6e06432323'; // todo: change person_id here
+  const { personID } = useAuth();
 
   const addMessage = async () => {
     if (messageValue.trim().length < 4) {

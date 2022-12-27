@@ -5,12 +5,13 @@ import { AddButton } from '~/components/compounds/AddButton/components/add-butto
 import { LeftSidebar, options } from '~/components/compounds/Left-Sidebar';
 import { SpinnerLoading } from '~/components/compounds/Spinner';
 import { Layout } from '~/components/molecules/layout';
+import { useAuth } from '~/hooks/useContextProvider';
 import { useGetData } from '~/hooks/useGetData';
 import { EstateModel, EstatesModelInitialState } from '~/models/estates.model';
 
 export const ManagementEstates = () => {
-  // 638a765c53adff6e06432323 / 638fb4c573eedbc3f53f214e
-  const personID = '638a765c53adff6e06432323'; // todo: change person_id (personID)
+  const { personID } = useAuth();
+
   const { data, isLoading } = useGetData<EstateModel[]>(
     [EstatesModelInitialState],
     'estates',

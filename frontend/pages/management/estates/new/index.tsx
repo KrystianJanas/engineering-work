@@ -23,10 +23,12 @@ export const ManagementEstatesAddPage = () => {
     console.log(data);
     const result = await postQuery('estates', { ...rest, person: personID });
     if (result) {
+      await router.push('/management/estates');
       toast.success(
         'Pomyślnie dodano nieruchomość. Możesz teraz nią zarządzać.'
       );
-      router.push('/management/estates');
+    } else {
+      toast.error('Coś poszło nie tak... Spróbuj ponownie później.');
     }
   };
 

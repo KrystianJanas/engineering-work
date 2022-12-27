@@ -13,7 +13,8 @@ import { Text } from '~/components/atoms/typography';
 import { Images } from '~/components/compounds/Images';
 import { SpinnerLoading } from '~/components/compounds/Spinner';
 import { Layout } from '~/components/molecules/layout';
-import { parseData, parseHour, useDateParser } from '~/hooks/useDateParser';
+import { useAuth } from '~/hooks/useContextProvider';
+import { parseData, parseHour } from '~/hooks/useDateParser';
 import { useGetData } from '~/hooks/useGetData';
 import {
   AnnouncementModel,
@@ -31,6 +32,8 @@ const StyledLayout = styled(Layout)`
 `;
 
 export const Announcement = () => {
+  const { personID } = useAuth();
+
   const router = useRouter();
   const [contactState, setContactState] = useState(false);
   const [messageValue, setMessageValue] = useState('');
@@ -40,14 +43,11 @@ export const Announcement = () => {
     'announcements',
     `${router.query.id}`
   );
-  const { date } = useDateParser(data?.created_at || '');
 
   if (isLoading) {
     return <SpinnerLoading />;
   }
-  // 638fb4c573eedbc3f53f214e
-  // 638a765c53adff6e06432323
-  const personId = '638a765c53adff6e06432323'; // todo: add user/person id CHANGE IT
+
   const addMessage = async () => {
     if (messageValue.trim().length < 4) {
       return toast.error('Wiadomość powinna być dłuższa niż 4 znaki.');
@@ -55,14 +55,14 @@ export const Announcement = () => {
 
     const result = await getData(
       'conversations',
-      `checkExistFrom/${data._id}/${personId}`
+      `checkExistFrom/${data._id}/${personID}`
     );
     if (result) {
       // konwersacja znaleziona, wiec wysylamy tylko wiadomosc
       const message = await postQuery('messages', {
         conversation: result[0]._id,
         announcement: result[0].announcement,
-        person: personId,
+        person: personID,
         content: messageValue,
       });
       if (message) {
@@ -74,7 +74,7 @@ export const Announcement = () => {
       // konwersacji nie ma -> tworzymy konwersacje, a nastepnie wiadomosc...
       const conversation = await postQuery('conversations', {
         announcement: data._id,
-        person_from: personId,
+        person_from: personID,
         person_to: data.person._id,
       });
       if (conversation) {
