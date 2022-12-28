@@ -24,7 +24,9 @@ class EstateController {
     } catch (error) {
       return response.status(422).json({ message: error.message });
     }
-    response.status(201).json(estate);
+    if (estate) {
+      response.status(201).json(estate);
+    }
   }
 
   async getEstates(request, response) {
@@ -40,16 +42,20 @@ class EstateController {
 
   async getEstate(request, response) {
     const id = request.params.id;
-    const estate = await Estate.findOne({ _id: id }).populate("person", [
-      "_id",
-      "name",
-      "phone_number",
-    ]);
+    let estate;
+    estate = await Estate.findOne({ _id: id })
+      .populate("person", ["_id", "name", "phone_number"])
+      .populate("renter", ["_id", "name", "phone_number"]);
 
-    response.status(200).json(estate);
+    console.log("ten endpoint 1");
+    if (estate) {
+      response.status(200).json(estate);
+    } else {
+      response.status(404).json({ message: "Nie znaleziono nieruchomości." });
+    }
 
     // estate.views = estate.views + 1; // make it only max 1 view per 1 visit on page.... ?? FE-SIDE
-    await estate.save();
+    // await estate.save();
   }
 
   async getEstatesByPerson(request, response) {
@@ -65,7 +71,13 @@ class EstateController {
       response.status(500).json({ message: error.message });
     }
 
-    response.status(200).json(estates);
+    console.log("ten endpoint 2");
+
+    if (estates) {
+      response.status(200).json(estates);
+    } else {
+      response.status(404).json({ message: "Nie znaleziono nieruchomości." });
+    }
   }
 
   async getEstatesByRenter(request, response) {
@@ -81,7 +93,13 @@ class EstateController {
       response.status(500).json({ message: error.message });
     }
 
-    response.status(200).json(estates);
+    console.log("ten endpoint 3");
+
+    if (estates) {
+      response.status(200).json(estates);
+    } else {
+      response.status(404).json({ message: "Nie znaleziono nieruchomości." });
+    }
   }
 
   async updateEstate(request, response) {
