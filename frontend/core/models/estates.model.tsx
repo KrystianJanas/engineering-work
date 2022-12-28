@@ -1,8 +1,12 @@
-import { PersonModel } from '~/models/person.model';
+import {
+  PersonLoginIdModel,
+  PersonLoginIdModelInitialState,
+  PersonModel,
+} from '~/models/person.model';
 
 export interface EstateModel {
   _id: string;
-  person: string;
+  person: PersonLoginIdModel;
   title: string;
   info: string;
   location: string;
@@ -25,7 +29,7 @@ export interface EstateModel {
 
 export const EstatesModelInitialState: EstateModel = {
   _id: '',
-  person: '',
+  person: PersonLoginIdModelInitialState,
   title: '',
   info: '',
   location: '',

@@ -20,9 +20,8 @@ export const useGetData = <FormType,>(
   const fetchData = async () => {
     const result = await getData(pageEndpoint, restEndpoint, params);
     setData({ data: result, isLoading: false });
-    console.log('useGetData()');
+    console.log('useGetData()'); // todo: delete it
   };
-
   // eslint-disable-next-line consistent-return
   useEffect(() => {
     if (updateState) {

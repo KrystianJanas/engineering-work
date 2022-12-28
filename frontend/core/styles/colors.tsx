@@ -11,6 +11,7 @@ export const colorsStyles = css`
     --background-medium-grey: rgba(185, 185, 185, 1);
 
     --border-grey: #c3d4e966;
+    --border-black: rgba(0, 0, 0, 0.4);
 
     --text-black: #1a202c;
     --text-grey: #90a3bf;

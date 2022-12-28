@@ -157,6 +157,7 @@ export const mixinBackground = (
 
 export const mixinBorder = (props: LayoutBorderProps): SerializedStyles => {
   return css`
+    border: ${props.border && props.border};
     border-radius: ${props.borderRadius ? `${props.borderRadius}` : undefined};
     border-top-left-radius: ${props.borderTopLeftRadius
       ? `${props.borderTopLeftRadius}`

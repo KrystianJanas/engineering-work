@@ -1,7 +1,7 @@
 export interface LeftSidebarOption {
-  href: string;
   name: string;
   placeholder: string;
+  href: string;
 }
 
 export interface LeftSidebarTypes {

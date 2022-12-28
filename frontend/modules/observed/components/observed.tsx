@@ -2,6 +2,7 @@ import { Text } from '~/components/atoms/typography';
 import { AnnouncementCard } from '~/components/compounds/Announcement-Card';
 import { SpinnerLoading } from '~/components/compounds/Spinner';
 import { Layout } from '~/components/molecules/layout';
+import { useAuth } from '~/hooks/useContextProvider';
 import { useGetData } from '~/hooks/useGetData';
 import {
   AnnouncementsModel,
@@ -9,10 +10,11 @@ import {
 } from '~/models/announcements.model';
 
 export const ObservedView = () => {
+  const { personID } = useAuth();
   const { data, isLoading } = useGetData<AnnouncementsModel[]>(
     [AnnouncementsModelInitialState],
     'observed',
-    '638fb4c573eedbc3f53f214e' // TODO: change to user/person id
+    `${personID}`
   );
 
   if (isLoading) {

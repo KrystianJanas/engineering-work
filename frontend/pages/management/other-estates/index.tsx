@@ -1,12 +1,6 @@
-import { LeftSidebar, options } from '~/components/compounds/Left-Sidebar';
-import { Layout } from '~/components/molecules/layout';
+import { ManagementOtherEstates } from '../../../modules/management-estates/other-estates/components';
 
 export const ManagementOtherEstatesPage = () => {
-  return (
-    <Layout display="flex" direction="row" minWidth="100%" paddingTop={15}>
-      <LeftSidebar options={options[1]} />
-      tu cos dalej,...
-    </Layout>
-  );
+  return <ManagementOtherEstates />;
 };
 export default ManagementOtherEstatesPage;

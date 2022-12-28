@@ -38,7 +38,6 @@ const CustomApp = ({ Component, pageProps }: AppProps) => {
       </Head>
       <Toaster />
       <GlobalStyles />
-
       <AuthContextProvider>
         {!pathname.toString().includes('auth') && <Header />}
 

@@ -1,6 +1,6 @@
 import { ManagementEstateIDDetails } from '../../../modules/management-estates/[id]/id';
 
-export const ManagementEstatedIDPage = () => {
+export const ManagementEstatesIDPage = () => {
   return <ManagementEstateIDDetails />;
 };
-export default ManagementEstatedIDPage;
+export default ManagementEstatesIDPage;

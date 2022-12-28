@@ -9,33 +9,43 @@ import { getRem } from '~/styles/utils';
 export const LeftSidebar = ({ options }: LeftSidebarTypes) => {
   const router = useRouter();
 
-  const pathName = router.pathname.slice(1, router.pathname.length);
+  let pathName = router.pathname.slice(1, router.pathname.length);
+
+  if (pathName.includes('[id]')) {
+    pathName = pathName.replace('[id]', `${router.query.id}`);
+  }
 
   const getSelectedItem = () => {
     return options.find((option) => option.href === pathName);
   };
 
+  const filteredOptions = options.filter((option) => option.href.length > 0);
+
   return (
     <Layout width={300} display="flex" direction="column" marginLeft={25}>
       <Layout marginBottom={25}>
-        <Text
-          weight={600}
-          size={getRem(18)}
-          lineHeight="27px"
-          color="var(--text-black)"
-        >
-          {getSelectedItem()?.name}
-        </Text>
-        <Text
-          weight={500}
-          size={getRem(14)}
-          lineHeight="21px"
-          color="var(--text-grey)"
-        >
-          {getSelectedItem()?.placeholder}
-        </Text>
+        {getSelectedItem()?.name !== getSelectedItem()?.placeholder && (
+          <>
+            <Text
+              weight={600}
+              size={getRem(18)}
+              lineHeight="27px"
+              color="var(--text-black)"
+            >
+              {getSelectedItem()?.name}
+            </Text>
+            <Text
+              weight={500}
+              size={getRem(14)}
+              lineHeight="21px"
+              color="var(--text-grey)"
+            >
+              {getSelectedItem()?.placeholder}
+            </Text>
+          </>
+        )}
       </Layout>
-      {options.map((option) => {
+      {filteredOptions.map((option) => {
         return (
           <Layout marginTop={15} marginBottom={15} key={option.href}>
             {getSelectedItem()?.name === option.name

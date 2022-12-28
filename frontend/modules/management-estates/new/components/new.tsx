@@ -27,7 +27,6 @@ export const ManagementEstatesForm = ({
     if (error) {
       return toast.error(error);
     }
-    toast.success('sukces');
     if (onSubmit) {
       onSubmit(formData);
     }
