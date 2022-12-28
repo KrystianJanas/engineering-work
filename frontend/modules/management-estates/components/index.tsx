@@ -1,4 +1,6 @@
+import styled from '@emotion/styled';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 import { Text } from '~/components/atoms/typography';
 import { AddButton } from '~/components/compounds/AddButton/components/add-button';
@@ -6,11 +8,20 @@ import { LeftSidebar, options } from '~/components/compounds/Left-Sidebar';
 import { SpinnerLoading } from '~/components/compounds/Spinner';
 import { Layout } from '~/components/molecules/layout';
 import { useAuth } from '~/hooks/useContextProvider';
+import { parseData, parseHour } from '~/hooks/useDateParser';
 import { useGetData } from '~/hooks/useGetData';
 import { EstateModel, EstatesModelInitialState } from '~/models/estates.model';
+import { getRem } from '~/styles/utils';
+
+const StyledLayout = styled(Layout)`
+  &:hover {
+    cursor: pointer;
+  }
+`;
 
 export const ManagementEstates = () => {
   const { personID } = useAuth();
+  const router = useRouter();
 
   const { data, isLoading } = useGetData<EstateModel[]>(
     [EstatesModelInitialState],
@@ -29,25 +40,46 @@ export const ManagementEstates = () => {
         <Layout display="flex" justifyContent="center">
           <Link href="/management/estates/new" passHref>
             {/* todo: change ref */}
-            <AddButton />
+            <AddButton text="Dodaj nową nieruchomość" />
           </Link>
         </Layout>
-        {data.length > 0 ? (
-          <Layout display="flex" wrap="wrap" justifyContent="center">
-            {data.map((option) => (
-              <Layout
-                key={option._id}
+        {data && data.length > 0 ? (
+          <Layout display="flex" direction="column" alignItems="center">
+            {data.map((estate) => (
+              <StyledLayout
+                key={estate._id}
                 display="flex"
-                width={320}
+                direction="column"
+                width="75%"
                 background="var(--background-white)"
                 borderRadius="10px"
                 boxShadow="0px 0px 16px rgba(0, 0, 0, 0.24)"
                 margin={[15]}
                 padding={[10]}
-                onClick={() => console.log('choose estate')} // todo: send data into component
+                onClick={() => router.push(`/management/estates/${estate._id}`)} // todo: send data into component
               >
-                {option.title}
-              </Layout>
+                <Text textAlign="center" size={getRem(18)}>
+                  {estate.title}
+                </Text>
+                <Text textAlign="center" size={getRem(16)}>
+                  Lokalizacja: {estate.location}
+                </Text>
+                <Text>&nbsp;</Text>
+                <Text size={getRem(14)} textAlign="center">
+                  Odstępne: <b>{estate.fee} PLN</b>/miesiąc
+                </Text>
+                <Text size={getRem(14)} textAlign="center">
+                  Czynsz: <b>{estate.rent} PLN</b>/miesiąc
+                </Text>
+                <Text size={getRem(14)} textAlign="center">
+                  Kaucja zwrotna: <b>{estate.caution} PLN</b>/miesiąc
+                </Text>
+                <Text>&nbsp;</Text>
+                <Text size={getRem(12)} textAlign="center">
+                  Nieruchomość utworzona {parseData(estate.created_at || '')} o
+                  godzinie {parseHour(estate.created_at || '')}
+                </Text>
+              </StyledLayout>
             ))}
           </Layout>
         ) : (

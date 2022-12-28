@@ -1,4 +1,4 @@
-import { ManagementEstates } from '../../../modules/management-estates/announcements/components/announcements';
+import { ManagementEstates } from '../../../modules/management-estates/components';
 
 export const ManagementEstatesPage = () => {
   return <ManagementEstates />;

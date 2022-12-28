@@ -1,4 +1,4 @@
-export interface AnnouncementsTypes {
+export interface EstatesTypes {
   id: number;
   name: string;
   image_url: string;

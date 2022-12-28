@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 
 import { Text } from '~/components/atoms/typography';
-import { getSelectedText } from '~/components/compounds/Left-Sidebar/components/selected-text';
+import { GetSelectedText } from '~/components/compounds/Left-Sidebar/components/selected-text';
 import { LeftSidebarTypes } from '~/components/compounds/Left-Sidebar/left-sidebar.types';
 import { Layout } from '~/components/molecules/layout';
 import { getRem } from '~/styles/utils';
@@ -37,15 +37,10 @@ export const LeftSidebar = ({ options }: LeftSidebarTypes) => {
       </Layout>
       {options.map((option) => {
         return (
-          <Layout
-            marginTop={15}
-            marginBottom={15}
-            key={option.href}
-            onClick={() => router.isReady && router.push(`/${option.href}`)}
-          >
+          <Layout marginTop={15} marginBottom={15} key={option.href}>
             {getSelectedItem()?.name === option.name
-              ? getSelectedText(option.name, 'var(--text-green)')
-              : getSelectedText(option.name, 'var(--text-black)')}
+              ? GetSelectedText(option.name, 'var(--text-green)', option.href)
+              : GetSelectedText(option.name, 'var(--text-black)', option.href)}
           </Layout>
         );
       })}

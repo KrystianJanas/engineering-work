@@ -6,7 +6,7 @@ import { postQuery } from '~/api/post';
 import { useAuth } from '~/hooks/useContextProvider';
 import { EstateModel } from '~/models/estates.model';
 
-import { ManagementEstatesForm } from '../../../../modules/management/new/components';
+import { ManagementEstatesForm } from '../../../../modules/management-estates/new/components';
 
 export const ManagementEstatesAddPage = () => {
   const router = useRouter();

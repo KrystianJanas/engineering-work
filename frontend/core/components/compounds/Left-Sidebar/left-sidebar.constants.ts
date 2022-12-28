@@ -26,19 +26,24 @@ export const options = {
   // sekcja: nieruchomosc do wynajecia
   2: [
     {
-      href: 'management/announcements/test1',
+      href: 'management/estates/:id/renter',
       name: 'Lokatorzy',
       placeholder: 'Zarządzaj lokatorami',
     },
     {
-      href: 'management/announcements/test2',
+      href: 'management/estates/:id/settlement',
       name: 'Rozliczenia',
       placeholder: 'Zarządzaj rozliczeniami',
     },
     {
-      href: 'management/announcements/test3',
+      href: 'management/estates/:id/invoices',
       name: 'Faktury',
       placeholder: 'Zarządzaj fakturami',
+    },
+    {
+      href: 'management/estates',
+      name: 'Powrót do menu głownego',
+      placeholder: '',
     },
   ],
 };

@@ -6,7 +6,7 @@ import { Layout } from '~/components/molecules/layout';
 import { useForm } from '~/hooks/useForm';
 import { AnnouncementEdit } from '~/models/announcement.model';
 
-import { TypesEstates } from 'modules/management/new/new.constants';
+import { TypesEstates } from 'modules/management-estates/new/new.constants';
 
 import { AnnouncementsInitialState } from '../announcements-form.constants';
 

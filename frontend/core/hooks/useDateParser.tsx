@@ -12,5 +12,5 @@ export const parseData = (toParse: string) => {
 };
 
 export const parseHour = (toParse: string) => {
-  return toParse.split('T')[1].slice(0, 8);
+  return toParse.split('T')[1] && toParse.split('T')[1].slice(0, 8);
 };
