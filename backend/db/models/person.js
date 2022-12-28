@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
+import { Schema, model } from "mongoose";
 
-const PersonSchema = new mongoose.Schema({
+const PersonSchema = new Schema({
   name: {
     type: String,
     required: false,
@@ -32,12 +32,12 @@ const PersonSchema = new mongoose.Schema({
     default: Date.now,
   },
   user: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     required: true,
     ref: "User",
   },
 });
 
-const Person = mongoose.model("Person", PersonSchema);
+const Person = model("Person", PersonSchema);
 
-module.exports = Person;
+export default Person;

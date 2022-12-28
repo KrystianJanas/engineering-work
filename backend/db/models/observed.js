@@ -1,13 +1,13 @@
-const mongoose = require("mongoose");
+import { Schema, model } from "mongoose";
 
-const observedSchema = new mongoose.Schema({
+const observedSchema = new Schema({
   announcement: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     required: true,
     ref: "Announcement",
   },
   person: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     required: true,
     ref: "Person",
   },
@@ -15,6 +15,6 @@ const observedSchema = new mongoose.Schema({
   created_at: { type: Date, default: Date.now },
 });
 
-const Observed = mongoose.model("Observed", observedSchema);
+const Observed = model("Observed", observedSchema);
 
-module.exports = Observed;
+export default Observed;

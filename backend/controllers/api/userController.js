@@ -1,7 +1,7 @@
-const User = require("../../db/models/user");
-const Person = require("../../db/models/person");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
+import User from "../../db/models/user.js";
+import Person from "../../db/models/person.js";
+import { hash, compare } from "bcrypt";
+import jsonwebtoken from "jsonwebtoken";
 
 class UserController {
   async saveUser(request, response) {
@@ -17,7 +17,7 @@ class UserController {
 
     // let's create an account
     try {
-      const hashedPassword = await bcrypt.hash(request.body.password, 10);
+      const hashedPassword = await hash(request.body.password, 10);
       const user = new User({
         login: request.body.login,
         password: hashedPassword,
@@ -51,8 +51,8 @@ class UserController {
     }
 
     try {
-      if (await bcrypt.compare(request.body.password, user.password)) {
-        const accessToken = jwt.sign(
+      if (await compare(request.body.password, user.password)) {
+        const accessToken = jsonwebtoken.sign(
           { login: request.body.login },
           process.env.ACCESS_TOKEN_SECRET
         );
@@ -80,8 +80,8 @@ class UserController {
     }
 
     try {
-      if (await bcrypt.compare(data.password, user.password)) {
-        const hashedNewPassword = await bcrypt.hash(data.newPassword, 10);
+      if (await compare(data.password, user.password)) {
+        const hashedNewPassword = await hash(data.newPassword, 10);
         user.password = hashedNewPassword;
 
         await user.save();
@@ -95,4 +95,4 @@ class UserController {
   }
 }
 
-module.exports = new UserController();
+export default new UserController();

@@ -1,7 +1,7 @@
-const mongoose = require("mongoose");
+import { Schema, model } from "mongoose";
 
-const EstateSchema = new mongoose.Schema({
-  person: { type: mongoose.Schema.Types.ObjectId, ref: "Person" },
+const EstateSchema = new Schema({
+  person: { type: Schema.Types.ObjectId, ref: "Person" },
 
   title: { type: String, require: true },
   info: { type: String, require: true },
@@ -20,11 +20,11 @@ const EstateSchema = new mongoose.Schema({
   updated_at: { type: Date, default: Date.now },
   views: { type: Number, default: 0 },
 
-  renter: [{ type: mongoose.Schema.Types.ObjectId, ref: "Person" }],
+  renter: [{ type: Schema.Types.ObjectId, ref: "Person" }],
 
   status: { type: Boolean, default: true },
 });
 
-const Estate = mongoose.model("Estate", EstateSchema);
+const Estate = model("Estate", EstateSchema);
 
-module.exports = Estate;
+export default Estate;

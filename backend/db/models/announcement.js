@@ -1,7 +1,7 @@
-const mongoose = require("mongoose");
+import { Schema, model } from "mongoose";
 
-const AnnouncementSchema = new mongoose.Schema({
-  person: { type: mongoose.Schema.Types.ObjectId, ref: "Person" },
+const AnnouncementSchema = new Schema({
+  person: { type: Schema.Types.ObjectId, ref: "Person" },
 
   title: { type: String, require: true },
   description: { type: String, require: true },
@@ -22,6 +22,6 @@ const AnnouncementSchema = new mongoose.Schema({
   status: { type: Boolean, default: true },
 });
 
-const Announcement = mongoose.model("Announcement", AnnouncementSchema);
+const Announcement = model("Announcement", AnnouncementSchema);
 
-module.exports = Announcement;
+export default Announcement;

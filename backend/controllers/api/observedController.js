@@ -1,4 +1,4 @@
-const Observed = require("../../db/models/observed");
+import Observed from "../../db/models/observed.js";
 
 class ObservedController {
   async saveObserved(request, response) {
@@ -64,4 +64,4 @@ class ObservedController {
   }
 }
 
-module.exports = new ObservedController();
+export default new ObservedController();

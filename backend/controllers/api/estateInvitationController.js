@@ -1,4 +1,4 @@
-const EstateInvitation = require("../../db/models/estateInvitation");
+import EstateInvitation from "../../db/models/estateInvitation.js";
 
 class EstateInvitationController {
   async saveEstateInvitation(request, response) {
@@ -20,18 +20,20 @@ class EstateInvitationController {
   }
 
   async getEstateInvitations(request, response) {
-    const personID = request.params.id;
+    const id = request.params.id.trim();
     let estateInvitations;
-    estateInvitations = await EstateInvitation.findOne({
-      person: personID,
-    }).populate("estate");
+    try {
+      estateInvitations = await EstateInvitation.find({ person: id }).populate("estate", ["location", "size", "rooms", "state", "fee", "rent", "caution"]).
+      populate("person", ["_id", "name", "phone_number"]);
+    } catch (e) {
+    }
 
     if (estateInvitations) {
       response.status(200).json(estateInvitations);
     } else {
-      response
-        .status(404)
-        .json({ message: "Nie znaleziono zaproszeń do nieruchomości." });
+      response.status(404).json({
+        message: "Nie znaleziono zaproszeń do nieruchomości.",
+      });
     }
   }
 
@@ -41,7 +43,7 @@ class EstateInvitationController {
     try {
       const estateInvitation = await EstateInvitation.findOne({ _id: id });
       if (estateInvitation) {
-        await conversation.deleteOne();
+        await estateInvitation.deleteOne();
         response.sendStatus(204);
       } else {
         return response
@@ -54,4 +56,4 @@ class EstateInvitationController {
   }
 }
 
-module.exports = new EstateInvitationController();
+export default new EstateInvitationController();

@@ -1,14 +1,14 @@
-const express = require("express");
-const router = express.Router();
+import { Router } from "express";
+const router = Router();
 
-const PeopleController = require("../controllers/api/peopleController");
-const UserController = require("../controllers/api/userController");
-const AnnouncementController = require("../controllers/api/announcementController");
-const ConversationController = require("../controllers/api/conversationController");
-const MessageController = require("../controllers/api/messageController");
-const ObservedController = require("../controllers/api/observedController");
-const EstateController = require("../controllers/api/estateController");
-const EstateInvitationController = require("../controllers/api/estateInvitationController");
+import PeopleController from "../controllers/api/peopleController.js";
+import UserController from "../controllers/api/userController.js";
+import AnnouncementController from "../controllers/api/announcementController.js";
+import ConversationController from "../controllers/api/conversationController.js";
+import MessageController from "../controllers/api/messageController.js";
+import ObservedController from "../controllers/api/observedController.js";
+import EstateController from "../controllers/api/estateController.js";
+import EstateInvitationController from "../controllers/api/estateInvitationController.js";
 
 // ludzie
 router.get("/people", PeopleController.getPeople);
@@ -33,7 +33,7 @@ router.post("/announcements", AnnouncementController.saveAnnouncement);
 router.put("/announcements/:id", AnnouncementController.updateAnnouncement);
 router.delete("/announcements/:id", AnnouncementController.deleteAnnouncement);
 
-// wiadomości
+// konwersacje
 router.get(
   "/conversations/from/:id",
   ConversationController.getConversationsFrom
@@ -47,6 +47,7 @@ router.get("/conversations/", ConversationController.getConversations);
 router.post("/conversations", ConversationController.saveConversation);
 router.delete("/conversations/:id", ConversationController.deleteConversation);
 
+// wiadomosci
 router.get("/messages/:id", MessageController.getMessages);
 router.post("/messages", MessageController.saveMessage);
 
@@ -79,4 +80,4 @@ router.delete(
   EstateInvitationController.deleteEstateInvitation
 );
 
-module.exports = router;
+export default router;

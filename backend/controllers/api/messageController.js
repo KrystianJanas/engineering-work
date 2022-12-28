@@ -1,4 +1,4 @@
-const Message = require("../../db/models/message");
+import Message from "../../db/models/message.js";
 
 class MessageController {
   async saveMessage(request, response) {
@@ -35,4 +35,4 @@ class MessageController {
   }
 }
 
-module.exports = new MessageController();
+export default new MessageController();

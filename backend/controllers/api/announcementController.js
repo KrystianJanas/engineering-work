@@ -1,4 +1,4 @@
-const Announcement = require("../../db/models/announcement");
+import Announcement from "../../db/models/announcement.js";
 
 class AnnouncementController {
   async saveAnnouncement(request, response) {
@@ -38,10 +38,11 @@ class AnnouncementController {
 
   async getAnnouncement(request, response) {
     const id = request.params.id;
-    const announcement = await Announcement.findOne({ _id: id }).populate(
-      "person",
-      ["_id", "name", "phone_number"]
-    );
+    const announcement = await Announcement.findOne({ _id: id }).populate("person", [
+      "_id",
+      "name",
+      "phone_number",
+    ]);
 
     response.status(200).json(announcement);
 
@@ -114,4 +115,4 @@ class AnnouncementController {
   }
 }
 
-module.exports = new AnnouncementController();
+export default new AnnouncementController();

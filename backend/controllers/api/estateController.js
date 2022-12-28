@@ -1,4 +1,4 @@
-const Estate = require("../../db/models/estate");
+import Estate from "../../db/models/estate.js";
 
 class EstateController {
   async saveEstate(request, response) {
@@ -41,13 +41,15 @@ class EstateController {
   }
 
   async getEstate(request, response) {
-    const id = request.params.id;
     let estate;
-    estate = await Estate.findOne({ _id: id })
-      .populate("person", ["_id", "name", "phone_number"])
-      .populate("renter", ["_id", "name", "phone_number"]);
+    const id = request.params.id.trim();
+    try {
+      estate = await Estate.findOne({_id: id})
+          .populate("person", ["_id", "name", "phone_number"])
+          .populate("renter", ["_id", "name", "phone_number"]);
+    } catch (e) {
+    }
 
-    console.log("ten endpoint 1");
     if (estate) {
       response.status(200).json(estate);
     } else {
@@ -71,8 +73,6 @@ class EstateController {
       response.status(500).json({ message: error.message });
     }
 
-    console.log("ten endpoint 2");
-
     if (estates) {
       response.status(200).json(estates);
     } else {
@@ -92,8 +92,6 @@ class EstateController {
     } catch (error) {
       response.status(500).json({ message: error.message });
     }
-
-    console.log("ten endpoint 3");
 
     if (estates) {
       response.status(200).json(estates);
@@ -154,4 +152,4 @@ class EstateController {
   }
 }
 
-module.exports = new EstateController();
+export default new EstateController();

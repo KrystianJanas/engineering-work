@@ -1,4 +1,4 @@
-const Conversation = require("../../db/models/conversation");
+import Conversation from "../../db/models/conversation.js";
 
 class ConversationController {
   async saveConversation(request, response) {
@@ -97,4 +97,4 @@ class ConversationController {
   }
 }
 
-module.exports = new ConversationController();
+export default new ConversationController();

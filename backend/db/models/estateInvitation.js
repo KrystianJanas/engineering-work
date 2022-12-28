@@ -1,15 +1,12 @@
-const mongoose = require("mongoose");
+import { Schema, model } from "mongoose";
 
-const EstateInvitationSchema = new mongoose.Schema({
-  estate: { type: mongoose.Schema.Types.ObjectId, ref: "Estate" },
-  person: { type: mongoose.Schema.Types.ObjectId, ref: "Person" },
+const EstateInvitationSchema = new Schema({
+  estate: { type: Schema.Types.ObjectId, ref: "Estate" },
+  person: { type: Schema.Types.ObjectId, ref: "Person" },
 
   created_at: { type: Date, default: Date.now },
 });
 
-const EstateInvitation = mongoose.model(
-  "EstateInvitation",
-  EstateInvitationSchema
-);
+const EstateInvitation = model("EstateInvitation", EstateInvitationSchema);
 
-module.exports = EstateInvitation;
+export default EstateInvitation;

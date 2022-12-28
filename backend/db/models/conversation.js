@@ -1,19 +1,19 @@
-const mongoose = require("mongoose");
+import { Schema, model } from "mongoose";
 
-const ConversationSchema = new mongoose.Schema({
+const ConversationSchema = new Schema({
   announcement: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     required: true,
     ref: "Announcement",
   },
 
   person_from: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     required: true,
     ref: "Person",
   },
   person_to: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     required: true,
     ref: "Person",
   },
@@ -22,6 +22,6 @@ const ConversationSchema = new mongoose.Schema({
   updated_at: { type: Date, default: Date.now },
 });
 
-const Conversation = mongoose.model("Conversation", ConversationSchema);
+const Conversation = model("Conversation", ConversationSchema);
 
-module.exports = Conversation;
+export default Conversation;

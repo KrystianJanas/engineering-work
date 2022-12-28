@@ -1,18 +1,17 @@
-const mongoose = require("mongoose");
-const config = require("../config");
+import { connect } from "mongoose";
+import { database } from "../config.js";
 
 // db connect
-mongoose
-  .connect(
-    "mongodb+srv://" +
-      config.database.user +
-      ":" +
-      config.database.password +
-      "@" +
-      config.database.host +
-      "/?retryWrites=true&w=majority",
-    { useNewUrlParser: true, useUnifiedTopology: true }
-  )
+connect(
+  "mongodb+srv://" +
+    database.user +
+    ":" +
+    database.password +
+    "@" +
+    database.host +
+    "/?retryWrites=true&w=majority",
+  { useNewUrlParser: true, useUnifiedTopology: true }
+)
   .then(() => {
     console.log("mongoose is connected!");
   })

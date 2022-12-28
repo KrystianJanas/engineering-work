@@ -1,4 +1,4 @@
-const Person = require("../../db/models/person");
+import Person from "../../db/models/person.js";
 
 class PeopleController {
   async savePerson(request, response) {
@@ -77,4 +77,4 @@ class PeopleController {
   }
 }
 
-module.exports = new PeopleController();
+export default new PeopleController();
