@@ -1,13 +1,7 @@
 import { useState } from 'react';
 
-export const useForm = <FormType,>( // ErrorType
-  initialState: FormType
-  // initialErrors: ErrorType,
-  // onSubmit: (data: FormType) => void
-  // onValidate: (data: FormType) => ErrorType
-) => {
+export const useForm = <FormType,>(initialState: FormType) => {
   const [formData, setFormData] = useState(initialState);
-  // const [errors, setErrors] = useState(initialErrors);
 
   const handleChange = (key: string, value: any) => {
     setFormData((prev: any) => ({
@@ -16,28 +10,8 @@ export const useForm = <FormType,>( // ErrorType
     }));
   };
 
-  // const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-  //   // const validationErrors = onValidate(formData);
-  //   // setErrors(validationErrors);
-  //   // if (Object.keys(validationErrors).length === 0) {
-  //   onSubmit(formData);
-  //   // }
-  // };
-
-  // const handleClickSubmit = () => {
-  //   // const validationErrors = onValidate(formData);
-  //   // setErrors(validationErrors);
-  //   // if (Object.keys(validationErrors).length === 0) {
-  //   onSubmit(formData);
-  //   // }
-  // };
-
   return {
-    // errors,
     formData,
     handleChange,
-    // handleSubmit,
-    // handleClickSubmit,
   };
 };

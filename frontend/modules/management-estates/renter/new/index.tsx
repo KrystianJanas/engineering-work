@@ -34,7 +34,6 @@ export const NewRenter = () => {
     personID.toString()
   );
 
-  // const [mail, setMail] = useState('');
   const [helperText, setHelperText] = useState('');
   const [mail, setMail] = useState('');
 
