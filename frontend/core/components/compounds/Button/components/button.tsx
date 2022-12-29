@@ -12,6 +12,10 @@ const StyledLayout = styled(Layout)`
   }
 `;
 
+const StyledText = styled(Text)`
+  text-decoration: none;
+`;
+
 export const Button = ({ text, onSubmit, width }: ButtonTypes) => {
   return (
     <StyledLayout
@@ -24,14 +28,14 @@ export const Button = ({ text, onSubmit, width }: ButtonTypes) => {
       alignItems="center"
       width={width && width}
     >
-      <Text
+      <StyledText
         weight={700}
         size={getRem(14)}
         color="var(--background-white)"
         lineHeight="138%"
       >
         {text}
-      </Text>
+      </StyledText>
     </StyledLayout>
   );
 };

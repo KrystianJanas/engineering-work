@@ -2,13 +2,18 @@ import toast from 'react-hot-toast';
 
 import { useRouter } from 'next/router';
 
+import { updateQuery } from '~/api/update';
 import { Text } from '~/components/atoms/typography';
+import { Button } from '~/components/compounds/Button';
 import { LeftSidebar } from '~/components/compounds/Left-Sidebar';
+import { ModalComponent } from '~/components/compounds/ModalComponent';
+import { useModalComponent } from '~/components/compounds/ModalComponent/useModalComponent';
 import { SpinnerLoading } from '~/components/compounds/Spinner';
 import { Layout } from '~/components/molecules/layout';
 import { useAuth } from '~/hooks/useContextProvider';
 import { useGetData } from '~/hooks/useGetData';
 import { EstateModel, EstatesModelInitialState } from '~/models/estates.model';
+import { getEstatesOptions } from '~/renterOptions';
 import { getRem } from '~/styles/utils';
 
 export const ManagementEstateIDDetails = () => {
@@ -17,6 +22,9 @@ export const ManagementEstateIDDetails = () => {
 
   // TODO: check person permissions -> is associated with this estate?
   // person or renter...
+
+  const { modalActive, setModalActive, modalData, setModalData } =
+    useModalComponent();
 
   const redirectedFunction = () => {
     if (router.isReady) {
@@ -41,36 +49,20 @@ export const ManagementEstateIDDetails = () => {
     return <SpinnerLoading />;
   }
 
-  const options = {
-    2: [
-      {
-        href: `management/estates/${router.query.id}`,
-        name: 'Nieruchomość',
-        placeholder: 'Szczegóły nieruchomości',
-      },
-      data.person._id === personID
-        ? {
-            href: `management/estates/${router.query.id}/renter`,
-            name: 'Lokatorzy',
-            placeholder: 'Zarządzaj lokatorami',
-          }
-        : { href: '', name: '', placeholder: '' },
-      {
-        href: `management/estates/${router.query.id}/settlement`,
-        name: 'Rozliczenia',
-        placeholder: 'Zarządzaj rozliczeniami',
-      },
-      {
-        href: `management/estates/${router.query.id}/invoices`,
-        name: 'Faktury',
-        placeholder: 'Zarządzaj fakturami',
-      },
-      {
-        href: 'management/estates',
-        name: 'Powrót do menu głownego',
-        placeholder: '',
-      },
-    ],
+  const options = getEstatesOptions(
+    router.query.id ? router.query.id.toString() : '',
+    data,
+    personID.toString()
+  );
+
+  const leaveEstateByRenter = async (estateID: string) => {
+    const response = await updateQuery(`/estates/remove_renter/${estateID}`, {
+      person_id: personID,
+    });
+    if (response) {
+      await router.push('/management');
+      toast.success('Pomyślnie opuszczono nieruchomość.');
+    }
   };
 
   return (
@@ -109,7 +101,7 @@ export const ManagementEstateIDDetails = () => {
         <Text size={getRem(16)}>Liczba metrów kwadratowych: {data.size}</Text>
         <Text size={getRem(16)}>Lokalizacja: {data.location}</Text>{' '}
         <Text size={getRem(16)}>Stan wyposażenia: {data.state}</Text>
-        {data.renter && (
+        {data.renter.length > 0 && (
           <Layout>
             {' '}
             &nbsp;
@@ -134,6 +126,47 @@ export const ManagementEstateIDDetails = () => {
             </Text>
             <Text size={getRem(16)}>{data.info}</Text>
           </Layout>
+        )}
+        {data.person._id !== personID ? (
+          <Layout display="flex" justifyContent="center" marginTop={20}>
+            <Button
+              text="Opuść nieruchomość"
+              onSubmit={() => {
+                setModalData({
+                  id: `${router.query.id}`,
+                  description:
+                    'Czy na pewno chcesz opuścić tą nieruchomość? Podejmij decyzję poniżej.',
+                });
+                setModalActive(true);
+              }}
+            />
+          </Layout>
+        ) : (
+          <Layout display="flex" justifyContent="center" marginTop={20}>
+            <Button
+              text="Usuń nieruchomość"
+              onSubmit={() => {
+                setModalData({
+                  id: `${router.query.id}`,
+                  description:
+                    'Czy na pewno chcesz usunąć tą nieruchomość? Podejmij decyzję poniżej.',
+                });
+                setModalActive(true);
+              }}
+            />
+          </Layout>
+        )}
+        {modalActive && (
+          <ModalComponent
+            title="OPUSZCZANIE NIERUCHOMOŚCI"
+            description={modalData.description}
+            cancelButton
+            cancelText="Nie chcę opuszczać"
+            onHide={() => setModalActive(false)}
+            confirmButton
+            confirmText="Opuszczam"
+            onConfirm={() => leaveEstateByRenter(`${router.query.id}`)}
+          />
         )}
       </Layout>
     </Layout>

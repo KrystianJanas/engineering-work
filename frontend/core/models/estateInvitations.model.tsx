@@ -5,11 +5,13 @@ import {
 } from '~/models/person.model';
 
 export interface EstateInvitationsModel {
+  _id: string;
   estate: EstateModel;
   person: PersonLoginIdModel;
 }
 
 export const EstateInvitationsModelInitialState = {
+  _id: '',
   estate: EstatesModelInitialState,
   person: PersonLoginIdModelInitialState,
 };
