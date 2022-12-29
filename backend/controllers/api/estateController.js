@@ -1,4 +1,7 @@
 import Estate from "../../db/models/estate.js";
+import person from "../../db/models/person.js";
+import { mongo } from "mongoose";
+
 
 class EstateController {
   async saveEstate(request, response) {
@@ -55,9 +58,6 @@ class EstateController {
     } else {
       response.status(404).json({ message: "Nie znaleziono nieruchomości." });
     }
-
-    // estate.views = estate.views + 1; // make it only max 1 view per 1 visit on page.... ?? FE-SIDE
-    // await estate.save();
   }
 
   async getEstatesByPerson(request, response) {
@@ -125,7 +125,55 @@ class EstateController {
         await estate.save();
         response.status(200).json(estate);
       } else {
-        return response.status(422).json({ message: "Estate not found" });
+        return response.status(422).json({ message: "Nie znaleziono nieruchomości." });
+      }
+    } catch (error) {
+      return response.status(422).json({ message: error.message });
+    }
+  }
+
+  async addNewRenterToEstate(request, response) {
+    const id = request.params.id;
+    const data = request.body;
+
+    // check:
+    // 1. czy jest dodany do nieruchomosci juz jako renter
+    // 2. czy jest dodany do estateInvitations jako oczekujacy?...
+
+    try {
+      const estate = await Estate.findOne({ _id: id });
+      if (estate) {
+        estate.renter = [...estate.renter, data.person_id]
+        estate.updated_at = Date.now();
+
+        await estate.save();
+        response.sendStatus(204);
+      } else {
+        return response.status(422).json({ message: "Nie znaleziono nieruchomości." });
+      }
+    } catch (error) {
+      return response.status(422).json({ message: error.message });
+    }
+  }
+
+  async removeRenterFromEstate(request, response) {
+    const id = request.params.id;
+    const { person_id } = request.body;
+
+
+    try {
+      const estate = await Estate.findOne({ _id: id });
+      if (estate) {
+        if(estate.renter.includes(person_id)) {
+          estate.renter = estate.renter.filter((est) => !est.equals( new mongo.ObjectID(person_id)))
+          await estate.save();
+
+          response.sendStatus(204);
+        } else {
+          return response.status(422).json({ message: "Nie znaleziono osoby przypisanej do tej nieruchomości." });
+        }
+      } else {
+        return response.status(422).json({ message: "Nie znaleziono nieruchomości." });
       }
     } catch (error) {
       return response.status(422).json({ message: error.message });
@@ -142,9 +190,10 @@ class EstateController {
         estate.updated_at = Date.now();
 
         await estate.save();
+
         response.sendStatus(204);
       } else {
-        return response.status(422).json({ message: "Estate not found" });
+        return response.status(422).json({ message: "Nie znaleziono nieruchomości." });
       }
     } catch (error) {
       return response.status(422).json({ message: error.message });

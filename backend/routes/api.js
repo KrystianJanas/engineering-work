@@ -64,12 +64,18 @@ router.get("/estates/person/:id/:status", EstateController.getEstatesByPerson);
 router.get("/estates/renter/:id/:status", EstateController.getEstatesByRenter);
 router.post("/estates", EstateController.saveEstate);
 router.put("/estates/:id", EstateController.updateEstate);
+router.put("/estates/add_renter/:id", EstateController.addNewRenterToEstate);
+router.put("/estates/remove_renter/:id", EstateController.removeRenterFromEstate);
 router.delete("/estates/:id", EstateController.deleteEstate);
 
 // zaproszenia do nieruchomości
 router.get(
-  "/estatesInvitations/:id",
-  EstateInvitationController.getEstateInvitations
+  "/estatesInvitations/person/:id",
+  EstateInvitationController.getPersonInvitationsToEstate
+);
+router.get(
+    "/estatesInvitations/estate/:id",
+    EstateInvitationController.getEstateInvitations
 );
 router.post(
   "/estatesInvitations",
