@@ -164,7 +164,7 @@ export const ManagementEstateIDDetails = () => {
             <Text size={getRem(16)}>{data.info}</Text>
           </Layout>
         )}
-        {dataCosts && (
+        {dataCosts ? (
           <Layout>
             &nbsp;
             <Text weight={700} size={getRem(16)}>
@@ -173,20 +173,36 @@ export const ManagementEstateIDDetails = () => {
             <Layout>
               <Text size={getRem(16)}>
                 Średni koszt stały za prąd: {dataCosts.current_fixedCosts}{' '}
-                PLN/miesiąc, średnia cena za 1kWh prądu:{' '}
+                PLN/miesiąc, średnia cena za każdy 1kWh użytego prądu:{' '}
                 {dataCosts.current_costPerOne} PLN.
               </Text>
               <Text size={getRem(16)}>
                 Średni koszt stały za gaz: {dataCosts.gas_fixedCosts}{' '}
-                PLN/miesiąc, średnia cena za 1m³ gazu:{' '}
+                PLN/miesiąc, średnia cena za każdy 1m³ użytego gazu:{' '}
                 {dataCosts.gas_costPerOne} PLN.
               </Text>
               <Text size={getRem(16)}>
                 Średni koszt stały za wodę: {dataCosts.water_fixedCosts}{' '}
-                PLN/miesiąc, średnia cena za 1m³ wody:{' '}
+                PLN/miesiąc, średnia cena za każdy 1m³ użytej wody:{' '}
                 {dataCosts.water_costPerOne} PLN.
               </Text>
             </Layout>
+          </Layout>
+        ) : (
+          <Layout>
+            &nbsp;
+            <Text weight={700} size={getRem(16)}>
+              Informacje o kosztach stałych
+            </Text>
+            <Text size={getRem(16)}>
+              Zarządca nieruchomości nie wprowadził jeszcze informacji o
+              kosztach stałych dotyczących prądu, gazu i wody.
+            </Text>
+            <Text size={getRem(16)}>
+              Na ten moment podawanie zużycia prądu, gazu oraz wody w zakładce{' '}
+              <i>Rozliczenia</i> nie jest możliwe, do czasu uzupełnienia
+              powyższych danych przez zarządce nieruchomości.
+            </Text>
           </Layout>
         )}
         {data.person._id !== personID ? (
