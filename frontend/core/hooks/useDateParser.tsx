@@ -3,14 +3,14 @@ export const useDateParser = (date: string) => {
   return { date: dateParser };
 };
 
-export const parseDateHour = (toParse: string) => {
-  return new Date(toParse).toLocaleString('de-DE');
-};
-
 export const parseData = (toParse: string) => {
-  return new Date(toParse).toLocaleDateString('pl');
+  return new Date(toParse).toLocaleDateString('pl').replaceAll('.', '-');
 };
 
 export const parseHour = (toParse: string) => {
-  return toParse.split('T')[1] && toParse.split('T')[1].slice(0, 8);
+  return toParse.split('T')[1] && toParse.split('T')[1].slice(0, 5);
+};
+
+export const makeFullDataHour = (data: string, text: string) => {
+  return `${text} ${parseData(data)}, ${parseHour(data)}`;
 };

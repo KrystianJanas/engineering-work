@@ -17,15 +17,15 @@ export const TypesEstates = [
     label: 'Stan deweloperski',
   },
   {
-    value: 'Mieszkanie umeblowane',
-    label: 'Mieszkanie umeblowane',
+    value: 'Nieruchomość umeblowana',
+    label: 'Nieruchomość umeblowana',
   },
   {
-    value: 'Mieszkanie nieumeblowane',
-    label: 'Mieszkanie nieumeblowane',
+    value: 'Nieruchomość nieumeblowana',
+    label: 'Nieruchomość nieumeblowana',
   },
   {
-    value: 'Mieszkanie częściowo wyposażone',
-    label: 'Mieszkanie częściowo wyposażone',
+    value: 'Nieruchomość częściowo wyposażona',
+    label: 'Nieruchomość częściowo wyposażona',
   },
 ];

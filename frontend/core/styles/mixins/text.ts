@@ -9,6 +9,7 @@ export interface TextMixinProps {
   lineHeight?: Property.LineHeight;
   textAlign?: Property.TextAlign;
   flex?: Property.Flex;
+  width?: Property.Width;
 }
 
 export const textMixin = ({
@@ -20,6 +21,7 @@ export const textMixin = ({
   lineHeight,
   textAlign,
   flex,
+  width,
 }: TextMixinProps) => ({
   fontWeight: weight,
   fontSize: size,
@@ -30,4 +32,5 @@ export const textMixin = ({
   lineHeight,
   textAlign,
   flex,
+  width,
 });

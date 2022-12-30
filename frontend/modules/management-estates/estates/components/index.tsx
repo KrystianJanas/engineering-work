@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 import { Text } from '~/components/atoms/typography';
@@ -38,10 +37,10 @@ export const ManagementEstates = () => {
       <LeftSidebar options={options[1]} />
       <Layout width="100%">
         <Layout display="flex" justifyContent="center">
-          <Link href="/management/estates/new" passHref>
-            {/* todo: change ref */}
-            <AddButton text="Dodaj nową nieruchomość" />
-          </Link>
+          <AddButton
+            text="Dodaj nową nieruchomość"
+            onClick={() => router.push('/management/estates/new')}
+          />
         </Layout>
         {data && data.length > 0 ? (
           <Layout display="flex" direction="column" alignItems="center">

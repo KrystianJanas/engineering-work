@@ -2,6 +2,7 @@ import toast from 'react-hot-toast';
 
 import { useRouter } from 'next/router';
 
+import { deleteQuery } from '~/api/delete';
 import { updateQuery } from '~/api/update';
 import { Text } from '~/components/atoms/typography';
 import { Button } from '~/components/compounds/Button';
@@ -26,13 +27,12 @@ export const ManagementEstateIDDetails = () => {
   const { modalActive, setModalActive, modalData, setModalData } =
     useModalComponent();
 
-  const redirectedFunction = () => {
-    if (router.isReady) {
-      router
-        .push('/management/estates')
-        .then(() => toast.error('Nie masz tu dostępu.'));
-    }
-  };
+  const {
+    modalActive: modalActiveDeleteEstate,
+    setModalActive: setModalActiveDeleteEstate,
+    modalData: modalDataDeleteEstate,
+    setModalData: setModalDataDeleteEstate,
+  } = useModalComponent();
 
   const { data, isLoading } = useGetData<EstateModel>(
     EstatesModelInitialState,
@@ -40,7 +40,23 @@ export const ManagementEstateIDDetails = () => {
     `${router.query.id}`
   );
 
+  const redirectedFunction = () => {
+    if (router.isReady) {
+      router.push('/management/estates');
+    }
+  };
+
   if (isLoading) {
+    return <SpinnerLoading />;
+  }
+
+  if (
+    !(
+      data.person._id === personID ||
+      data.renter.find((rent) => rent._id === personID)
+    )
+  ) {
+    redirectedFunction();
     return <SpinnerLoading />;
   }
 
@@ -62,6 +78,14 @@ export const ManagementEstateIDDetails = () => {
     if (response) {
       await router.push('/management');
       toast.success('Pomyślnie opuszczono nieruchomość.');
+    }
+  };
+
+  const deleteEstate = async (estateID: string) => {
+    const response = await deleteQuery('estates', `${estateID}`);
+    if (response) {
+      await router.push('/management/estates');
+      toast.success('Pomyślnie usunięto nieruchomość.');
     }
   };
 
@@ -90,9 +114,11 @@ export const ManagementEstateIDDetails = () => {
         <Text weight={700} size={getRem(16)}>
           Informacje dotyczące kosztów wynajmu
         </Text>
-        <Text size={getRem(16)}>Czynsz: {data.rent}</Text>
-        <Text size={getRem(16)}>Odstępne: {data.fee}</Text>
-        <Text size={getRem(16)}>Kaucja zwrotna: {data.caution}</Text>
+        <Text size={getRem(16)}>Czynsz: {data.rent} PLN/miesiąc</Text>
+        <Text size={getRem(16)}>Odstępne: {data.fee} PLN/miesiąc</Text>
+        <Text size={getRem(16)}>
+          Kaucja zwrotna: {data.caution} PLN (płatność jednorazowa)
+        </Text>
         &nbsp;
         <Text weight={700} size={getRem(16)}>
           Informacje dotyczące nieruchomości
@@ -146,12 +172,12 @@ export const ManagementEstateIDDetails = () => {
             <Button
               text="Usuń nieruchomość"
               onSubmit={() => {
-                setModalData({
+                setModalDataDeleteEstate({
                   id: `${router.query.id}`,
                   description:
                     'Czy na pewno chcesz usunąć tą nieruchomość? Podejmij decyzję poniżej.',
                 });
-                setModalActive(true);
+                setModalActiveDeleteEstate(true);
               }}
             />
           </Layout>
@@ -166,6 +192,18 @@ export const ManagementEstateIDDetails = () => {
             confirmButton
             confirmText="Opuszczam"
             onConfirm={() => leaveEstateByRenter(`${router.query.id}`)}
+          />
+        )}
+        {modalActiveDeleteEstate && (
+          <ModalComponent
+            title="USUWANIE NIERUCHOMOŚCI"
+            description={modalDataDeleteEstate.description}
+            cancelButton
+            cancelText="Nie chcę usunąć"
+            onHide={() => setModalActiveDeleteEstate(false)}
+            confirmButton
+            confirmText="Usuwam"
+            onConfirm={() => deleteEstate(`${router.query.id}`)}
           />
         )}
       </Layout>

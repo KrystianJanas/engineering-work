@@ -18,6 +18,7 @@ export interface PersonLoginIdModel {
 
 export interface PersonConversationsModel {
   name: string;
+  _id?: string;
 }
 
 // -------- INITIAL STATES
@@ -30,6 +31,7 @@ export const PersonLoginIdModelInitialState: PersonLoginIdModel = {
 
 export const PersonConversationsModelInitialState: PersonConversationsModel = {
   name: '',
+  _id: '',
 };
 
 export const PersonModelInitialState: PersonModel = {

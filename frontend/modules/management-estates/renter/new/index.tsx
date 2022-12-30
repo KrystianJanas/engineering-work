@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 
 import { TextField } from '@mui/material';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 import { postQuery } from '~/api/post';
@@ -118,16 +117,12 @@ export const NewRenter = () => {
             </Text>
           </Layout>
           <Layout display="flex" gap="20px">
-            <Link
-              href={{
-                pathname: `/management/estates/${router.query.id}/renter`,
-              }}
-              passHref
-            >
-              <a>
-                <Button text="Powrót" onSubmit={() => null} />
-              </a>
-            </Link>
+            <Button
+              text="Powrót"
+              onSubmit={() =>
+                router.push(`/management/estates/${router.query.id}/renter`)
+              }
+            />
             <Button
               text="Wyślij zaproszenie"
               onSubmit={() => sendInvitation()}

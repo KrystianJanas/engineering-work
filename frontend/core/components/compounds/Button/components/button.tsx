@@ -16,13 +16,13 @@ const StyledText = styled(Text)`
   text-decoration: none;
 `;
 
-export const Button = ({ text, onSubmit, width }: ButtonTypes) => {
+export const Button = ({ text, onSubmit, width, disabled }: ButtonTypes) => {
   return (
     <StyledLayout
       background="var(--background-light-blue)"
       borderRadius="4px"
       padding={[10, 15]}
-      onClick={onSubmit}
+      onClick={disabled ? () => null : onSubmit}
       display="flex"
       justifyContent="center"
       alignItems="center"

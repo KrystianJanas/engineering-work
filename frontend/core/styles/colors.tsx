@@ -12,6 +12,7 @@ export const colorsStyles = css`
 
     --border-grey: #c3d4e966;
     --border-black: rgba(0, 0, 0, 0.4);
+    --border-light-black: rgba(0, 0, 0, 0.2);
 
     --text-black: #1a202c;
     --text-grey: #90a3bf;
