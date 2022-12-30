@@ -56,18 +56,20 @@ export const ManagementEstateFixedCosts = () => {
     );
 
   useEffect(() => {
-    setCurrent({
-      fixed_costs: dataCosts.current_fixedCosts,
-      cost_per_one: dataCosts.current_costPerOne,
-    });
-    setGas({
-      fixed_costs: dataCosts.gas_fixedCosts,
-      cost_per_one: dataCosts.gas_costPerOne,
-    });
-    setWater({
-      fixed_costs: dataCosts.water_fixedCosts,
-      cost_per_one: dataCosts.water_costPerOne,
-    });
+    if (dataCosts) {
+      setCurrent({
+        fixed_costs: dataCosts.current_fixedCosts,
+        cost_per_one: dataCosts.current_costPerOne,
+      });
+      setGas({
+        fixed_costs: dataCosts.gas_fixedCosts,
+        cost_per_one: dataCosts.gas_costPerOne,
+      });
+      setWater({
+        fixed_costs: dataCosts.water_fixedCosts,
+        cost_per_one: dataCosts.water_costPerOne,
+      });
+    }
   }, [dataCosts]);
 
   const redirectedFunction = () => {

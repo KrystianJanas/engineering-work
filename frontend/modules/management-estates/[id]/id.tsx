@@ -13,6 +13,10 @@ import { SpinnerLoading } from '~/components/compounds/Spinner';
 import { Layout } from '~/components/molecules/layout';
 import { useAuth } from '~/hooks/useContextProvider';
 import { useGetData } from '~/hooks/useGetData';
+import {
+  EstateCostsModel,
+  EstateCostsModelInitialState,
+} from '~/models/estateCosts.model';
 import { EstateModel, EstatesModelInitialState } from '~/models/estates.model';
 import { getEstatesOptions } from '~/renterOptions';
 import { getRem } from '~/styles/utils';
@@ -40,13 +44,20 @@ export const ManagementEstateIDDetails = () => {
     `${router.query.id}`
   );
 
+  const { data: dataCosts, isLoading: isLoadingCosts } =
+    useGetData<EstateCostsModel>(
+      EstateCostsModelInitialState,
+      'estates/costs',
+      `${router.query.id}`
+    );
+
   const redirectedFunction = () => {
     if (router.isReady) {
       router.push('/management/estates');
     }
   };
 
-  if (isLoading) {
+  if (isLoading || isLoadingCosts) {
     return <SpinnerLoading />;
   }
 
@@ -151,6 +162,31 @@ export const ManagementEstateIDDetails = () => {
               Dodatkowe informacje
             </Text>
             <Text size={getRem(16)}>{data.info}</Text>
+          </Layout>
+        )}
+        {dataCosts && (
+          <Layout>
+            &nbsp;
+            <Text weight={700} size={getRem(16)}>
+              Informacje o kosztach stałych
+            </Text>
+            <Layout>
+              <Text size={getRem(16)}>
+                Średni koszt stały za prąd: {dataCosts.current_fixedCosts}{' '}
+                PLN/miesiąc, średnia cena za 1kWh prądu:{' '}
+                {dataCosts.current_costPerOne} PLN.
+              </Text>
+              <Text size={getRem(16)}>
+                Średni koszt stały za gaz: {dataCosts.gas_fixedCosts}{' '}
+                PLN/miesiąc, średnia cena za 1m³ gazu:{' '}
+                {dataCosts.gas_costPerOne} PLN.
+              </Text>
+              <Text size={getRem(16)}>
+                Średni koszt stały za wodę: {dataCosts.water_fixedCosts}{' '}
+                PLN/miesiąc, średnia cena za 1m³ wody:{' '}
+                {dataCosts.water_costPerOne} PLN.
+              </Text>
+            </Layout>
           </Layout>
         )}
         {data.person._id !== personID ? (
