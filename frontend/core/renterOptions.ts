@@ -34,6 +34,13 @@ export const getEstatesOptions = (
         name: 'Wiadomości',
         placeholder: 'Osoby z nieruchomości',
       },
+      dataEstate.person._id === personID
+        ? {
+            href: `management/estates/${queryID}/costs`,
+            name: 'Koszty stałe',
+            placeholder: 'Zarządzaj kosztami stałymi',
+          }
+        : { href: '', name: '', placeholder: '' },
       {
         href: 'management',
         name: 'Powrót do menu głownego',
