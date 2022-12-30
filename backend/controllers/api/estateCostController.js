@@ -1,4 +1,4 @@
-import EstateCostSchema from "../../db/models/estateCost.js";
+import EstateCost from "../../db/models/estateCost.js";
 
 class EstateCostController {
     async saveCosts(request, response) {
@@ -7,7 +7,7 @@ class EstateCostController {
         let costFind;
         let cost;
         try {
-            costFind = await EstateCostSchema.findOne({ estate: data.estate_id });
+            costFind = await EstateCost.findOne({ estate: data.estate_id });
 
             if(costFind && costFind._id) {
                 costFind.current_fixedCosts = data.current_fixedCosts || costFind.current_fixedCosts;
@@ -25,7 +25,7 @@ class EstateCostController {
                 response.status(200).json(costFind);
 
             } else {
-                cost = new EstateCostSchema({
+                cost = new EstateCost({
                     estate: data.estate_id,
 
                     current_fixedCosts: data.current_fixedCosts,
@@ -50,7 +50,7 @@ class EstateCostController {
         const estate_id = request.params.id;
 
         try {
-            costs = await EstateCostSchema.findOne({ estate: estate_id });
+            costs = await EstateCost.findOne({ estate: estate_id });
         } catch (error) {
             response.status(500).json({ message: error.message });
         }

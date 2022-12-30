@@ -11,6 +11,7 @@ import EstateController from "../controllers/api/estateController.js";
 import EstateInvitationController from "../controllers/api/estateInvitationController.js";
 import EstateMessageController from "../controllers/api/estateMessageController.js";
 import EstateCostController from "../controllers/api/estateCostController.js";
+import EstateSettlementController from "../controllers/api/estateSettlementController.js";
 
 // ludzie
 router.get("/people", PeopleController.getPeople);
@@ -77,6 +78,13 @@ router.post("/estates/messages", EstateMessageController.saveMessage);
 // nieruchomości -> koszty stałe
 router.get("/estates/costs/:id", EstateCostController.getCosts);
 router.post("/estates/costs", EstateCostController.saveCosts);
+
+// nieruchomości -> rozliczenia
+router.get("/estates/settlements/:id", EstateSettlementController.getSettlements);
+router.get("/estates/settlements/thisMonth/:id", EstateSettlementController.getSettlementInThisMonth);
+router.post("/estates/settlements", EstateSettlementController.saveSettlement);
+
+
 
 // zaproszenia do nieruchomości
 router.get(
