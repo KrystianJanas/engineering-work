@@ -9,6 +9,7 @@ import MessageController from "../controllers/api/messageController.js";
 import ObservedController from "../controllers/api/observedController.js";
 import EstateController from "../controllers/api/estateController.js";
 import EstateInvitationController from "../controllers/api/estateInvitationController.js";
+import EstateMessageController from "../controllers/api/estateMessageController.js";
 
 // ludzie
 router.get("/people", PeopleController.getPeople);
@@ -67,6 +68,10 @@ router.put("/estates/:id", EstateController.updateEstate);
 router.put("/estates/add_renter/:id", EstateController.addNewRenterToEstate);
 router.put("/estates/remove_renter/:id", EstateController.removeRenterFromEstate);
 router.delete("/estates/:id", EstateController.deleteEstate);
+
+// nieruchomości -> wiadomości
+router.get("/estates/messages/:id", EstateMessageController.getMessages);
+router.post("/estates/messages", EstateMessageController.saveMessage);
 
 // zaproszenia do nieruchomości
 router.get(
