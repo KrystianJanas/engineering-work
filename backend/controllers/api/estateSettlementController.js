@@ -1,5 +1,6 @@
 import EstateSettlement from "../../db/models/estateSettlement.js";
 import EstateCost from "../../db/models/estateCost.js";
+import Observed from "../../db/models/observed.js";
 
 class EstateSettlementController {
     async saveSettlement(request, response) {
@@ -46,7 +47,8 @@ class EstateSettlementController {
         const estate_id = request.params.id;
 
         try {
-            settlements = await EstateSettlement.find({ estate: estate_id });
+            settlements = await EstateSettlement.find({ estate: estate_id }).sort({data: -1}).
+            populate("person", ["_id", "name", "phone_number"]);
         } catch (error) {
             response.status(500).json({ message: error.message });
         }
@@ -71,6 +73,24 @@ class EstateSettlementController {
             }
         } catch (error) {
             response.status(500).json({ message: error.message });
+        }
+    }
+
+    async deleteSettlement(request, response) {
+        const id = request.params.id;
+
+        try {
+            const settlement = await EstateSettlement.findOne({ _id: id });
+            if (settlement) {
+                await settlement.deleteOne();
+                response.sendStatus(204);
+            } else {
+                return response
+                    .status(422)
+                    .json({ message: "Nie znaleziono rozliczenia." });
+            }
+        } catch (error) {
+            return response.status(422).json({ message: error.message });
         }
     }
 }

@@ -83,6 +83,7 @@ router.post("/estates/costs", EstateCostController.saveCosts);
 router.get("/estates/settlements/:id", EstateSettlementController.getSettlements);
 router.get("/estates/settlements/thisMonth/:id", EstateSettlementController.getSettlementInThisMonth);
 router.post("/estates/settlements", EstateSettlementController.saveSettlement);
+router.delete("/estates/settlements/:id", EstateSettlementController.deleteSettlement);
 
 
 
