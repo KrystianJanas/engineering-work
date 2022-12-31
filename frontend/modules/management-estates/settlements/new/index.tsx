@@ -10,6 +10,7 @@ import { Button } from '~/components/compounds/Button';
 import { LeftSidebar } from '~/components/compounds/Left-Sidebar';
 import { SpinnerLoading } from '~/components/compounds/Spinner';
 import { Layout } from '~/components/molecules/layout';
+import { useActivity } from '~/hooks/useActivity';
 import { useAuth } from '~/hooks/useContextProvider';
 import { useGetData } from '~/hooks/useGetData';
 import {
@@ -26,6 +27,8 @@ import { newSettlementValidation } from './new.validation';
 export const SettlementNew = () => {
   const router = useRouter();
   const { personID } = useAuth();
+
+  const { activity, setActivity } = useActivity();
 
   const [current, setCurrent] = useState(0);
   const [gas, setGas] = useState(0);
@@ -71,13 +74,15 @@ export const SettlementNew = () => {
     personID.toString()
   );
 
-  let sendRequest = false;
   const sendNewSettlement = async () => {
-    sendRequest = true;
+    if (activity) {
+      return null;
+    }
+    setActivity(true);
     const error = newSettlementValidation(current, gas, water);
     if (error) {
       toast.error(error);
-      sendRequest = false;
+      setActivity(false);
     } else {
       const response = await postQuery('estates/settlements', {
         estate_id: router.query.id,
@@ -88,15 +93,16 @@ export const SettlementNew = () => {
       });
       if (response) {
         await router.push(`/management/estates/${router.query.id}/settlements`);
-        sendRequest = false;
+        setActivity(false);
         toast.success(
           'Pozytywnie wprowadzono zużycie prądu, gazu oraz wody w tym miesiącu.'
         );
       } else {
         toast.error('Coś poszło nie tak...');
-        sendRequest = false;
+        setActivity(false);
       }
     }
+    return null;
   };
 
   return (
@@ -188,7 +194,7 @@ export const SettlementNew = () => {
               />
               <Button
                 text="Wyślij zużycie"
-                disabled={sendRequest}
+                disabled={activity}
                 onSubmit={() => sendNewSettlement()}
               />
             </Layout>

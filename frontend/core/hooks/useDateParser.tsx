@@ -14,3 +14,7 @@ export const parseHour = (toParse: string) => {
 export const makeFullDataHour = (data: string, text: string) => {
   return `${text} ${parseData(data)}, ${parseHour(data)}`;
 };
+
+export const parseDateSettlement = (data: string) => {
+  return `MIESIĄC: ${data.split('-')[1]}, ROK: ${data.split('-')[0]}`;
+};

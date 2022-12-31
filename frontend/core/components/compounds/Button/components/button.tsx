@@ -22,7 +22,7 @@ export const Button = ({ text, onSubmit, width, disabled }: ButtonTypes) => {
       background="var(--background-light-blue)"
       borderRadius="4px"
       padding={[10, 15]}
-      onClick={disabled ? () => null : onSubmit}
+      onClick={disabled ? () => console.log('disabled') : onSubmit}
       display="flex"
       justifyContent="center"
       alignItems="center"

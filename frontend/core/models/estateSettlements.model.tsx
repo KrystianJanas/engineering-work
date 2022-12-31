@@ -1,6 +1,13 @@
+import {
+  PersonLoginIdModel,
+  PersonLoginIdModelInitialState,
+} from '~/models/person.model';
+
 export interface EstateSettlementsModel {
+  _id: string;
+
   estate: string;
-  person: string;
+  person: PersonLoginIdModel;
 
   data: string; // year-month
 
@@ -11,6 +18,10 @@ export interface EstateSettlementsModel {
   current_cost_one: string;
   gas_cost_one: string;
   water_cost_one: string;
+
+  current_fixed_costs: string;
+  gas_fixed_costs: string;
+  water_fixed_costs: string;
 
   created_at: string;
 }
@@ -25,8 +36,10 @@ export interface EstateSettlementNewModel {
 // initial states
 
 export const EstateSettlementsModelInitialState: EstateSettlementsModel = {
+  _id: '',
+
   estate: '',
-  person: '',
+  person: PersonLoginIdModelInitialState,
 
   data: '', // year-month
 
@@ -39,6 +52,10 @@ export const EstateSettlementsModelInitialState: EstateSettlementsModel = {
   water_cost_one: '',
 
   created_at: '',
+
+  current_fixed_costs: '',
+  gas_fixed_costs: '',
+  water_fixed_costs: '',
 };
 
 export const EstateSettlementNewModelInitialState: EstateSettlementNewModel = {
