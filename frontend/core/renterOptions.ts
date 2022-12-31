@@ -20,7 +20,7 @@ export const getEstatesOptions = (
           }
         : { href: '', name: '', placeholder: '' },
       {
-        href: `management/estates/${queryID}/settlement`,
+        href: `management/estates/${queryID}/settlements`,
         name: 'Rozliczenia',
         placeholder: 'Zarządzaj rozliczeniami',
       },

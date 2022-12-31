@@ -1,4 +1,4 @@
-import { priceRegex } from '~/price.rules';
+import { priceRegex } from '~/regex.rules';
 
 import { CostsValidationTypes } from './costs.validation.types';
 

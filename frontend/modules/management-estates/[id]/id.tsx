@@ -44,6 +44,12 @@ export const ManagementEstateIDDetails = () => {
     `${router.query.id}`
   );
 
+  const redirectedFunction = () => {
+    if (router.isReady) {
+      router.push('/management/estates');
+    }
+  };
+
   const { data: dataCosts, isLoading: isLoadingCosts } =
     useGetData<EstateCostsModel>(
       EstateCostsModelInitialState,
@@ -51,27 +57,17 @@ export const ManagementEstateIDDetails = () => {
       `${router.query.id}`
     );
 
-  const redirectedFunction = () => {
-    if (router.isReady) {
-      router.push('/management/estates');
-    }
-  };
-
   if (isLoading || isLoadingCosts) {
     return <SpinnerLoading />;
   }
 
   if (
+    !data ||
     !(
       data.person._id === personID ||
       data.renter.find((rent) => rent._id === personID)
     )
   ) {
-    redirectedFunction();
-    return <SpinnerLoading />;
-  }
-
-  if (!data) {
     redirectedFunction();
     return <SpinnerLoading />;
   }

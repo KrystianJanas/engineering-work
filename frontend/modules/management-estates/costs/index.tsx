@@ -18,7 +18,7 @@ import {
   EstateCostsModelInitialState,
 } from '~/models/estateCosts.model';
 import { EstateModel, EstatesModelInitialState } from '~/models/estates.model';
-import { priceError, priceRegex } from '~/price.rules';
+import { priceError, priceRegex } from '~/regex.rules';
 import { getEstatesOptions } from '~/renterOptions';
 import { getRem } from '~/styles/utils';
 
