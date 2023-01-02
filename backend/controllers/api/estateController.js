@@ -84,6 +84,7 @@ class EstateController {
     let estates;
     const renter = request.params.id;
     const status = request.params.status || true;
+
     try {
       estates = await Estate.find({
         renter,
