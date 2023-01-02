@@ -1,7 +1,6 @@
 import * as path from "path";
 
 class UploadController {
-
     async saveImage(request, response) {
         if(request.files === null) {
             return response.status(400).json({message: "Nie znaleziono plików."});
