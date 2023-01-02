@@ -21,3 +21,15 @@ export const getData = async (
   }
   return null;
 };
+
+export const getFileDownload = async (endpoint: string) => {
+  try {
+    const response = await axios.get(`http://localhost:3001/api/${endpoint}`, {
+      responseType: 'blob',
+    });
+    return response;
+  } catch (error) {
+    console.error(error);
+  }
+  return null;
+};

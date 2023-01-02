@@ -14,3 +14,17 @@ export const postQuery = async (pageEndpoint: string, data: any) => {
   }
   return null;
 };
+
+export const postFileQuery = async (endpoint: string, formData: FormData) => {
+  try {
+    return await axios.post(`http://localhost:3001/api/${endpoint}`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+  } catch (error) {
+    // @ts-ignore
+    toast.error(error.response.data.message);
+  }
+  return null;
+};

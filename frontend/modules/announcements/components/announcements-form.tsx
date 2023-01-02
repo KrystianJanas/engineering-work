@@ -132,7 +132,7 @@ export const AnnouncementsForm = ({
           />
         </Layout>
         <Layout width={750}>
-          / here add option to choose default profile photo to our estate \
+          / here add option to choose default profile photo to our estate s \
         </Layout>
         <Layout width={250} display="flex" wrap="wrap" gap="15px">
           <Link

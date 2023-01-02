@@ -3,8 +3,9 @@ import { css } from '@emotion/react';
 export const colorsStyles = css`
   :root {
     --white: #ffffff;
-    --background-white: #ffffff;
 
+    --background-white: #ffffff;
+    --background-light-grey: #d2d2d2;
     --background-light-blue: #12b9ac;
     --background-medium-blue: #0e9186;
     --background-grey: #e9e9e9;
@@ -12,6 +13,8 @@ export const colorsStyles = css`
 
     --border-grey: #c3d4e966;
     --border-black: rgba(0, 0, 0, 0.4);
+    --border-full-black: rgba(0, 0, 0, 1);
+    --border-medium-black: rgba(0, 0, 0, 0.5);
     --border-light-black: rgba(0, 0, 0, 0.2);
 
     --text-black: #1a202c;

@@ -145,10 +145,6 @@ export const ManagementEstatesForm = ({
           </TextField>
         </Layout>
         <Layout width={500}>
-          / here add option to choose default profile photo to our estate \
-          {/* // TODO photo */}
-        </Layout>
-        <Layout width={500}>
           <TextField
             id="filled-multiline-flexible"
             label="Dodatkowe informacje"

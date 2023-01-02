@@ -7,7 +7,12 @@ import { Layout } from '~/components/molecules/layout';
 
 import { DropdownWindowTypes } from '../dropdown-window.types';
 
-export const DropdownWindow = ({ children, name }: DropdownWindowTypes) => {
+export const DropdownWindow = ({
+  children,
+  name,
+  boxShadow,
+  borderRadius,
+}: DropdownWindowTypes) => {
   const [expanded, setExpanded] = useState(false);
 
   return (
@@ -18,6 +23,8 @@ export const DropdownWindow = ({ children, name }: DropdownWindowTypes) => {
       marginRight="auto"
       background="var(--background-white)"
       padding={[10, 25]}
+      boxShadow={boxShadow && boxShadow}
+      borderRadius={borderRadius && borderRadius}
     >
       <Layout display="flex" onClick={() => setExpanded(!expanded)}>
         {name}

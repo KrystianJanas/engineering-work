@@ -1,6 +1,8 @@
 import { Form } from 'react-bootstrap';
 import toast from 'react-hot-toast';
 
+import { Autocomplete, TextField } from '@mui/material';
+
 import { updateQuery } from '~/api/update';
 import { Text } from '~/components/atoms/typography';
 import { Button } from '~/components/compounds/Button/components/button';
@@ -60,14 +62,23 @@ export const Account = () => {
       <LeftSidebar options={options[1]} />
       <Layout width="100%">
         <Layout
+          background="var(--background-white)"
+          width="100%"
+          borderRadius="8px"
+          marginRight={15}
+          padding={[10, 0]}
+          boxShadow="0 0 5px 1px var(--border-black)"
           display="flex"
           direction="column"
-          alignItems="center"
-          justifyContent="center"
         >
-          <DropdownWindow name="Dane kontaktowe">
+          <DropdownWindow
+            name="Dane kontaktowe"
+            boxShadow="0 0 5px 1px var(--border-black)"
+            borderRadius="8px"
+          >
             <Layout marginBottom={20}>
               <Text weight={600}>Osoba kontaktowa</Text>
+
               <FormTextfieldComponent
                 value={userData.name}
                 placeholder="Osoba kontaktowa"
@@ -84,10 +95,27 @@ export const Account = () => {
             </Layout>
             <Layout marginBottom={20}>
               <Text weight={600}>Miejscowość</Text>
-              <FormTextfieldComponent
+
+              {/* <FormTextfieldComponent
                 value={userData.city}
                 placeholder="Miejscowość"
                 onChange={(text) => handleChangeUserData('city', text)}
+              /> */}
+
+              <Autocomplete
+                disablePortal
+                id="combo-box-demo"
+                options={[{ label: 'Rzeszów' }, { label: 'Kraków' }]}
+                sx={{ width: 300 }}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    size="small"
+                    value={userData.city}
+                    onChange={(text) => handleChangeUserData('city', text)}
+                    placeholder="Miejscowość"
+                  />
+                )}
               />
             </Layout>
             <Layout marginBottom={20}>
@@ -105,7 +133,11 @@ export const Account = () => {
               />
             </Layout>
           </DropdownWindow>
-          <DropdownWindow name="Hasło">
+          <DropdownWindow
+            name="Zarządzanie hasłem"
+            boxShadow="0 0 5px 1px var(--border-black)"
+            borderRadius="8px"
+          >
             <Layout marginBottom={20}>
               <Text weight={600}>Aktulne hasło</Text>
               <FormTextfieldComponent
