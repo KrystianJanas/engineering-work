@@ -6,6 +6,7 @@ export const useModalComponent = () => {
     id: string;
     description: string;
     other_id?: string;
+    other_data?: any;
   }>({ id: '', description: '' });
   const [activity, setActivity] = useState(false);
 

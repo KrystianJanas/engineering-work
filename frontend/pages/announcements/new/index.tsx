@@ -34,7 +34,7 @@ export const AnnouncementsNewPage = () => {
       onSubmit={({ _id, person, images, ...rest }) => {
         const dataToApi: any = {
           person: personID,
-          images: [testImageUrl, testImageUrl], // TODO: convert images array to string array list
+          images: [testImageUrl, testImageUrl], // TODO: convert pictures array to string array list
           ...rest,
         };
 

@@ -4,7 +4,11 @@ export const useDateParser = (date: string) => {
 };
 
 export const parseData = (toParse: string) => {
-  return new Date(toParse).toLocaleDateString('pl').replaceAll('.', '-');
+  let date = new Date(toParse).toLocaleDateString('pl').replaceAll('.', '-');
+  if (date.split('-')[0].length === 1) {
+    date = `0${date}`;
+  }
+  return date;
 };
 
 export const parseHour = (toParse: string) => {
@@ -17,4 +21,11 @@ export const makeFullDataHour = (data: string, text: string) => {
 
 export const parseDateSettlement = (data: string) => {
   return `MIESIĄC: ${data.split('-')[1]}, ROK: ${data.split('-')[0]}`;
+};
+
+export const parseDataUploadFiles = (data: string) => {
+  return `${data.split(',')[0].replaceAll('.', '-')}-${data
+    .split(',')[1]
+    .replaceAll(':', '-')
+    .slice(1, data.split(',')[1].length)}`;
 };
