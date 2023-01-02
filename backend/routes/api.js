@@ -12,6 +12,8 @@ import EstateInvitationController from "../controllers/api/estateInvitationContr
 import EstateMessageController from "../controllers/api/estateMessageController.js";
 import EstateCostController from "../controllers/api/estateCostController.js";
 import EstateSettlementController from "../controllers/api/estateSettlementController.js";
+import UploadController from "../controllers/api/uploadController.js";
+import InvoiceController from "../controllers/api/invoiceController.js";
 
 // ludzie
 router.get("/people", PeopleController.getPeople);
@@ -85,6 +87,14 @@ router.get("/estates/settlements/thisMonth/:id", EstateSettlementController.getS
 router.post("/estates/settlements", EstateSettlementController.saveSettlement);
 router.delete("/estates/settlements/:id", EstateSettlementController.deleteSettlement);
 
+// nieruchomości -> faktury
+router.get("/estates/invoices/:id", InvoiceController.getInvoices);
+router.post("/estates/invoices/:id", InvoiceController.saveInvoice);
+router.delete("/estates/invoices/:id", InvoiceController.deleteInvoice);
+router.put("/estates/invoices/payment/:id", InvoiceController.updatePaymentRenterInvoice);
+router.get("/estates/invoices/download/:name", InvoiceController.downloadInvoice);
+
+
 
 
 // zaproszenia do nieruchomości
@@ -104,5 +114,7 @@ router.delete(
   "/estatesInvitations/:id",
   EstateInvitationController.deleteEstateInvitation
 );
+
+router.post("/upload/pictures", UploadController.saveImage);
 
 export default router;
