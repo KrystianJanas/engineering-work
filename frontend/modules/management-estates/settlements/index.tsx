@@ -140,8 +140,7 @@ export const ManagementEstateSettlement = () => {
                   <Layout
                     display="flex"
                     background="var(--background-white)"
-                    boxShadow="0 0 2px 1px var(--border-black)"
-                    borderRadius="8px"
+                    boxShadow="0 0 4px var(--border-black)"
                     padding={[10]}
                     key={settlement._id}
                     direction="column"

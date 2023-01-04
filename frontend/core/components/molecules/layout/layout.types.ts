@@ -87,4 +87,6 @@ export interface LayoutBorderProps {
 
 export interface LayoutOrdersProps {
   boxShadow?: Property.BoxShadow;
+  overflow?: Property.Overflow;
+  overflowY?: Property.OverflowY;
 }

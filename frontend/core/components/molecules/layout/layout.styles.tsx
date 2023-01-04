@@ -177,5 +177,7 @@ export const mixinBorder = (props: LayoutBorderProps): SerializedStyles => {
 export const mixInOrders = (props: LayoutOrdersProps): SerializedStyles => {
   return css`
     box-shadow: ${props.boxShadow ? `${props.boxShadow}` : undefined};
+    overflow: ${props.overflow ? `${props.overflow}` : undefined};
+    overflow-y: ${props.overflowY ? `${props.overflowY}` : undefined};
   `;
 };

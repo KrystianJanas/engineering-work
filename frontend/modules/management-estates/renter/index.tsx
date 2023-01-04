@@ -8,8 +8,12 @@ import { updateQuery } from '~/api/update';
 import { Text } from '~/components/atoms/typography';
 import { AddButton } from '~/components/compounds/AddButton/components/add-button';
 import { LeftSidebar } from '~/components/compounds/Left-Sidebar';
+import { ModalComponent } from '~/components/compounds/ModalComponent';
+import { useModalComponent } from '~/components/compounds/ModalComponent/useModalComponent';
 import { SpinnerLoading } from '~/components/compounds/Spinner';
+import { CustomDeleteIcon } from '~/components/icons/global';
 import { Layout } from '~/components/molecules/layout';
+import { useActivity } from '~/hooks/useActivity';
 import { useAuth } from '~/hooks/useContextProvider';
 import { useGetData } from '~/hooks/useGetData';
 import {
@@ -37,6 +41,16 @@ export const ManagementEstatesRenter = () => {
       `${router.query.id}`
     );
 
+  const { activity, setActivity } = useActivity();
+  const { modalActive, setModalActive, modalData, setModalData } =
+    useModalComponent();
+  const {
+    modalActive: modalActiveInvitation,
+    setModalActive: setModalActiveInvitation,
+    modalData: modalDataInvitation,
+    setModalData: setModalDataInvitation,
+  } = useModalComponent();
+
   const { data: dataEstateInvitations, isLoading: isLoadingEstateInvitations } =
     useGetData<EstateInvitationsModel[]>(
       [EstateInvitationsModelInitialState],
@@ -55,6 +69,10 @@ export const ManagementEstatesRenter = () => {
   );
 
   const rejectInvitation = async (estateInvitationID: string) => {
+    if (activity) {
+      return null;
+    }
+    setActivity(true);
     const response = await deleteQuery(
       'estatesInvitations',
       `${estateInvitationID}`
@@ -64,12 +82,18 @@ export const ManagementEstatesRenter = () => {
       toast.success(
         'Pomyślnie wycofano zaproszenie lokatora do nieruchomości.'
       );
+      return null;
     }
+    return setActivity(false);
   };
 
   const removeRenter = async (personRenterID: string) => {
-    const estate = [dataEstate].find((cos) =>
-      cos.renter.find((cos2) => cos2._id === personRenterID)
+    if (activity) {
+      return null;
+    }
+    setActivity(true);
+    const estate = [dataEstate].find((oneEstate) =>
+      oneEstate.renter.find((person) => person._id === personRenterID)
     );
     if (estate) {
       const response = await updateQuery(
@@ -81,10 +105,12 @@ export const ManagementEstatesRenter = () => {
       if (response) {
         window.location.reload();
         toast.success('Pomyślnie usunięto lokatora z nieruchomości.');
+        return null;
       }
     } else {
       toast.error('Coś poszło nie tak... Odśwież stronę i spróbuj ponownie.');
     }
+    return setActivity(false);
   };
 
   return (
@@ -96,6 +122,7 @@ export const ManagementEstatesRenter = () => {
         borderRadius="8px"
         marginRight={15}
         padding={[10, 20]}
+        boxShadow="0 0 5px 1px var(--border-black)"
       >
         <Layout display="flex" justifyContent="center" marginBottom={20}>
           <AddButton
@@ -118,69 +145,110 @@ export const ManagementEstatesRenter = () => {
         )}
         {dataEstate.renter.length > 0 && (
           <Layout>
-            {' '}
-            &nbsp;
             <Text weight={700} size={getRem(16)}>
-              Osoby wynajmujące
+              Lokatorzy, którzy obecnie są przypisani do mieszkania:
             </Text>
-            {dataEstate.renter.map((renterPerson, index) => {
-              return (
-                <Layout
-                  display="flex"
-                  direction="row"
-                  gap="25px"
-                  key={renterPerson._id}
-                >
-                  <Text size={getRem(16)}>
-                    {index + 1}) {renterPerson.name}, telefon kontaktowy:{' '}
-                    {renterPerson.phone_number || 'nie podano'}
-                  </Text>
-                  -
-                  <StyledText
-                    size={getRem(16)}
-                    onClick={() => removeRenter(renterPerson._id)}
+            <Layout boxShadow="0 0 4px var(--border-black)" marginTop={10}>
+              {dataEstate.renter.map((renterPerson, index) => {
+                return (
+                  <Layout
+                    display="flex"
+                    direction="row"
+                    gap="25px"
+                    key={renterPerson._id}
+                    padding={[10]}
+                    background={
+                      index % 2 === 0
+                        ? 'var(--border-white)'
+                        : 'var(--background-light-grey)'
+                    }
                   >
-                    USUŃ LOKATORA
-                  </StyledText>
-                </Layout>
-              );
-            })}
+                    <Text size={getRem(16)} flex={1}>
+                      {index + 1}) {renterPerson.name}, telefon kontaktowy:{' '}
+                      {renterPerson.phone_number || 'nie podano'}
+                    </Text>
+                    <CustomDeleteIcon
+                      onClick={() => {
+                        setModalData({
+                          id: renterPerson._id,
+                          description: `Czy na pewno chcesz usunąć osobę: ${renterPerson.name}?`,
+                        });
+                        setModalActive(true);
+                      }}
+                    />
+                  </Layout>
+                );
+              })}
+            </Layout>
           </Layout>
         )}
         &nbsp;
         {dataEstateInvitations.length > 0 && (
           <Layout>
-            {' '}
             &nbsp;
             <Text weight={700} size={getRem(16)}>
-              Wysłane prośby o dołączenie do nieruchomości:
+              Wysłane zaproszenia dotyczące dołączenia do nieruchomości:
             </Text>
-            {dataEstateInvitations.map((estateInvitation, index) => {
-              return (
-                <Layout
-                  display="flex"
-                  direction="row"
-                  gap="25px"
-                  key={estateInvitation._id}
-                >
-                  <Text size={getRem(16)}>
-                    {index + 1}) {estateInvitation.person.name}, telefon
-                    kontaktowy:{' '}
-                    {estateInvitation.person.phone_number || 'nie podano'}
-                  </Text>
-                  -
-                  <StyledText
-                    size={getRem(16)}
-                    onClick={() => rejectInvitation(estateInvitation._id)}
+            <Layout boxShadow="0 0 5px 1px var(--border-black)" marginTop={10}>
+              {dataEstateInvitations.map((estateInvitation, index) => {
+                return (
+                  <Layout
+                    display="flex"
+                    direction="row"
+                    gap="25px"
+                    key={estateInvitation._id}
+                    padding={[10]}
+                    background={
+                      index % 2 === 0
+                        ? 'var(--border-white)'
+                        : 'var(--background-light-grey)'
+                    }
                   >
-                    COFNIJ ZAPROSZENIE
-                  </StyledText>
-                </Layout>
-              );
-            })}
+                    <Text size={getRem(16)} flex={1}>
+                      {index + 1}) {estateInvitation.person.name}, telefon
+                      kontaktowy:{' '}
+                      {estateInvitation.person.phone_number || 'nie podano'}
+                    </Text>
+                    <CustomDeleteIcon
+                      onClick={() => {
+                        setModalDataInvitation({
+                          id: estateInvitation._id,
+                          description: `Czy na pewno chcesz usunąć zaproszenie dla: ${estateInvitation.person.name}?`,
+                        });
+                        setModalActiveInvitation(true);
+                      }}
+                    />
+                  </Layout>
+                );
+              })}
+            </Layout>
           </Layout>
         )}
       </Layout>
+      {modalActive && (
+        <ModalComponent
+          title="USUWANIE LOKATORA"
+          description={modalData.description}
+          cancelButton
+          cancelText="Nie, nie chcę"
+          confirmButton
+          confirmText="Tak, chcę usunąć"
+          onHide={() => setModalActive(false)}
+          onConfirm={() => removeRenter(modalData.id)}
+        />
+      )}
+      {modalActiveInvitation && (
+        <ModalComponent
+          title="USUWANIE ZAPROSZENIA"
+          description={modalDataInvitation.description}
+          cancelButton
+          cancelText="Nie, nie chcę"
+          confirmButton
+          confirmText="Tak, chcę usunąć"
+          onHide={() => setModalActiveInvitation(false)}
+          onConfirm={() => rejectInvitation(modalDataInvitation.id)}
+        />
+      )}
     </Layout>
   );
 };

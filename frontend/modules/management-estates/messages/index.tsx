@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import { postQuery } from '~/api/post';
 import { Text } from '~/components/atoms/typography';
 import { LeftSidebar } from '~/components/compounds/Left-Sidebar';
+import { Line } from '~/components/compounds/Line';
 import { MessageCardComponent } from '~/components/compounds/Message-Card/messageCard.component';
 import { SendMessageSection } from '~/components/compounds/Send-Message-Section';
 import { SpinnerLoading } from '~/components/compounds/Spinner';
@@ -88,17 +89,26 @@ export const ManagementEstatesIDMessages = () => {
         width="100%"
         borderRadius="8px"
         marginRight={15}
-        padding={[10, 20]}
+        padding={[10, 10]}
         boxShadow="0 0 5px 1px var(--border-black)"
         display="flex"
         direction="column"
+        minWidth={500}
       >
         <Layout display="flex" direction="column" flex={1}>
+          <Layout marginBottom={15}>
+            <Text textAlign="center">
+              Wiadomości posortowane: <b>od najnowszej</b>.
+            </Text>
+          </Layout>
           {dataMessages.length > 0 && dataMessages[0].content.length > 0 ? (
-            <>
-              <Text textAlign="center" size={getRem(16)}>
-                Wiadomości posegregowane: <b>od najnowszej, do najstarszej</b>
-              </Text>
+            <Layout
+              display="flex"
+              direction="column"
+              overflowY="auto"
+              height={525}
+              padding={[0, 5]}
+            >
               {dataMessages.map((message) => (
                 <Layout
                   key={message._id}
@@ -106,6 +116,8 @@ export const ManagementEstatesIDMessages = () => {
                   justifyContent="center"
                 >
                   <MessageCardComponent
+                    boxShadow="0 0 4px var(--border-black)"
+                    borderRadius="0"
                     person={message.person.name}
                     data={message.created_at}
                     content={message.content}
@@ -116,7 +128,7 @@ export const ManagementEstatesIDMessages = () => {
                   />
                 </Layout>
               ))}
-            </>
+            </Layout>
           ) : (
             <>
               <Text textAlign="center" size={getRem(16)} width="100%">
@@ -136,10 +148,13 @@ export const ManagementEstatesIDMessages = () => {
           margin={[20, 0, 10, 0]}
           gap="10px"
         >
+          <Line />
           <Text textAlign="center" size={getRem(16)}>
             Jeśli chcesz <b>napisać wiadomość</b>, skorzystaj z sekcji poniżej.
           </Text>
           <SendMessageSection
+            borderRadius="0"
+            boxShadow="0"
             label="Wiadomość"
             onSubmit={(message) => saveMessage(message)}
             disabledButton={isSaving}

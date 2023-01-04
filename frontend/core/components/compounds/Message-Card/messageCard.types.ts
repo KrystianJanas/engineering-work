@@ -7,6 +7,9 @@ export interface MessageCardTypes {
     estate_owner: string;
     personID: string;
   };
+
+  borderRadius?: string;
+  boxShadow?: string;
 }
 
 export const MessageCardTypesInitialState = {

@@ -1,9 +1,5 @@
 import toast from 'react-hot-toast';
 
-import styled from '@emotion/styled';
-import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
-import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import FileDownload from 'js-file-download';
 import { useRouter } from 'next/router';
 
@@ -16,6 +12,11 @@ import { LeftSidebar } from '~/components/compounds/Left-Sidebar';
 import { ModalComponent } from '~/components/compounds/ModalComponent';
 import { useModalComponent } from '~/components/compounds/ModalComponent/useModalComponent';
 import { SpinnerLoading } from '~/components/compounds/Spinner';
+import {
+  CustomDeleteIcon,
+  CustomDownloadIcon,
+  CustomInfoIcon,
+} from '~/components/icons/global';
 import { Layout } from '~/components/molecules/layout';
 import { useActivity } from '~/hooks/useActivity';
 import { useAuth } from '~/hooks/useContextProvider';
@@ -29,27 +30,6 @@ import {
 import { PersonLoginIdModel } from '~/models/person.model';
 import { getEstatesOptions } from '~/renterOptions';
 import { getRem } from '~/styles/utils';
-
-const standardHover = `
-    color: var(--border-medium-black);
-    
-    &:hover {
-      color: var(--border-full-black);
-      cursor: pointer;
-    }
-`;
-
-const StyledDownloadIcon = styled(FileDownloadOutlinedIcon)`
-  ${standardHover}
-`;
-
-const StyledDeleteIcon = styled(DeleteOutlineOutlinedIcon)`
-  ${standardHover}
-`;
-
-const StyledInfoIcon = styled(InfoOutlinedIcon)`
-  ${standardHover}
-`;
 
 export const ManagementEstatesInvoices = () => {
   const router = useRouter();
@@ -226,8 +206,7 @@ export const ManagementEstatesInvoices = () => {
               </Text>
               <Layout
                 margin={[10, 10, 0, 10]}
-                boxShadow="0 0 5px 1px var(--border-black)"
-                borderRadius="8px"
+                boxShadow="0 0 4px var(--border-black)"
               >
                 {dataInvoices.map((invoice, index) => (
                   <Layout
@@ -244,11 +223,11 @@ export const ManagementEstatesInvoices = () => {
                       </Text>
                     </Layout>
                     <Layout display="flex" alignItems="center" gap="10px">
-                      <StyledDownloadIcon
+                      <CustomDownloadIcon
                         onClick={() => onFileDownload(invoice.invoice_name)}
                       />
                       <Layout>
-                        <StyledInfoIcon
+                        <CustomInfoIcon
                           onClick={() => {
                             setModalDataInfo({
                               id: invoice._id,
@@ -263,7 +242,7 @@ export const ManagementEstatesInvoices = () => {
                         />
                       </Layout>
                       {data.person._id === personID && (
-                        <StyledDeleteIcon
+                        <CustomDeleteIcon
                           onClick={() => {
                             setModalData({
                               id: invoice._id,

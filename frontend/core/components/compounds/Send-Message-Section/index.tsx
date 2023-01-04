@@ -14,8 +14,8 @@ export const SendMessageSection = ({ ...types }: SendMessageSectionTypes) => {
   return (
     <Layout
       width="100%"
-      boxShadow="0 0 5px 1px var(--border-black)"
-      borderRadius="8px"
+      boxShadow={types.boxShadow || '0 0 5px 1px var(--border-black)'}
+      borderRadius={types.borderRadius || '8px'}
       padding={[10]}
     >
       <Layout display="flex" direction="column" gap="5px">

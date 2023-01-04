@@ -102,9 +102,10 @@ export const ManagementEstateIDDetails = () => {
       <Layout
         background="var(--background-white)"
         width="100%"
-        borderRadius="8px"
         marginRight={15}
         padding={[10, 20]}
+        boxShadow="0 0 5px 1px var(--border-black)"
+        borderRadius="8px"
       >
         <Text textAlign="center" size={getRem(20)}>
           {data.title}
