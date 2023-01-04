@@ -1,4 +1,8 @@
 import {
+  MetaTypes,
+  MetaTypesInitialState,
+} from '~/hooks/usePagination/metaTypes';
+import {
   AnnouncementConversationsModel,
   AnnouncementConversationsModelInitialState,
 } from '~/models/announcement.model';
@@ -21,4 +25,14 @@ export const ConversationTypesInitialState: ConversationTypes = {
   created_at: '',
   person_from: PersonConversationsModelInitialState,
   person_to: PersonConversationsModelInitialState,
+};
+
+export interface ConversationTypesWithPageNumber {
+  conversations: ConversationTypes[];
+  meta: MetaTypes;
+}
+
+export const ConversationTypesWithPageNumberInitialState = {
+  conversations: [ConversationTypesInitialState],
+  meta: MetaTypesInitialState,
 };

@@ -1,9 +1,9 @@
 import { Layout } from '~/components/molecules/layout';
 
-export const Line = () => {
+export const Line = ({ background }: { background?: string }) => {
   return (
     <Layout
-      background="rgb(240, 240, 240)"
+      background={background || 'var(--background-medium-grey)'}
       borderRadius="6px"
       width="95%"
       height={2}

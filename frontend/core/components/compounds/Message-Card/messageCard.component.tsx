@@ -9,7 +9,8 @@ export const MessageCardComponent = ({ ...data }: MessageCardTypes) => {
     <Layout width="100%" marginBottom={10}>
       <Text color="var(--text-black)" size={getRem(13)} weight={600}>
         {`${data.person}, ${makeFullDataHour(data.data, '')} ${
-          data.additional?.personID === data.additional?.estate_owner
+          data.additional &&
+          data.additional.personID === data.additional.estate_owner
             ? '( zarządca nieruchomości )'
             : ''
         }`}

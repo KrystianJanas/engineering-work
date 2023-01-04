@@ -22,6 +22,7 @@ export const ConversationCard = ({
   conversation: ConversationTypes;
 }) => {
   const { date } = useDateParser(conversation.created_at);
+
   return (
     <Link
       href={{
@@ -32,7 +33,7 @@ export const ConversationCard = ({
       <StyledLayout
         background="var(--background-white)"
         borderRadius="6px"
-        boxShadow="0 0 16px rgba(0, 0, 0, 0.24)"
+        boxShadow="0 0 4px rgba(0, 0, 0, 0.24)"
         padding={[10]}
         margin={[20, 15]}
         display="flex"
@@ -40,7 +41,7 @@ export const ConversationCard = ({
         <Layout
           width={150}
           height="auto"
-          boxShadow="0 0 16px rgba(0, 0, 0, 0.24)"
+          boxShadow="0 0 4px rgba(0, 0, 0, 0.24)"
           display="flex"
           marginRight={15}
           borderRadius="10px"

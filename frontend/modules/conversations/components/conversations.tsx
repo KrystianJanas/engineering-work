@@ -1,16 +1,20 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import styled from '@emotion/styled';
+import { useRouter } from 'next/router';
 
 import { Text } from '~/components/atoms/typography';
 import { ConversationCard } from '~/components/compounds/Message-Card';
+import { Pagination } from '~/components/compounds/Pagination';
 import { SpinnerLoading } from '~/components/compounds/Spinner';
 import { Layout } from '~/components/molecules/layout';
 import { useAuth } from '~/hooks/useContextProvider';
 import { useGetData } from '~/hooks/useGetData';
+import { usePagination } from '~/hooks/usePagination/usePagination';
 import {
   ConversationTypes,
-  ConversationTypesInitialState,
+  ConversationTypesWithPageNumber,
+  ConversationTypesWithPageNumberInitialState,
 } from '~/models/conversation.model';
 import { getRem } from '~/styles/utils';
 
@@ -35,21 +39,44 @@ const StyledButton = styled.button`
 `;
 
 export const Conversations = () => {
-  const [optionMessage, setOptionMessage] = useState('send'); // true: send conversations | false: received conversations
-
   const { personID } = useAuth();
+  const router = useRouter();
 
-  const changeOptionMessage = (option: string) => {
-    setOptionMessage(option);
-  };
-
+  const [optionMessage, setOptionMessage] = useState('send'); // true: send conversations | false: received conversations
   const [restEndpoint, setRestEndpoint] = useState(`from/${personID}`);
 
-  const { data, isLoading, setUpdateState } = useGetData<ConversationTypes[]>(
-    [ConversationTypesInitialState],
-    'conversations',
-    restEndpoint
-  );
+  const {
+    page,
+    setPage,
+    maxPage,
+    setMaxPage,
+    onPreviousPage,
+    onNextPage,
+    perPage,
+  } = usePagination(1, 5);
+
+  useEffect(() => {
+    if (!router.isReady) {
+      return;
+    }
+    const actualQueryPage = Number(router.query.pageNum) || 1;
+    router.push({
+      query: {
+        ...router.query,
+        pageNum: actualQueryPage,
+      },
+    });
+    setPage(actualQueryPage);
+  }, [router.isReady]);
+
+  const { data, isLoading, setUpdateState } =
+    useGetData<ConversationTypesWithPageNumber>(
+      ConversationTypesWithPageNumberInitialState,
+      'conversations',
+      restEndpoint,
+      page,
+      perPage
+    );
 
   useMemo(() => {
     if (optionMessage === 'send') {
@@ -64,6 +91,17 @@ export const Conversations = () => {
   if (isLoading) {
     return <SpinnerLoading />;
   }
+
+  if (maxPage === 0) {
+    setMaxPage(data.meta.totalPages);
+  }
+
+  const changeOptionMessage = (option: string) => {
+    setPage(1);
+    setMaxPage(0);
+    setOptionMessage(option);
+  };
+
   if (data) {
     return (
       <Layout padding={[10]} marginLeft="auto" marginRight="auto" width="75%">
@@ -113,8 +151,8 @@ export const Conversations = () => {
           </StyledButton>
         </Layout>
         {/* BOTTOM SECTION */}
-        {data.length > 0 ? (
-          data.map((conversation: ConversationTypes) => {
+        {data.conversations.length > 0 ? (
+          data.conversations.map((conversation: ConversationTypes) => {
             return (
               <ConversationCard
                 key={conversation._id}
@@ -127,6 +165,14 @@ export const Conversations = () => {
             Nie znaleziono żadnych wiadomości w tej sekcji.
           </Text>
         )}
+        <Layout display="flex" justifyContent="right">
+          <Pagination
+            page={page}
+            maxPage={maxPage}
+            onPreviousPage={onPreviousPage}
+            onNextPage={onNextPage}
+          />
+        </Layout>
       </Layout>
     );
   }

@@ -2,16 +2,17 @@ import { useState } from 'react';
 import { FloatingLabel } from 'react-bootstrap';
 import toast from 'react-hot-toast';
 
-import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import Form from 'react-bootstrap/Form';
 
 import { postQuery } from '~/api/post';
 import { Text } from '~/components/atoms/typography';
+import { Button } from '~/components/compounds/Button';
+import { Line } from '~/components/compounds/Line';
+import { MessageCardComponent } from '~/components/compounds/Message-Card/messageCard.component';
 import { SpinnerLoading } from '~/components/compounds/Spinner';
 import { Layout } from '~/components/molecules/layout';
 import { useAuth } from '~/hooks/useContextProvider';
-import { parseData, parseHour } from '~/hooks/useDateParser';
 import { useGetData } from '~/hooks/useGetData';
 import { getRem } from '~/styles/utils';
 import {
@@ -19,19 +20,12 @@ import {
   MessageConversationTypeInitialState,
 } from '~/types/messages.types';
 
-const StyledLayout = styled(Layout)`
-  border: 2px solid rgba(240, 240, 240);
-
-  &:hover {
-    border: 2px solid rgba(18, 185, 172, 0.5);
-    cursor: pointer;
-  }
-`;
-
 export const Conversation = () => {
   const router = useRouter();
   const [messageFieldStatus, setMessageFieldStatus] = useState(false);
   const [messageValue, setMessageValue] = useState('');
+
+  const { personID } = useAuth();
 
   const { data, isLoading } = useGetData<MessageConversationType[]>(
     [MessageConversationTypeInitialState],
@@ -42,8 +36,6 @@ export const Conversation = () => {
   if (isLoading) {
     return <SpinnerLoading />;
   }
-
-  const { personID } = useAuth();
 
   const addMessage = async () => {
     if (messageValue.trim().length < 4) {
@@ -72,6 +64,8 @@ export const Conversation = () => {
       marginLeft="auto"
       marginRight="auto"
       direction="column"
+      boxShadow="0 0 5px 1px var(--border-black)"
+      marginTop={15}
     >
       <Layout display="flex" justifyContent="center">
         <Text size={getRem(22)} weight={700}>
@@ -79,48 +73,20 @@ export const Conversation = () => {
             'Błąd: Nie znaleziono danych dotyczących tego ogłoszenia.'}
         </Text>
       </Layout>
-      {data.map((message: MessageConversationType) => (
-        <Layout
-          width="100%"
-          background="var(--background-white)"
-          margin={[10]}
-          padding={[10]}
-          borderRadius="6px"
-          boxShadow="0 0 16px rgba(0, 0, 0, 0.24)"
-          key={message._id}
-        >
-          <Layout marginBottom={10}>
-            <Layout display="flex">
-              <Layout flex={1}>
-                <Text size={getRem(14)} textAlign="center">
-                  Wiadomość od <b>{message.person.name}</b> z dnia&nbsp;
-                  <b>{parseData(message.created_at)}</b>, godzina&nbsp;
-                  <b>{parseHour(message.created_at)}</b>
-                </Text>
-                <Layout
-                  marginLeft="auto"
-                  marginRight="auto"
-                  marginTop={3}
-                  marginBottom={3}
-                  width="100%"
-                  background="rgb(0,0,0)"
-                  height={1}
-                />
-              </Layout>
-            </Layout>
-          </Layout>
-          <Text size={getRem(18)}>{message.content}</Text>
-        </Layout>
-      ))}
-      <Layout
-        marginTop={10}
-        marginBottom={10}
-        marginLeft="auto"
-        marginRight="auto"
-        width="95%"
-        height={3}
-        background="rgb(200, 200, 200)"
-      />
+      <Layout height={550} overflowY="auto" padding={[10]} marginBottom={25}>
+        <Text textAlign="center" size={getRem(16)}>
+          Wiadomości posegregowane: <b>od najnowszej</b>.
+        </Text>
+        {data.map((message: MessageConversationType) => (
+          <MessageCardComponent
+            key={message._id}
+            person={message.person.name}
+            data={message.created_at}
+            content={message.content}
+          />
+        ))}
+      </Layout>
+      <Line />
       {data && data.length > 0 && (
         <Layout
           display="flex"
@@ -129,7 +95,7 @@ export const Conversation = () => {
           padding={[10]}
           background="var(--background-white)"
           borderRadius="6px"
-          boxShadow="0 0 16px rgba(0, 0, 0, 0.24)"
+          boxShadow="0 0 4px rgba(0, 0, 0, 0.24)"
           width="75%"
           direction="column"
           alignItems="center"
@@ -152,39 +118,22 @@ export const Conversation = () => {
                   }}
                 />
               </FloatingLabel>
-              <StyledLayout
-                display="flex"
-                marginLeft="auto"
-                marginRight="auto"
-                marginTop={10}
-                borderRadius="10px"
-                background="rgb(240, 240, 240)"
-                padding={[5, 15]}
-                onClick={addMessage}
-              >
-                <Text size={getRem(16)}>Dodaj odpowiedź</Text>
-              </StyledLayout>
+              <Layout display="flex" justifyContent="center" marginTop={10}>
+                <Button text="Dodaj odpowiedź" onSubmit={addMessage} />
+              </Layout>
             </Layout>
           ) : (
             <>
-              <Text size={getRem(16)} weight={500}>
+              <Text size={getRem(16)} weight={400}>
                 Chcesz dodać odpowiedź do konwersacji?
               </Text>
 
-              <StyledLayout
-                display="flex"
-                marginLeft="auto"
-                marginRight="auto"
-                borderRadius="10px"
-                marginTop={5}
-                background="rgb(240, 240, 240)"
-                padding={[5, 15]}
-                onClick={() => {
-                  setMessageFieldStatus(true);
-                }}
-              >
-                <Text size={getRem(16)}>Rozwiń panel</Text>
-              </StyledLayout>
+              <Layout marginTop={5}>
+                <Button
+                  text="Rozwiń panel"
+                  onSubmit={() => setMessageFieldStatus(true)}
+                />
+              </Layout>
             </>
           )}
         </Layout>

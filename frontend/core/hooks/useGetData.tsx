@@ -8,17 +8,19 @@ export const useGetData = <FormType,>(
   initialState: FormType,
   pageEndpoint: string,
   restEndpoint?: string,
-  params?: any
+  page?: number,
+  perPage?: number
 ) => {
   const [updateState, setUpdateState] = useState(false);
   const router = useRouter();
+
   const [data, setData] = useState<{ data: FormType; isLoading: boolean }>({
     data: initialState,
     isLoading: true,
   });
 
   const fetchData = async () => {
-    const result = await getData(pageEndpoint, restEndpoint, params);
+    const result = await getData(pageEndpoint, restEndpoint, page, perPage);
     setData({ data: result, isLoading: false });
     console.log('useGetData()'); // todo: delete it
   };
@@ -28,9 +30,19 @@ export const useGetData = <FormType,>(
       return setUpdateState(false);
     }
     if (router.isReady) {
+      router.push(
+        {
+          query: {
+            ...router.query,
+            pageNum: page,
+          },
+        },
+        undefined,
+        { scroll: false }
+      );
       fetchData();
     }
-  }, [router.isReady, updateState]);
+  }, [router.isReady, updateState, page]);
 
   return {
     data: data.data,

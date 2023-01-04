@@ -3,12 +3,19 @@ import axios from 'axios';
 export const getData = async (
   pageEndpoint: string,
   restEndpoint?: string,
-  params?: any
+  page?: number,
+  perPage?: number
 ) => {
   try {
     if (restEndpoint) {
       const { data } = await axios.get(
-        `http://localhost:3001/api/${pageEndpoint}/${restEndpoint}`
+        `http://localhost:3001/api/${pageEndpoint}/${restEndpoint}`,
+        {
+          params: {
+            page,
+            perPage,
+          },
+        }
       );
       return data;
     }
