@@ -7,7 +7,7 @@ export const getData = async (
   perPage?: number
 ) => {
   try {
-    if (restEndpoint) {
+    if (restEndpoint && restEndpoint.length > 0) {
       const { data } = await axios.get(
         `http://localhost:3001/api/${pageEndpoint}/${restEndpoint}`,
         {
@@ -20,7 +20,13 @@ export const getData = async (
       return data;
     }
     const { data } = await axios.get(
-      `http://localhost:3001/api/${pageEndpoint}`
+      `http://localhost:3001/api/${pageEndpoint}`,
+      {
+        params: {
+          page,
+          perPage,
+        },
+      }
     );
     return data;
   } catch (error) {

@@ -19,17 +19,21 @@ export const Pagination = ({
 }: PaginationTypes) => {
   return (
     <Layout display="flex" alignItems="center" gap="20px">
-      <StyledLayout onClick={onPreviousPage}>
-        <ArrowLeft />
-      </StyledLayout>
+      {page !== 1 && (
+        <StyledLayout onClick={onPreviousPage}>
+          <ArrowLeft />
+        </StyledLayout>
+      )}
 
       <Layout>
         strona <b>{page}</b> z <b>{maxPage}</b>
       </Layout>
 
-      <StyledLayout onClick={onNextPage}>
-        <ArrowRight />
-      </StyledLayout>
+      {page < maxPage && (
+        <StyledLayout onClick={onNextPage}>
+          <ArrowRight />
+        </StyledLayout>
+      )}
     </Layout>
   );
 };

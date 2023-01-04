@@ -34,7 +34,7 @@ export const useGetData = <FormType,>(
         {
           query: {
             ...router.query,
-            pageNum: page,
+            pageNum: page || 0,
           },
         },
         undefined,

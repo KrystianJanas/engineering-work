@@ -1,3 +1,8 @@
+import {
+  MetaTypes,
+  MetaTypesInitialState,
+} from '~/hooks/usePagination/metaTypes';
+
 export interface AnnouncementsModel {
   _id: string;
   person: string;
@@ -34,4 +39,14 @@ export const AnnouncementsModelInitialState: AnnouncementsModel = {
   updated_at: '',
 
   status: false,
+};
+
+export interface AnnouncementsModelData {
+  announcements: AnnouncementsModel[];
+  meta: MetaTypes;
+}
+
+export const AnnouncementsModelDatanitialState: AnnouncementsModelData = {
+  announcements: [AnnouncementsModelInitialState],
+  meta: MetaTypesInitialState,
 };
