@@ -39,7 +39,7 @@ class AnnouncementController {
 
 
       meta = {
-        totalPages: Math.ceil(announcementsPages.length / perPage),
+        totalPages: Math.ceil(announcementsPages.length / perPage) || 1,
         actualPage: Number(page)
       }
 

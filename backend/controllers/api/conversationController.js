@@ -69,7 +69,7 @@ class ConversationController {
           .populate("announcement", ["title", "images"]);
 
       const meta = {
-        totalPages: Math.ceil(conversationsPages.length / perPage),
+        totalPages: Math.ceil(conversationsPages.length / perPage) || 1,
         actualPage: Number(page)
       }
 
@@ -99,7 +99,7 @@ class ConversationController {
         .populate("announcement", ["title", "images"]);
 
       const meta = {
-        totalPages: Math.ceil(conversationsPages.length / perPage),
+        totalPages: Math.ceil(conversationsPages.length / perPage) || 1,
         actualPage: Number(page)
       }
 

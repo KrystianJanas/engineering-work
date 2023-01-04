@@ -57,8 +57,7 @@ router.get("/messages/:id", MessageController.getMessages);
 router.post("/messages", MessageController.saveMessage);
 
 // obserwowane ogłoszenia
-router.get("/observed", ObservedController.getObserved);
-router.get("/observed/:id", ObservedController.getObserved);
+router.get("/observed/:id", ObservedController.getObservedAnnouncements);
 router.post("/observed", ObservedController.saveObserved);
 router.delete("/observed/:id", ObservedController.deleteObserved);
 

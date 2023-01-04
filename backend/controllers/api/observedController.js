@@ -28,21 +28,31 @@ class ObservedController {
     }
   }
 
-  async getObserved(request, response) {
-    let observed;
+  async getObservedAnnouncements(request, response) {
+    let announcements, announcementsPages, meta;
     let id = request.params.id;
 
     try {
-      if (id) {
-        observed = await Observed.find({ person: id }).populate("announcement");
-      } else {
-        observed = await Observed.find({});
+      const { page=1, perPage=10 } = request.query;
+
+      announcementsPages = await Observed.find({ person: id })
+          .populate("announcement");
+
+      announcements = await Observed.find({ person: id })
+          .populate("announcement")
+          .limit(perPage)
+          .skip((page-1) * perPage);
+
+      meta = {
+        totalPages: Math.ceil(announcementsPages.length / perPage) || 1,
+        actualPage: Number(page)
       }
+
+      response.status(200).json({announcements, meta});
+
     } catch (error) {
       response.status(500).json({ message: error.message });
     }
-
-    return response.status(200).json(observed);
   }
 
   async deleteObserved(request, response) {
@@ -54,9 +64,7 @@ class ObservedController {
         await observed.deleteOne();
         response.sendStatus(204);
       } else {
-        return response
-          .status(422)
-          .json({ message: "Nie znaleziono obserwowanego ogłoszenia." });
+        response.status(422).json({ message: "Nie znaleziono obserwowanego ogłoszenia." });
       }
     } catch (error) {
       return response.status(422).json({ message: error.message });
