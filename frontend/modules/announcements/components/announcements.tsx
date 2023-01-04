@@ -14,7 +14,7 @@ import { usePagination } from '~/hooks/usePagination/usePagination';
 import {
   AnnouncementsModel,
   AnnouncementsModelData,
-  AnnouncementsModelDatanitialState,
+  AnnouncementsModelDataInitialState,
 } from '~/models/announcements.model';
 
 export const AnnouncementsView = () => {
@@ -28,7 +28,7 @@ export const AnnouncementsView = () => {
     onPreviousPage,
     onNextPage,
     perPage,
-  } = usePagination(1, 1);
+  } = usePagination(1, 5);
 
   useEffect(() => {
     if (!router.isReady) {
@@ -45,7 +45,7 @@ export const AnnouncementsView = () => {
   }, [router.isReady]);
 
   const { data, isLoading } = useGetData<AnnouncementsModelData>(
-    AnnouncementsModelDatanitialState,
+    AnnouncementsModelDataInitialState,
     'announcements',
     '',
     page,
@@ -87,19 +87,21 @@ export const AnnouncementsView = () => {
             <Text>Nie znaleziono żadnych ogłoszeń w tym momencie.</Text>
           </Layout>
         )}
-        <Layout
-          display="flex"
-          marginLeft="auto"
-          marginTop={15}
-          marginRight={25}
-        >
-          <Pagination
-            page={page}
-            maxPage={maxPage}
-            onPreviousPage={onPreviousPage}
-            onNextPage={onNextPage}
-          />
-        </Layout>
+        {maxPage > 1 && (
+          <Layout
+            display="flex"
+            marginLeft="auto"
+            marginTop={15}
+            marginRight={25}
+          >
+            <Pagination
+              page={page}
+              maxPage={maxPage}
+              onPreviousPage={onPreviousPage}
+              onNextPage={onNextPage}
+            />
+          </Layout>
+        )}
       </Layout>
     </Layout>
   );

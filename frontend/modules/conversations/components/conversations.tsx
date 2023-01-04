@@ -165,14 +165,16 @@ export const Conversations = () => {
             Nie znaleziono żadnych wiadomości w tej sekcji.
           </Text>
         )}
-        <Layout display="flex" justifyContent="right">
-          <Pagination
-            page={page}
-            maxPage={maxPage}
-            onPreviousPage={onPreviousPage}
-            onNextPage={onNextPage}
-          />
-        </Layout>
+        {maxPage > 1 && (
+          <Layout display="flex" justifyContent="right">
+            <Pagination
+              page={page}
+              maxPage={maxPage}
+              onPreviousPage={onPreviousPage}
+              onNextPage={onNextPage}
+            />
+          </Layout>
+        )}
       </Layout>
     );
   }

@@ -46,7 +46,7 @@ export interface AnnouncementsModelData {
   meta: MetaTypes;
 }
 
-export const AnnouncementsModelDatanitialState: AnnouncementsModelData = {
+export const AnnouncementsModelDataInitialState: AnnouncementsModelData = {
   announcements: [AnnouncementsModelInitialState],
   meta: MetaTypesInitialState,
 };

@@ -1,24 +1,62 @@
+import { useEffect } from 'react';
+
+import { useRouter } from 'next/router';
+
 import { Text } from '~/components/atoms/typography';
 import { AnnouncementCard } from '~/components/compounds/Announcement-Card';
+import { Pagination } from '~/components/compounds/Pagination';
 import { SpinnerLoading } from '~/components/compounds/Spinner';
 import { Layout } from '~/components/molecules/layout';
 import { useAuth } from '~/hooks/useContextProvider';
 import { useGetData } from '~/hooks/useGetData';
+import { usePagination } from '~/hooks/usePagination/usePagination';
 import {
-  AnnouncementsModel,
-  AnnouncementsModelInitialState,
+  AnnouncementsModelData,
+  AnnouncementsModelDataInitialState,
 } from '~/models/announcements.model';
 
 export const ObservedView = () => {
+  const router = useRouter();
   const { personID } = useAuth();
-  const { data, isLoading } = useGetData<AnnouncementsModel[]>(
-    [AnnouncementsModelInitialState],
+
+  const {
+    page,
+    setPage,
+    maxPage,
+    setMaxPage,
+    onPreviousPage,
+    onNextPage,
+    perPage,
+  } = usePagination(1, 1);
+
+  useEffect(() => {
+    if (!router.isReady) {
+      return;
+    }
+    const actualQueryPage = Number(router.query.pageNum) || 1;
+    router.push({
+      query: {
+        ...router.query,
+        pageNum: actualQueryPage,
+      },
+    });
+    setPage(actualQueryPage);
+  }, [router.isReady]);
+
+  const { data, isLoading } = useGetData<AnnouncementsModelData>(
+    AnnouncementsModelDataInitialState,
     'observed',
-    `${personID}`
+    `${personID}`,
+    page,
+    perPage
   );
 
   if (isLoading) {
     return <SpinnerLoading />;
+  }
+
+  if (maxPage === 0) {
+    setMaxPage(data.meta.totalPages);
   }
 
   return (
@@ -29,8 +67,8 @@ export const ObservedView = () => {
         wrap="wrap"
         padding={[10, 0]}
       >
-        {data.length > 0 ? (
-          data.map(
+        {data.announcements.length > 0 ? (
+          data.announcements.map(
             (
               announcement: any // todo: let's type it
             ) => (
@@ -50,6 +88,21 @@ export const ObservedView = () => {
           </Layout>
         )}
       </Layout>
+      {maxPage > 1 && (
+        <Layout
+          display="flex"
+          justifyContent="right"
+          marginTop={15}
+          marginRight={25}
+        >
+          <Pagination
+            page={page}
+            maxPage={maxPage}
+            onPreviousPage={onPreviousPage}
+            onNextPage={onNextPage}
+          />
+        </Layout>
+      )}
     </Layout>
   );
 };
