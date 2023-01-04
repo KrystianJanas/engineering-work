@@ -29,11 +29,12 @@ class AnnouncementController {
     let announcements;
     try {
       announcements = await Announcement.find({ status: true });
+      response.status(200).json(announcements);
+
     } catch (error) {
       response.status(500).json({ message: error.message });
     }
 
-    response.status(200).json(announcements);
   }
 
   async getAnnouncement(request, response) {

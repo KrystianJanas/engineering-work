@@ -30,21 +30,6 @@ class ConversationController {
     return response.status(200).json(conversations);
   }
 
-  async getConversationsFrom(request, response) {
-    let conversations;
-    const id = request.params.id;
-    try {
-      conversations = await Conversation.find({ person_from: id })
-        .populate("person_from", ["name"])
-        .populate("person_to", ["name"])
-        .populate("announcement", ["title", "images"]);
-    } catch (error) {
-      response.status(500).json({ message: error.message });
-    }
-
-    return response.status(200).json(conversations);
-  }
-
   async getConversationsCheckExistFrom(request, response) {
     let conversations;
     const body = request.params;
@@ -65,19 +50,65 @@ class ConversationController {
     return response.status(200).json(conversations);
   }
 
-  async getConversationsTo(request, response) {
-    let conversations;
+  async getConversationsFrom(request, response) {
+    let conversationsPages, conversations;
     const id = request.params.id;
     try {
+      const { page=1, perPage=10 } = request.query;
+
+      conversationsPages = await Conversation.find({ person_from: id })
+          .populate("person_from", ["name"])
+          .populate("person_to", ["name"])
+          .populate("announcement", ["title", "images"]);
+
+      conversations = await Conversation.find({ person_from: id })
+          .limit(perPage)
+          .skip((page-1) * perPage)
+          .populate("person_from", ["name"])
+          .populate("person_to", ["name"])
+          .populate("announcement", ["title", "images"]);
+
+      const meta = {
+        totalPages: Math.ceil(conversationsPages.length / perPage),
+        actualPage: Number(page)
+      }
+
+      return response.status(200).json({conversations, meta});
+
+    } catch (error) {
+      response.status(500).json({ message: error.message });
+    }
+  }
+
+  async getConversationsTo(request, response) {
+    let conversationsPages, conversations;
+    const id = request.params.id;
+    try {
+      const { page=1, perPage=10 } = request.query;
+
+      conversationsPages = await Conversation.find({ person_from: id })
+          .populate("person_from", ["name"])
+          .populate("person_to", ["name"])
+          .populate("announcement", ["title", "images"]);
+
       conversations = await Conversation.find({ person_to: id })
-        .populate("person_from", ["name"])
+          .limit(perPage)
+          .skip((page-1) * perPage)
+          .populate("person_from", ["name"])
         .populate("person_to", ["name"])
         .populate("announcement", ["title", "images"]);
+
+      const meta = {
+        totalPages: Math.ceil(conversationsPages.length / perPage),
+        actualPage: Number(page)
+      }
+
+      return response.status(200).json({conversations, meta});
+
     } catch (error) {
       response.status(500).json({ message: error.message });
     }
 
-    return response.status(200).json(conversations);
   }
 
   async deleteConversation(request, response) {

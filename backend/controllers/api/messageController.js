@@ -26,7 +26,8 @@ class MessageController {
     try {
       messages = await Message.find({ conversation: id })
         .populate("person", ["name"])
-        .populate("announcement", ["title"]);
+        .populate("announcement", ["title"])
+          .sort({created_at: -1});
     } catch (error) {
       response.status(500).json({ message: error.message });
     }
