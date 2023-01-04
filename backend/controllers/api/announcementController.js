@@ -19,17 +19,32 @@ class AnnouncementController {
         images: data.images,
       });
       await announcement.save();
+
+      response.status(201).json(announcement);
     } catch (error) {
       return response.status(422).json({ message: error.message });
     }
-    response.status(201).json(announcement);
   }
 
   async getAnnouncements(request, response) {
-    let announcements;
+    let announcements, announcementsPages, meta;
     try {
-      announcements = await Announcement.find({ status: true });
-      response.status(200).json(announcements);
+      const { page=1, perPage=10 } = request.query;
+
+      announcementsPages = await Announcement.find({ status: true });
+
+      announcements = await Announcement.find({ status: true })
+          .limit(perPage)
+          .skip((page-1) * perPage);
+
+
+      meta = {
+        totalPages: Math.ceil(announcementsPages.length / perPage),
+        actualPage: Number(page)
+      }
+
+      response.status(200).json({announcements, meta});
+
 
     } catch (error) {
       response.status(500).json({ message: error.message });
@@ -39,16 +54,14 @@ class AnnouncementController {
 
   async getAnnouncement(request, response) {
     const id = request.params.id;
-    const announcement = await Announcement.findOne({ _id: id }).populate("person", [
-      "_id",
-      "name",
-      "phone_number",
-    ]);
+    try{
+      const announcement = await Announcement.findOne({ _id: id })
+          .populate("person", ["_id", "name", "phone_number"]);
+      response.status(200).json(announcement);
+    } catch (error) {
+      response.status(500).json({ message: error.message });
 
-    response.status(200).json(announcement);
-
-    // announcement.views = announcement.views + 1; // make it only max 1 view per 1 visit on page.... ?? FE-SIDE
-    // await announcement.save();
+    }
   }
 
   async getAnnouncementsByPerson(request, response) {
@@ -60,11 +73,11 @@ class AnnouncementController {
         person,
         status,
       });
+      response.status(200).json(announcements);
+
     } catch (error) {
       response.status(500).json({ message: error.message });
     }
-
-    response.status(200).json(announcements);
   }
 
   async updateAnnouncement(request, response) {
@@ -89,10 +102,10 @@ class AnnouncementController {
         await announcement.save();
         response.status(200).json(announcement);
       } else {
-        return response.status(422).json({ message: "Announcement not found" });
+        return response.status(422).json({ message: "Ogłoszenie nie zostało znalezione."});
       }
     } catch (error) {
-      return response.status(422).json({ message: error.message });
+      return response.status(500).json({ message: error.message });
     }
   }
 
@@ -108,10 +121,10 @@ class AnnouncementController {
         await announcement.save();
         response.sendStatus(204);
       } else {
-        return response.status(422).json({ message: "Announcement not found" });
+        return response.status(422).json({ message: "Ogłoszenie nie zostało znalezione." });
       }
     } catch (error) {
-      return response.status(422).json({ message: error.message });
+      return response.status(500).json({ message: error.message });
     }
   }
 }
