@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 
 import { testImageUrl } from '~/GLOBAL.constants';
 import { postQuery } from '~/api/post';
-import { useAuth } from '~/hooks/useContextProvider';
+import { useAuth } from '~/components/contexts/useContextProvider';
 import { AnnouncementModelInitialState } from '~/models/announcement.model';
 
 import { AnnouncementsForm } from '../../../modules/announcements/components/announcements-form';

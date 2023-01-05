@@ -9,9 +9,9 @@ import { Text } from '~/components/atoms/typography';
 import { Button } from '~/components/compounds/Button';
 import { LeftSidebar } from '~/components/compounds/Left-Sidebar';
 import { SpinnerLoading } from '~/components/compounds/Spinner';
+import { useAuth } from '~/components/contexts/useContextProvider';
 import { Layout } from '~/components/molecules/layout';
 import { useActivity } from '~/hooks/useActivity';
-import { useAuth } from '~/hooks/useContextProvider';
 import { useGetData } from '~/hooks/useGetData';
 import {
   EstateSettlementNewModel,

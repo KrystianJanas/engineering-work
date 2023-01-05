@@ -33,7 +33,8 @@
     "react-query": "^3.39.0",
     "react-router-dom": "^6.6.0",
     "styled-components": "^5.3.6",
-    "universal-cookie": "^4.0.4"
+    "universal-cookie": "^4.0.4",
+    "js-cookie": "^3.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.17.10",

@@ -1,4 +1,3 @@
-import { useContext, useEffect } from 'react';
 import toast from 'react-hot-toast';
 
 import styled from '@emotion/styled';
@@ -7,8 +6,9 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 import { Text } from '~/components/atoms/typography';
+import { setAuthorization } from '~/components/contexts/api';
+import { useAuth } from '~/components/contexts/useContextProvider';
 import { Layout } from '~/components/molecules/layout';
-import AuthContext from '~/hooks/useContextProvider';
 import { useForm } from '~/hooks/useForm';
 import { getRem } from '~/styles/utils';
 
@@ -31,15 +31,8 @@ const StyledButton = styled(Button)`
 export const SignIn = ({ type }: SignTypes) => {
   const router = useRouter();
   const { formData, handleChange } = useForm<Sign>(signInitialState);
-  const { saveTokens, isLogged } = useContext(AuthContext);
 
-  useEffect(() => {
-    // console.log(isLogged); // todo: console.log
-    if (!isLogged) {
-      return;
-    }
-    router.push('/');
-  }, [saveTokens]);
+  const { login } = useAuth();
 
   const handleLogin = async (data: Sign, typeView: string) => {
     if (typeView === 'login') {
@@ -47,12 +40,10 @@ export const SignIn = ({ type }: SignTypes) => {
       if (errors && errors.length > 0) {
         toast.error(errors);
       }
+
       if (user) {
-        saveTokens({
-          userId: user.user_id,
-          personId: user.person_id,
-          accessToken: user.accessToken,
-        });
+        setAuthorization(user.accessToken);
+        login(user.user_id);
         toast.success('Pomyślnie zalogowano.');
       }
     }
@@ -111,6 +102,8 @@ export const SignIn = ({ type }: SignTypes) => {
       </Link>
     );
   };
+
+  const { logout } = useAuth();
 
   return (
     <Layout

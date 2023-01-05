@@ -6,8 +6,8 @@ import { Text } from '~/components/atoms/typography';
 import { AnnouncementCard } from '~/components/compounds/Announcement-Card';
 import { Pagination } from '~/components/compounds/Pagination';
 import { SpinnerLoading } from '~/components/compounds/Spinner';
+import { useAuth } from '~/components/contexts/useContextProvider';
 import { Layout } from '~/components/molecules/layout';
-import { useAuth } from '~/hooks/useContextProvider';
 import { useGetData } from '~/hooks/useGetData';
 import { usePagination } from '~/hooks/usePagination/usePagination';
 import {

@@ -7,8 +7,8 @@ import { Text } from '~/components/atoms/typography';
 import { AnnouncementCard } from '~/components/compounds/Announcement-Card';
 import { LeftSidebar, options } from '~/components/compounds/Left-Sidebar';
 import { SpinnerLoading } from '~/components/compounds/Spinner';
+import { useAuth } from '~/components/contexts/useContextProvider';
 import { Layout } from '~/components/molecules/layout';
-import { useAuth } from '~/hooks/useContextProvider';
 import { useGetData } from '~/hooks/useGetData';
 import {
   AnnouncementsModel,

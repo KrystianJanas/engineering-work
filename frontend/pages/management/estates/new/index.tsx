@@ -3,7 +3,7 @@ import toast from 'react-hot-toast';
 import { useRouter } from 'next/router';
 
 import { postQuery } from '~/api/post';
-import { useAuth } from '~/hooks/useContextProvider';
+import { useAuth } from '~/components/contexts/useContextProvider';
 import { EstateModel } from '~/models/estates.model';
 
 import { ManagementEstatesForm } from '../../../../modules/management-estates/new/components';

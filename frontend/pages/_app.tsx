@@ -7,7 +7,9 @@ import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
-import { AuthContextProvider } from '~/hooks/useContextProvider';
+// eslint-disable-next-line import/namespace
+import { ProtectRoute } from '~/components/contexts/protectRoute';
+import { AuthProvider } from '~/components/contexts/useContextProvider';
 import { GlobalStyles } from '~/styles';
 
 import { Header } from '../modules/header/components/header';
@@ -38,11 +40,13 @@ const CustomApp = ({ Component, pageProps }: AppProps) => {
       </Head>
       <Toaster />
       <GlobalStyles />
-      <AuthContextProvider>
-        {!pathname.toString().includes('auth') && <Header />}
+      <AuthProvider>
+        <ProtectRoute>
+          {!pathname.toString().includes('auth') && <Header />}
 
-        <Component {...pageProps} />
-      </AuthContextProvider>
+          <Component {...pageProps} />
+        </ProtectRoute>
+      </AuthProvider>
     </QueryClientProvider>
   );
 };

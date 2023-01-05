@@ -11,8 +11,8 @@ import { Button } from '~/components/compounds/Button';
 import { Line } from '~/components/compounds/Line';
 import { MessageCardComponent } from '~/components/compounds/Message-Card/messageCard.component';
 import { SpinnerLoading } from '~/components/compounds/Spinner';
+import { useAuth } from '~/components/contexts/useContextProvider';
 import { Layout } from '~/components/molecules/layout';
-import { useAuth } from '~/hooks/useContextProvider';
 import { useGetData } from '~/hooks/useGetData';
 import { getRem } from '~/styles/utils';
 import {

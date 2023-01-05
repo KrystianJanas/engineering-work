@@ -12,6 +12,7 @@ import { LeftSidebar } from '~/components/compounds/Left-Sidebar';
 import { ModalComponent } from '~/components/compounds/ModalComponent';
 import { useModalComponent } from '~/components/compounds/ModalComponent/useModalComponent';
 import { SpinnerLoading } from '~/components/compounds/Spinner';
+import { useAuth } from '~/components/contexts/useContextProvider';
 import {
   CustomDeleteIcon,
   CustomDownloadIcon,
@@ -19,7 +20,6 @@ import {
 } from '~/components/icons/global';
 import { Layout } from '~/components/molecules/layout';
 import { useActivity } from '~/hooks/useActivity';
-import { useAuth } from '~/hooks/useContextProvider';
 import { makeFullDataHour } from '~/hooks/useDateParser';
 import { useGetData } from '~/hooks/useGetData';
 import { EstateModel, EstatesModelInitialState } from '~/models/estates.model';

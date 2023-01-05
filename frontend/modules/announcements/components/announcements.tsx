@@ -8,6 +8,7 @@ import { AddButton } from '~/components/compounds/AddButton/components/add-butto
 import { AnnouncementCard } from '~/components/compounds/Announcement-Card';
 import { Pagination } from '~/components/compounds/Pagination';
 import { SpinnerLoading } from '~/components/compounds/Spinner';
+import { useAuth } from '~/components/contexts/useContextProvider';
 import { Layout } from '~/components/molecules/layout';
 import { useGetData } from '~/hooks/useGetData';
 import { usePagination } from '~/hooks/usePagination/usePagination';
@@ -19,6 +20,7 @@ import {
 
 export const AnnouncementsView = () => {
   const router = useRouter();
+  const { isAuthenticated } = useAuth();
 
   const {
     page,
@@ -32,6 +34,10 @@ export const AnnouncementsView = () => {
 
   useEffect(() => {
     if (!router.isReady) {
+      return;
+    }
+    if (!isAuthenticated) {
+      router.push('/auth/sign-in');
       return;
     }
     const actualQueryPage = Number(router.query.pageNum) || 1;

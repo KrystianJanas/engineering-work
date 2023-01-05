@@ -11,10 +11,10 @@ import { LeftSidebar } from '~/components/compounds/Left-Sidebar';
 import { ModalComponent } from '~/components/compounds/ModalComponent';
 import { useModalComponent } from '~/components/compounds/ModalComponent/useModalComponent';
 import { SpinnerLoading } from '~/components/compounds/Spinner';
+import { useAuth } from '~/components/contexts/useContextProvider';
 import { CustomDeleteIcon } from '~/components/icons/global';
 import { Layout } from '~/components/molecules/layout';
 import { useActivity } from '~/hooks/useActivity';
-import { useAuth } from '~/hooks/useContextProvider';
 import { useGetData } from '~/hooks/useGetData';
 import {
   EstateInvitationsModel,

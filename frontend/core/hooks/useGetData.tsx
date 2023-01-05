@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
 import { getData } from '~/api/get';
+import { useAuth } from '~/components/contexts/useContextProvider';
 
 export const useGetData = <FormType,>(
   initialState: FormType,
@@ -11,6 +12,7 @@ export const useGetData = <FormType,>(
   page?: number,
   perPage?: number
 ) => {
+  const { isAuthenticated } = useAuth();
   const [updateState, setUpdateState] = useState(false);
   const router = useRouter();
 
@@ -26,8 +28,14 @@ export const useGetData = <FormType,>(
   };
   // eslint-disable-next-line consistent-return
   useEffect(() => {
+    if (!isAuthenticated) {
+      router.push('/auth/sign-in');
+      return;
+    }
+
     if (updateState) {
-      return setUpdateState(false);
+      setUpdateState(false);
+      return;
     }
     if (router.isReady) {
       router.push(

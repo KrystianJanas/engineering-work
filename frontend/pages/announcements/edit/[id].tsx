@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { testImageUrl } from '~/GLOBAL.constants';
 import { updateQuery } from '~/api/update';
 import { SpinnerLoading } from '~/components/compounds/Spinner';
-import { useAuth } from '~/hooks/useContextProvider';
+import { useAuth } from '~/components/contexts/useContextProvider';
 import { useGetData } from '~/hooks/useGetData';
 import {
   AnnouncementModel,

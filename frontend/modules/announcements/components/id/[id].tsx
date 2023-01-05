@@ -12,8 +12,8 @@ import { postQuery } from '~/api/post';
 import { Text } from '~/components/atoms/typography';
 import { Images } from '~/components/compounds/Images';
 import { SpinnerLoading } from '~/components/compounds/Spinner';
+import { useAuth } from '~/components/contexts/useContextProvider';
 import { Layout } from '~/components/molecules/layout';
-import { useAuth } from '~/hooks/useContextProvider';
 import { parseData, parseHour } from '~/hooks/useDateParser';
 import { useGetData } from '~/hooks/useGetData';
 import {
