@@ -15,6 +15,28 @@ import EstateSettlementController from "../controllers/api/estateSettlementContr
 import UploadController from "../controllers/api/uploadController.js";
 import InvoiceController from "../controllers/api/invoiceController.js";
 
+import jwt from "jsonwebtoken";
+
+
+function authenticate(req, res, next) {
+    let token = req.headers.authorization;
+
+    try {
+        if (!token) return res.sendStatus(403);
+            token = token.split(' ')[1];
+
+            jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+
+            if (err) return res.sendStatus(403);
+
+            req.user = user;
+            next();
+        });
+    } catch(err) {
+        if (err) return res.sendStatus(403);
+    }
+}
+
 // ludzie
 router.get("/people", PeopleController.getPeople);
 router.get("/people/:id", PeopleController.getPerson);
@@ -28,7 +50,7 @@ router.post("/auth/login", UserController.getUser);
 router.post("/auth/updatePassword", UserController.updatePassword); // check, if it works - delete this comment
 
 // ogłoszenia
-router.get("/announcements", AnnouncementController.getAnnouncements);
+router.get("/announcements", authenticate, AnnouncementController.getAnnouncements);
 router.get("/announcements/:id", AnnouncementController.getAnnouncement);
 router.get(
   "/announcements/person/:id/:status",
@@ -115,5 +137,21 @@ router.delete(
 );
 
 router.post("/upload/pictures", UploadController.saveImage);
+
+
+router.get('/users/me', (req, res) => {
+    let token = req.headers.authorization;
+    try {
+        if (!token) return res.sendStatus(403);
+        token = token.split(' ')[1];
+
+        jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+            if (err) return res.sendStatus(403);
+            res.json(user);
+        })
+    } catch(err) {
+        return res.sendStatus(403);
+    }
+});
 
 export default router;

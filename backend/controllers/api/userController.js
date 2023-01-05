@@ -1,7 +1,7 @@
 import User from "../../db/models/user.js";
 import Person from "../../db/models/person.js";
 import { hash, compare } from "bcrypt";
-import jsonwebtoken from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 
 class UserController {
   async saveUser(request, response) {
@@ -52,8 +52,8 @@ class UserController {
 
     try {
       if (await compare(request.body.password, user.password)) {
-        const accessToken = jsonwebtoken.sign(
-          { login: request.body.login },
+        const accessToken = jwt.sign(
+          { login: request.body.login, _id: person._id },
           process.env.ACCESS_TOKEN_SECRET
         );
         response.status(200).json({
