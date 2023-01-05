@@ -19,8 +19,6 @@ export const ManagementEstatesAddPage = () => {
     created_at,
     ...rest
   }: EstateModel) => {
-    const data = { ...rest, person: personID };
-    console.log(data);
     const result = await postQuery('estates', { ...rest, person: personID });
     if (result) {
       await router.push('/management/estates');

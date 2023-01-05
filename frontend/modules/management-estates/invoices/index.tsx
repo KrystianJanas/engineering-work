@@ -100,7 +100,6 @@ export const ManagementEstatesInvoices = () => {
       `estates/invoices/download/${filename}`
     );
     if (response) {
-      console.log(response.data);
       FileDownload(response.data, 'faktura.pdf');
     }
   };
@@ -123,8 +122,6 @@ export const ManagementEstatesInvoices = () => {
     }
     return null;
   };
-
-  console.log(dataInvoices);
 
   const getInfoAboutInvoice = (invoice: InvoicesModel) => {
     let text = '';

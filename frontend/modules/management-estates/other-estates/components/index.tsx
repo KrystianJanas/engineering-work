@@ -75,7 +75,7 @@ export const ManagementOtherEstates = () => {
   >(
     [EstateInvitationsModelInitialState],
     'estatesInvitations',
-    `person/${personID}` // todo: check if it works, because endpoint name is changed in backend
+    `person/${personID}`
   ); // zaproszenia do nieruchomości
 
   if (isLoading || isLoadingInvitations) {

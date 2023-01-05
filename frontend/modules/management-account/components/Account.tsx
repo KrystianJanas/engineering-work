@@ -44,7 +44,6 @@ export const Account = () => {
     if (error) {
       return toast.error(error);
     }
-    console.log('Dane prawidłowe...');
 
     const result = await updateQuery(`people/${personID}`, userData);
     if (result) {

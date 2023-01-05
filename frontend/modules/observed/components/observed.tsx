@@ -70,7 +70,7 @@ export const ObservedView = () => {
         {data.announcements.length > 0 ? (
           data.announcements.map(
             (
-              announcement: any // todo: let's type it
+              announcement: any // todo: lets typing it
             ) => (
               <AnnouncementCard
                 typeView="observed"

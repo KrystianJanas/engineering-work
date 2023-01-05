@@ -30,9 +30,6 @@ const CustomApp = ({ Component, pageProps }: AppProps) => {
   const { pathname } = useRouter();
   const { pageTitle } = useActiveNavLink(pathname);
 
-  // const { isLogged } = useContext(AuthContext);
-
-  // console.log('isLogged:', isLogged); // todo: console.log
   return (
     <QueryClientProvider client={queryClient}>
       <Head>

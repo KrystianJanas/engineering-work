@@ -50,3 +50,10 @@ export const AnnouncementsModelDataInitialState: AnnouncementsModelData = {
   announcements: [AnnouncementsModelInitialState],
   meta: MetaTypesInitialState,
 };
+
+export interface AnnouncementObservedModel {
+  announcement: AnnouncementsModel;
+  _id: string;
+  created_at: string;
+  person: string;
+}

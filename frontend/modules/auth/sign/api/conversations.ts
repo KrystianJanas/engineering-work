@@ -16,7 +16,6 @@ export const signIn = async (login: string, password: string) => {
           });
 
         if (response.data) {
-          // todo: mam uzytkownika uid, pid, accesstoken
           return { user: response.data };
         }
       } catch (error) {
@@ -57,7 +56,6 @@ export const signUp = async (
             response.data.status &&
             response.data.status === 201
           ) {
-            console.log('Status: 201');
             return { success: true };
           }
           return { errors };

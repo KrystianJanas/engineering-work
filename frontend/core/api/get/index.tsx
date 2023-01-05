@@ -1,5 +1,3 @@
-import axios from 'axios';
-
 import api from '~/components/contexts/api';
 
 export const getData = async (
@@ -33,7 +31,7 @@ export const getData = async (
 
 export const getFileDownload = async (endpoint: string) => {
   try {
-    const response = await axios.get(`http://localhost:3001/api/${endpoint}`, {
+    const response = await api.get(`${endpoint}`, {
       responseType: 'blob',
     });
     return response;

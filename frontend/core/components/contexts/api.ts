@@ -17,12 +17,6 @@ export const setAuthorization = (accessToken: string): void => {
       Authorization: `Bearer ${accessToken}`,
     };
   }
-  // else if (cookie.get('token')) {
-  //   cookie.remove('token');
-  // }
-  // if (cookie.get('user')) {
-  //   cookie.remove('user');
-  // }
 };
 
 export default api;

@@ -45,7 +45,6 @@ export const AnnouncementEditPage = () => {
   }
 
   if (data.person._id !== personID) {
-    // todo: change it to !==
     toast.error('Nie masz tu dostepu');
     router.push('/announcements').finally(() => {
       return <div>no access</div>;

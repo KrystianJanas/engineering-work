@@ -55,7 +55,7 @@ export const ManagementEstates = () => {
                 boxShadow="0px 0px 16px rgba(0, 0, 0, 0.24)"
                 margin={[15]}
                 padding={[10]}
-                onClick={() => router.push(`/management/estates/${estate._id}`)} // todo: send data into component
+                onClick={() => router.push(`/management/estates/${estate._id}`)}
               >
                 <Text textAlign="center" size={getRem(18)}>
                   {estate.title}
