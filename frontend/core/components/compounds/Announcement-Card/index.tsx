@@ -9,12 +9,12 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import Link from 'next/link';
 
-import { default_avatar_url } from '~/GLOBAL.constants';
 import { deleteQuery } from '~/api/delete';
 import { postQuery } from '~/api/post';
 import { Text } from '~/components/atoms/typography';
 import { ModalComponent } from '~/components/compounds/ModalComponent';
 import { useModalComponent } from '~/components/compounds/ModalComponent/useModalComponent';
+import { default_avatar_url } from '~/components/constants/GLOBAL.constants';
 import { useAuth } from '~/components/contexts/useContextProvider';
 import { Layout } from '~/components/molecules/layout';
 import { parseData, parseHour } from '~/hooks/useDateParser';

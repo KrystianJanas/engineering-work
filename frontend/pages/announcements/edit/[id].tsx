@@ -2,9 +2,9 @@ import toast from 'react-hot-toast';
 
 import { useRouter } from 'next/router';
 
-import { testImageUrl } from '~/GLOBAL.constants';
 import { updateQuery } from '~/api/update';
 import { SpinnerLoading } from '~/components/compounds/Spinner';
+import { testImageUrl } from '~/components/constants/GLOBAL.constants';
 import { useAuth } from '~/components/contexts/useContextProvider';
 import { useGetData } from '~/hooks/useGetData';
 import {

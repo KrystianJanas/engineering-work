@@ -1,4 +1,5 @@
-import { AccountModel } from '~/models/account.model';
+import { AccountModel, AccountPasswordModel } from '~/models/account.model';
+import { zipCodeRegex } from '~/regex.rules';
 
 export const AccountValidationPersonalData = (formData: AccountModel) => {
   let error;
@@ -10,14 +11,7 @@ export const AccountValidationPersonalData = (formData: AccountModel) => {
       };
     }
 
-    if (
-      formData.zip_code.trim().length !== 6 ||
-      !formData.zip_code.includes('-') ||
-      !(
-        formData.zip_code.split('-')[0] &&
-        formData.zip_code.split('-')[0].length === 2
-      )
-    ) {
+    if (!formData.zip_code.match(zipCodeRegex)) {
       return {
         error: 'Kod pocztowy powinien mieć następujący schemat: 12-345.',
       };
@@ -32,6 +26,47 @@ export const AccountValidationPersonalData = (formData: AccountModel) => {
       !Number(formData.phone_number)
     ) {
       return { error: 'Numer telefonu powinien zawierać 9 cyfr.' };
+    }
+  } else {
+    error = 'Nie znaleziono formularza. Spróbuj ponownie.';
+  }
+
+  return { error };
+};
+
+export const AccountValidatePassword = (formData: AccountPasswordModel) => {
+  let error;
+
+  if (formData) {
+    if (formData.password.trim().length < 5) {
+      return {
+        error: 'Hasło powinno zawierać co najmniej 5 znaków.',
+      };
+    }
+
+    if (formData.newPassword.trim().length < 5) {
+      return {
+        error: 'Nowe hasło powinno zawierać co najmniej 5 znaków.',
+      };
+    }
+
+    if (formData.repeatNewPassword.trim().length < 5) {
+      return {
+        error:
+          'Powtórzenie nowego hasła powinno zawierać co najmniej 5 znaków.',
+      };
+    }
+
+    if (formData.newPassword.trim() !== formData.repeatNewPassword.trim()) {
+      return {
+        error: 'Nowe hasło i jego powtórzenie powinny być identyczne.',
+      };
+    }
+
+    if (formData.password.trim() === formData.newPassword.trim()) {
+      return {
+        error: 'Nowe hasło powinno się różnić od poprzednio używanego hasła.',
+      };
     }
   } else {
     error = 'Nie znaleziono formularza. Spróbuj ponownie.';

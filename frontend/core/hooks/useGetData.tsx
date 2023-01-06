@@ -24,9 +24,8 @@ export const useGetData = <FormType,>(
   const fetchData = async () => {
     const result = await getData(pageEndpoint, restEndpoint, page, perPage);
     setData({ data: result, isLoading: false });
-    console.log('useGetData()'); // todo: delete it
   };
-  // eslint-disable-next-line consistent-return
+
   useEffect(() => {
     if (!isAuthenticated) {
       router.push('/auth/sign-in');

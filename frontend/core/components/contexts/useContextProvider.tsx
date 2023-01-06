@@ -25,6 +25,48 @@ export const AuthProvider = ({ children }: any) => {
 
   const [personID, setPersonID] = useState(user);
 
+  const removeAllCookies = () => {
+    cookies.remove('user');
+    cookies.remove('token');
+  };
+
+  const setCookies = (token: string, userID: string) => {
+    if (token && token.length > 0) {
+      if (!cookies.get('token')) {
+        cookies.set('token', token);
+        // eslint-disable-next-line no-empty
+      } else if (cookies.get('token') === token) {
+      } else {
+        cookies.remove('token');
+        cookies.set('token', token);
+      }
+    }
+    if (userID && userID.length > 0) {
+      if (!cookies.get('user')) {
+        cookies.set('user', userID);
+        // eslint-disable-next-line no-empty
+      } else if (cookies.get('user') === userID) {
+      } else {
+        cookies.remove('user');
+        cookies.set('user', userID);
+      }
+    }
+  };
+
+  const logout = async () => {
+    setAuthorization('');
+    setUser('');
+    await removeAllCookies();
+    await router.push('/auth/sign-in');
+  };
+
+  const login = async (id: string) => {
+    setUser(id);
+    setPersonID(id);
+    await setCookies('', id);
+    await router.push('/');
+  };
+
   useEffect(() => {
     async function loadUserFromCookies() {
       const token = cookies.get('token');
@@ -35,35 +77,25 @@ export const AuthProvider = ({ children }: any) => {
           if (data) {
             setUser(data._id);
             setPersonID(data._id);
+            await setCookies(token, data._id);
+          } else {
+            logout();
           }
         } catch (error) {
           // @ts-ignore
           if (error.response.status === 403) {
-            cookies.remove('token');
-            cookies.remove('user');
+            logout();
+            return;
           }
         }
+      } else if (cookies.get('user')) {
+        await removeAllCookies();
       }
       setLoading(false);
     }
 
     loadUserFromCookies();
-  }, []);
-
-  const logout = () => {
-    cookies.remove('token');
-    cookies.remove('user');
-    setUser('');
-    setAuthorization('');
-    router.push('/auth/sign-in');
-  };
-
-  const login = (id: string) => {
-    setUser(id);
-    setPersonID(id);
-    cookies.set('user', id);
-    router.push('/');
-  };
+  }, [router.pathname]);
 
   return (
     <AuthContext.Provider

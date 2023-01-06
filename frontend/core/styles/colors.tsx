@@ -5,6 +5,9 @@ export const colorsStyles = css`
     --white: #ffffff;
 
     --background-white: #ffffff;
+
+    --background-white-medium-transparent: rgba(0, 0, 0, 0.7);
+
     --background-light-grey: #d2d2d2;
     --background-light-blue: #12b9ac;
     --background-medium-blue: #0e9186;
@@ -21,6 +24,7 @@ export const colorsStyles = css`
     --text-grey: #90a3bf;
     --text-green: #12b9ac;
     --text-grey-black: #333333;
+    --text-white: #ffffff;
     --text-light-green: rgba(18, 185, 172, 0.8);
   }
 `;

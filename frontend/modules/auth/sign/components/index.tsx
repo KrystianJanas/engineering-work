@@ -10,6 +10,7 @@ import { setAuthorization } from '~/components/contexts/api';
 import { useAuth } from '~/components/contexts/useContextProvider';
 import { Layout } from '~/components/molecules/layout';
 import { useForm } from '~/hooks/useForm';
+import { validateEmail } from '~/mail.rules';
 import { getRem } from '~/styles/utils';
 
 import { signIn, signUp } from '../api/conversations';
@@ -26,6 +27,15 @@ const StyledButton = styled(Button)`
     background-color: var(--background-medium-blue);
     color: var(--white);
   }
+`;
+
+const StyledLayout = styled(Layout)`
+  background: url('/dashboard.jpg');
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  height: calc(100% - (100px));
 `;
 
 export const SignIn = ({ type }: SignTypes) => {
@@ -103,10 +113,8 @@ export const SignIn = ({ type }: SignTypes) => {
     );
   };
 
-  const { logout } = useAuth();
-
   return (
-    <Layout
+    <StyledLayout
       display="flex"
       justifyContent="center"
       alignItems="center"
@@ -150,6 +158,14 @@ export const SignIn = ({ type }: SignTypes) => {
             <TextField
               id="login"
               label="Adres e-mail"
+              error={
+                !validateEmail(formData.login) && formData.login.length > 3
+              }
+              helperText={
+                !validateEmail(formData.login) &&
+                formData.login.length > 5 &&
+                'Niepoprawny format adresu e-mail'
+              }
               variant="outlined"
               value={formData.login}
               onChange={(e) => handleChange('login', e.target.value)}
@@ -191,6 +207,6 @@ export const SignIn = ({ type }: SignTypes) => {
           </Layout>
         </Layout>
       </Layout>
-    </Layout>
+    </StyledLayout>
   );
 };

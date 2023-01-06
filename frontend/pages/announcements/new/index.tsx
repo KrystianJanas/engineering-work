@@ -2,8 +2,8 @@ import toast from 'react-hot-toast';
 
 import { useRouter } from 'next/router';
 
-import { testImageUrl } from '~/GLOBAL.constants';
 import { postQuery } from '~/api/post';
+import { testImageUrl } from '~/components/constants/GLOBAL.constants';
 import { useAuth } from '~/components/contexts/useContextProvider';
 import { AnnouncementModelInitialState } from '~/models/announcement.model';
 

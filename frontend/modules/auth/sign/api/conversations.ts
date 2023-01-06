@@ -1,8 +1,15 @@
 import axios from 'axios';
 
+import { validateEmail } from '~/mail.rules';
+
 export const signIn = async (login: string, password: string) => {
   const errors: any = [];
-  if (login && login.length > 4 && login.includes('@')) {
+  if (
+    login &&
+    login.length > 4 &&
+    login.includes('@') &&
+    validateEmail(login)
+  ) {
     if (password && password.length > 4) {
       try {
         const response = await axios
@@ -25,7 +32,7 @@ export const signIn = async (login: string, password: string) => {
       errors.push('Niepoprawny format hasła!');
     }
   } else {
-    errors.push('Niepoprawny adres e-mail!');
+    errors.push('Niepoprawny format adresu e-mail!');
   }
 
   return { errors };

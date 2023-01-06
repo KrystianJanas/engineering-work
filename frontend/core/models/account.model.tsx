@@ -11,3 +11,15 @@ export const AccountModelInitialState: AccountModel = {
   city: '',
   phone_number: '',
 };
+
+export interface AccountPasswordModel {
+  password: string;
+  newPassword: string;
+  repeatNewPassword: string;
+}
+
+export const AccountPasswordModelInitialState: AccountPasswordModel = {
+  password: '',
+  newPassword: '',
+  repeatNewPassword: '',
+};

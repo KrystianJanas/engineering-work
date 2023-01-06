@@ -21,5 +21,10 @@ export const options = {
       name: 'Dane osobowe',
       placeholder: 'Wybierz z listy',
     },
+    {
+      href: 'auth/logout',
+      name: 'Wyloguj się',
+      placeholder: '',
+    },
   ],
 };

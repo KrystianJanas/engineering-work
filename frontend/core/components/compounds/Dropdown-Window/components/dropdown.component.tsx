@@ -1,6 +1,5 @@
 import { useState } from 'react';
 
-import { Line } from '~/components/compounds/Line';
 import { ArrowDown } from '~/components/icons/arrow-down';
 import { ArrowUp } from '~/components/icons/arrow-up';
 import { Layout } from '~/components/molecules/layout';
@@ -18,7 +17,7 @@ export const DropdownWindow = ({
   return (
     <Layout
       margin={[10, 0]}
-      width="75%"
+      width="95%"
       marginLeft="auto"
       marginRight="auto"
       background="var(--background-white)"
@@ -38,8 +37,13 @@ export const DropdownWindow = ({
       </Layout>
       {expanded && (
         <>
-          <Line />
-          <Layout width="95%" marginLeft="auto" marginRight="auto">
+          {/* <Line /> */}
+          <Layout
+            width="95%"
+            marginLeft="auto"
+            marginRight="auto"
+            marginTop={25}
+          >
             {children}
           </Layout>
         </>
