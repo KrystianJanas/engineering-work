@@ -41,7 +41,10 @@ export const ManagementEstateIDDetails = () => {
   const { data, isLoading } = useGetData<EstateModel>(
     EstatesModelInitialState,
     'estates',
-    `${router.query.id}`
+    `${router.query.id}`,
+    0,
+    0,
+    { personID, typeView: 'view' }
   );
 
   const redirectedFunction = () => {
@@ -61,13 +64,7 @@ export const ManagementEstateIDDetails = () => {
     return <SpinnerLoading />;
   }
 
-  if (
-    !data ||
-    !(
-      data.person._id === personID ||
-      data.renter.find((rent) => rent._id === personID)
-    )
-  ) {
+  if (!data && !isLoading) {
     redirectedFunction();
     return <SpinnerLoading />;
   }
@@ -217,7 +214,18 @@ export const ManagementEstateIDDetails = () => {
             />
           </Layout>
         ) : (
-          <Layout display="flex" justifyContent="center" marginTop={20}>
+          <Layout
+            display="flex"
+            justifyContent="center"
+            marginTop={20}
+            gap="25px"
+          >
+            <Button
+              text="Edytuj dane nieruchomości"
+              onSubmit={() =>
+                router.push(`/management/estates/${router.query.id}/edit`)
+              }
+            />
             <Button
               text="Usuń nieruchomość"
               onSubmit={() => {

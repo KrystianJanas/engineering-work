@@ -1,6 +1,6 @@
 import toast from 'react-hot-toast';
 
-import api from '~/components/contexts/api';
+import api from '~/api/api';
 
 export const deleteQuery = async (pageEndpoint: string, id: string) => {
   try {

@@ -10,7 +10,8 @@ export const useGetData = <FormType,>(
   pageEndpoint: string,
   restEndpoint?: string,
   page?: number,
-  perPage?: number
+  perPage?: number,
+  params?: any
 ) => {
   const { isAuthenticated } = useAuth();
   const [updateState, setUpdateState] = useState(false);
@@ -22,7 +23,13 @@ export const useGetData = <FormType,>(
   });
 
   const fetchData = async () => {
-    const result = await getData(pageEndpoint, restEndpoint, page, perPage);
+    const result = await getData(
+      pageEndpoint,
+      restEndpoint,
+      page,
+      perPage,
+      params
+    );
     setData({ data: result, isLoading: false });
   };
 
@@ -37,16 +44,19 @@ export const useGetData = <FormType,>(
       return;
     }
     if (router.isReady) {
-      router.push(
-        {
-          query: {
-            ...router.query,
-            pageNum: page || 0,
+      if (page && page > 0) {
+        router.push(
+          {
+            query: {
+              ...router.query,
+              pageNum: page || 0,
+            },
           },
-        },
-        undefined,
-        { scroll: false }
-      );
+          undefined,
+          { scroll: false }
+        );
+      }
+
       fetchData();
     }
   }, [router.isReady, updateState, page]);

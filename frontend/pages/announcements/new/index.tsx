@@ -5,7 +5,6 @@ import { useRouter } from 'next/router';
 import { postQuery } from '~/api/post';
 import { testImageUrl } from '~/components/constants/GLOBAL.constants';
 import { useAuth } from '~/components/contexts/useContextProvider';
-import { AnnouncementModelInitialState } from '~/models/announcement.model';
 
 import { AnnouncementsForm } from '../../../modules/announcements/components/announcements-form';
 import { AnnouncementsValidation } from '../../../modules/announcements/components/announcements.validation';
@@ -30,7 +29,6 @@ export const AnnouncementsNewPage = () => {
 
   return (
     <AnnouncementsForm
-      announcement={AnnouncementModelInitialState}
       onSubmit={({ _id, person, images, ...rest }) => {
         const dataToApi: any = {
           person: personID,

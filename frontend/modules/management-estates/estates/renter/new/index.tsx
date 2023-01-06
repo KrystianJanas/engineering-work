@@ -8,7 +8,7 @@ import { postQuery } from '~/api/post';
 import { Text } from '~/components/atoms/typography';
 import { Button } from '~/components/compounds/Button';
 import { LeftSidebar } from '~/components/compounds/Left-Sidebar';
-import SpinnerLoading from '~/components/compounds/Spinner';
+import { SpinnerLoading } from '~/components/compounds/Spinner';
 import { useAuth } from '~/components/contexts/useContextProvider';
 import { Layout } from '~/components/molecules/layout';
 import { useGetData } from '~/hooks/useGetData';
@@ -24,7 +24,10 @@ export const NewRenter = () => {
   const { data, isLoading } = useGetData<EstateModel>(
     EstatesModelInitialState,
     'estates',
-    `${router.query.id}`
+    `${router.query.id}`,
+    0,
+    0,
+    { personID, typeView: 'view' }
   );
 
   const options = getEstatesOptions(
@@ -46,7 +49,14 @@ export const NewRenter = () => {
     }
   }, [mail]);
 
-  if (isLoading || !router.isReady) {
+  const redirectedFunction = () => {
+    if (router.isReady) {
+      router.push('/management/estates');
+    }
+  };
+
+  if (!data && !isLoading) {
+    redirectedFunction();
     return <SpinnerLoading />;
   }
 

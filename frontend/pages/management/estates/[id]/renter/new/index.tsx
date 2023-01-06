@@ -1,4 +1,4 @@
-import { NewRenter } from '../../../../../../modules/management-estates/renter/new';
+import { NewRenter } from '../../../../../../modules/management-estates/estates/renter/new';
 
 export const NewRenterPage = () => {
   return <NewRenter />;

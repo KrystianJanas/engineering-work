@@ -37,7 +37,10 @@ export const SettlementNew = () => {
   const { data, isLoading } = useGetData<EstateModel>(
     EstatesModelInitialState,
     'estates',
-    `${router.query.id}`
+    `${router.query.id}`,
+    0,
+    0,
+    { personID, typeView: 'view' }
   );
 
   const { data: dataThisMonth, isLoading: isLoadingThisMonth } =
@@ -57,13 +60,7 @@ export const SettlementNew = () => {
     return <SpinnerLoading />;
   }
 
-  if (
-    !data ||
-    !(
-      data.person._id === personID ||
-      data.renter.find((rent) => rent._id === personID)
-    )
-  ) {
+  if (!data && !isLoading) {
     redirectedFunction();
     return <SpinnerLoading />;
   }

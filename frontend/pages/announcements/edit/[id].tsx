@@ -8,9 +8,9 @@ import { testImageUrl } from '~/components/constants/GLOBAL.constants';
 import { useAuth } from '~/components/contexts/useContextProvider';
 import { useGetData } from '~/hooks/useGetData';
 import {
-  AnnouncementModel,
-  AnnouncementModelInitialState,
-} from '~/models/announcement.model';
+  AnnouncementsModel,
+  AnnouncementsModelInitialState,
+} from '~/models/announcements.model';
 
 import { AnnouncementsForm } from '../../../modules/announcements/components/announcements-form';
 import { AnnouncementsValidation } from '../../../modules/announcements/components/announcements.validation';
@@ -25,7 +25,7 @@ export const AnnouncementEditPage = () => {
     const result = await updateQuery(`announcements/${router.query.id}`, data);
 
     if (result && result.status === 200) {
-      await router.push('/management');
+      await router.push('/management/announcements');
       toast.success('Pozytywnie edytowano ogłoszenie.');
     } else {
       toast.error(
@@ -34,21 +34,22 @@ export const AnnouncementEditPage = () => {
     }
   };
 
-  const { data, isLoading } = useGetData<AnnouncementModel>(
-    AnnouncementModelInitialState,
+  const { data, isLoading } = useGetData<AnnouncementsModel>(
+    AnnouncementsModelInitialState,
     'announcements',
-    `${router.query.id}`
+    `${router.query.id}`,
+    0,
+    0,
+    { personID, typeView: 'edit' }
   );
 
   if (isLoading) {
     return <SpinnerLoading />;
   }
 
-  if (data.person._id !== personID) {
-    toast.error('Nie masz tu dostepu');
-    router.push('/announcements').finally(() => {
-      return <div>no access</div>;
-    });
+  if (!data && !isLoading) {
+    router.push('/management');
+    return <SpinnerLoading />;
   }
 
   return (

@@ -50,7 +50,10 @@ export const ManagementEstateSettlement = () => {
   const { data, isLoading } = useGetData<EstateModel>(
     EstatesModelInitialState,
     'estates',
-    `${router.query.id}`
+    `${router.query.id}`,
+    0,
+    0,
+    { personID, typeView: 'view' }
   );
 
   const redirectedFunction = () => {
@@ -74,18 +77,12 @@ export const ManagementEstateSettlement = () => {
     `${router.query.id}`
   );
 
-  if (isLoading || isLoadingCosts || isLoadingSettlements) {
+  if (!data && !isLoading) {
+    redirectedFunction();
     return <SpinnerLoading />;
   }
 
-  if (
-    !data ||
-    !(
-      data.person._id === personID ||
-      data.renter.find((rent) => rent._id === personID)
-    )
-  ) {
-    redirectedFunction();
+  if (isLoading || isLoadingCosts || isLoadingSettlements) {
     return <SpinnerLoading />;
   }
 
@@ -122,16 +119,19 @@ export const ManagementEstateSettlement = () => {
         marginBottom={15}
         padding={[10, 20, 20, 20]}
       >
-        <Layout display="flex" justifyContent="center">
-          <Button
-            text="Dodaj nowe odczyty liczników"
-            onSubmit={() =>
-              router.push(
-                `/management/estates/${router.query.id}/settlements/new`
-              )
-            }
-          />
-        </Layout>
+        {dataCosts && (
+          <Layout display="flex" justifyContent="center">
+            <Button
+              text="Dodaj nowe odczyty liczników"
+              onSubmit={() =>
+                router.push(
+                  `/management/estates/${router.query.id}/settlements/new`
+                )
+              }
+            />
+          </Layout>
+        )}
+
         {dataCosts ? (
           <Layout marginTop={15}>
             {dataSettlements.length > 0 ? (

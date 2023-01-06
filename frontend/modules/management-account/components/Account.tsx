@@ -2,6 +2,7 @@ import toast from 'react-hot-toast';
 
 import { Autocomplete, TextField } from '@mui/material';
 
+import api from '~/api/api';
 import { updateQuery } from '~/api/update';
 import { Text } from '~/components/atoms/typography';
 import { Button } from '~/components/compounds/Button/components/button';
@@ -9,7 +10,6 @@ import { DropdownWindow } from '~/components/compounds/Dropdown-Window';
 import { LeftSidebar, options } from '~/components/compounds/Left-Sidebar';
 import { SpinnerLoading } from '~/components/compounds/Spinner';
 import { CITIES } from '~/components/constants/CITIES.constants';
-import api from '~/components/contexts/api';
 import { useAuth } from '~/components/contexts/useContextProvider';
 import { Layout } from '~/components/molecules/layout';
 import { useActivity } from '~/hooks/useActivity';
@@ -156,12 +156,17 @@ export const Account = () => {
             <Layout marginBottom={20}>
               <Text weight={600}>Kod pocztowy</Text>
               <TextField
-                sx={{ width: 150 }}
+                sx={{ width: 250 }}
                 size="small"
                 placeholder="Kod pocztowy"
-                error={!formData.zip_code.match(zipCodeRegex)}
+                error={
+                  !formData.zip_code.match(zipCodeRegex) &&
+                  formData.zip_code.length > 0
+                }
                 helperText={
-                  !formData.zip_code.match(zipCodeRegex) && zipCodeError
+                  !formData.zip_code.match(zipCodeRegex) &&
+                  formData.zip_code.length > 0 &&
+                  zipCodeError
                 }
                 InputProps={{
                   inputProps: {
@@ -175,8 +180,17 @@ export const Account = () => {
             <Layout marginBottom={20}>
               <Text weight={600}>Numer telefonu do kontaktu</Text>
               <TextField
-                sx={{ width: 150 }}
+                sx={{ width: 250 }}
                 size="small"
+                error={
+                  formData.phone_number.length > 0 &&
+                  formData.phone_number.length < 9
+                }
+                helperText={
+                  formData.phone_number.length > 0 &&
+                  formData.phone_number.length < 9 &&
+                  'Numer telefonu powinien zawierać co najmniej 9 cyfr.'
+                }
                 placeholder="Numer telefonu"
                 InputProps={{
                   inputProps: {

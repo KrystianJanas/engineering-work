@@ -1,4 +1,4 @@
-import { ManagementEstatesInvoicesNew } from '../../../../../../modules/management-estates/invoices/new';
+import { ManagementEstatesInvoicesNew } from '../../../../../../modules/management-estates/estates/invoices/new/index.tsx';
 
 export const ManagementEstatesInvoicesNewPage = () => {
   return <ManagementEstatesInvoicesNew />;

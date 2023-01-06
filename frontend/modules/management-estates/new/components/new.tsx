@@ -1,17 +1,20 @@
 import toast from 'react-hot-toast';
 
-import { MenuItem, TextField } from '@mui/material';
+import { Autocomplete, TextField } from '@mui/material';
 import Link from 'next/link';
 
+import { Text } from '~/components/atoms/typography';
 import { Button } from '~/components/compounds/Button';
+import { CITIES } from '~/components/constants/CITIES.constants';
+import { STATES } from '~/components/constants/STATES.contants';
 import { Layout } from '~/components/molecules/layout';
 import { useForm } from '~/hooks/useForm';
 import {
   EstatesModelInitialState,
   ManagementEstateForm,
 } from '~/models/estates.model';
+import { getRem } from '~/styles/utils';
 
-import { TypesEstates } from '../new.constants';
 import { ManagementEstatesFormValidation } from '../new.validation';
 
 export const ManagementEstatesForm = ({
@@ -37,7 +40,7 @@ export const ManagementEstatesForm = ({
     <Layout display="flex" justifyContent="center" marginTop={15}>
       <Layout
         borderRadius="6px"
-        width={640}
+        width={800}
         display="flex"
         justifyContent="center"
         boxShadow="0 0 16px rgba(0, 0, 0, 0.24)"
@@ -45,7 +48,15 @@ export const ManagementEstatesForm = ({
         wrap="wrap"
         gap="15px"
       >
-        <Layout width={500}>
+        <Layout display="flex" direction="column">
+          <Text textAlign="center" size={getRem(18)} weight={700}>
+            Formularz
+          </Text>
+          <Text textAlign="center" size={getRem(16)}>
+            {estate ? 'Edycja' : 'Tworzenie nowej'} nieruchomości
+          </Text>
+        </Layout>
+        <Layout width={750}>
           <TextField
             id="outlined-basic"
             label="Tytuł nieruchomości"
@@ -56,7 +67,7 @@ export const ManagementEstatesForm = ({
             size="medium"
           />
         </Layout>
-        <Layout width={500}>
+        <Layout display="flex" gap="25px" width={750}>
           <TextField
             id="outlined-basic"
             type="number"
@@ -67,8 +78,6 @@ export const ManagementEstatesForm = ({
             onChange={(e) => handleChange('fee', e.target.value)}
             size="medium"
           />
-        </Layout>
-        <Layout width={500}>
           <TextField
             id="outlined-basic"
             type="number"
@@ -79,8 +88,6 @@ export const ManagementEstatesForm = ({
             onChange={(e) => handleChange('rent', e.target.value)}
             size="medium"
           />
-        </Layout>
-        <Layout width={500}>
           <TextField
             id="outlined-basic"
             type="number"
@@ -92,19 +99,17 @@ export const ManagementEstatesForm = ({
             size="medium"
           />
         </Layout>
-        <Layout width={500}>
+        <Layout display="flex" gap="25px" width={750}>
           <TextField
             id="outlined-basic"
             type="number"
-            label="Metraż nieruchomości (w metrach)"
+            label="Metraż nieruchomości (w m²)"
             variant="outlined"
             fullWidth
             value={formData.size}
             onChange={(e) => handleChange('size', e.target.value)}
             size="medium"
           />
-        </Layout>
-        <Layout width={500}>
           <TextField
             id="outlined-basic"
             type="number"
@@ -116,35 +121,35 @@ export const ManagementEstatesForm = ({
             size="medium"
           />
         </Layout>
-        <Layout width={500}>
-          <TextField
-            id="outlined-basic"
-            label="Lokalizacja mieszkania"
-            variant="outlined"
-            fullWidth
-            value={formData.location}
-            onChange={(e) => handleChange('location', e.target.value)}
+        <Layout width={750}>
+          <Autocomplete
             size="medium"
+            options={CITIES.map((city) => `${city.city}`)}
+            value={formData.location}
+            onChange={(event, newValue) => {
+              handleChange('location', newValue || '');
+            }}
+            renderInput={(params) => (
+              <TextField {...params} label="Miejscowość" />
+            )}
+            disablePortal
           />
         </Layout>
-        <Layout width={500}>
-          <TextField
-            id="outlined-select-currency"
-            select
-            label="Stan wyposażenia nieruchomości"
-            value={formData.state}
-            onChange={(e) => handleChange('state', e.target.value)}
-            fullWidth
+        <Layout width={750}>
+          <Autocomplete
             size="medium"
-          >
-            {TypesEstates.map((option) => (
-              <MenuItem key={option.value} value={option.value}>
-                {option.label}
-              </MenuItem>
-            ))}
-          </TextField>
+            options={STATES}
+            value={formData.state}
+            onChange={(event, newValue) => {
+              handleChange('state', newValue || '');
+            }}
+            renderInput={(params) => (
+              <TextField {...params} label="Wyposażenie / stan nieruchomości" />
+            )}
+            disablePortal
+          />
         </Layout>
-        <Layout width={500}>
+        <Layout width={750}>
           <TextField
             id="filled-multiline-flexible"
             label="Dodatkowe informacje"

@@ -1,4 +1,4 @@
-import { ManagementEstatesInvoices } from '../../../../../modules/management-estates/invoices';
+import { ManagementEstatesInvoices } from '../../../../../modules/management-estates/estates/invoices';
 
 export const ManagementEstatesIDInvoicesPage = () => {
   return <ManagementEstatesInvoices />;

@@ -4,11 +4,12 @@ import styled from '@emotion/styled';
 import { Button, TextField } from '@mui/material';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import Cookies from 'universal-cookie';
 
 import { Text } from '~/components/atoms/typography';
-import { setAuthorization } from '~/components/contexts/api';
 import { useAuth } from '~/components/contexts/useContextProvider';
 import { Layout } from '~/components/molecules/layout';
+import { useActivity } from '~/hooks/useActivity';
 import { useForm } from '~/hooks/useForm';
 import { validateEmail } from '~/mail.rules';
 import { getRem } from '~/styles/utils';
@@ -39,26 +40,38 @@ const StyledLayout = styled(Layout)`
 `;
 
 export const SignIn = ({ type }: SignTypes) => {
+  const cookies = new Cookies();
+  const { activity, setActivity } = useActivity();
+
   const router = useRouter();
   const { formData, handleChange } = useForm<Sign>(signInitialState);
 
   const { login } = useAuth();
 
   const handleLogin = async (data: Sign, typeView: string) => {
+    if (activity) {
+      return null;
+    }
+    setActivity(true);
     if (typeView === 'login') {
       const { errors, user } = await signIn(data.login, data.password);
       if (errors && errors.length > 0) {
         toast.error(errors);
+        setActivity(false);
       }
 
       if (user) {
-        setAuthorization(user.accessToken);
-        login(user.user_id);
+        cookies.set('token', user.accessToken);
+        await login(user.user_id);
         toast.success('Pomyślnie zalogowano.');
       }
     }
   };
   const handleRegister = async (data: Sign, typeView: string) => {
+    if (activity) {
+      return null;
+    }
+    setActivity(true);
     if (typeView === 'register') {
       const { errors, success } = await signUp(
         data.login,
@@ -69,7 +82,9 @@ export const SignIn = ({ type }: SignTypes) => {
       if (errors && errors.length === 0) {
         await router.push('/auth/sign-in');
         toast.success('Udało się zarejestrować! Możesz się zalogować.');
+        setActivity(false);
       } else {
+        setActivity(false);
         toast.error(errors);
       }
     }

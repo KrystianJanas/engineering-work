@@ -47,16 +47,15 @@ export const ManagementEstatesInvoices = () => {
   const { data, isLoading } = useGetData<EstateModel>(
     EstatesModelInitialState,
     'estates',
-    `${router.query.id}`
+    `${router.query.id}`,
+    0,
+    0,
+    { personID, typeView: 'view' }
   );
 
   const { data: dataInvoices, isLoading: isLoadingInvoices } = useGetData<
     InvoicesModel[]
   >([InvoicesModelInitialState], 'estates/invoices', `${router.query.id}`);
-
-  if (isLoading || isLoadingInvoices) {
-    return <SpinnerLoading />;
-  }
 
   const redirectedFunction = () => {
     if (router.isReady) {
@@ -64,12 +63,11 @@ export const ManagementEstatesInvoices = () => {
     }
   };
 
-  if (
-    !(
-      data.person._id === personID ||
-      data.renter.find((rent) => rent._id === personID)
-    )
-  ) {
+  if (isLoading || isLoadingInvoices) {
+    return <SpinnerLoading />;
+  }
+
+  if (!data && !isLoading) {
     redirectedFunction();
     return <SpinnerLoading />;
   }
@@ -194,9 +192,9 @@ export const ManagementEstatesInvoices = () => {
           </Layout>
         )}
 
-        <Layout marginTop={25}>
+        <Layout marginTop={0}>
           {dataInvoices && dataInvoices.length > 0 ? (
-            <>
+            <Layout marginTop={25}>
               <Text textAlign="center" size={getRem(16)}>
                 Wykaz faktur udostępnionych przez zarządce nieruchomości
                 znajdują się poniżej.
@@ -256,9 +254,9 @@ export const ManagementEstatesInvoices = () => {
                   </Layout>
                 ))}
               </Layout>
-            </>
+            </Layout>
           ) : (
-            <Layout marginTop={25}>
+            <>
               <Text size={getRem(16)} textAlign="center">
                 Zarządca nieruchomości nie wprowadził do tej pory żadnej faktury
                 do systemu.
@@ -267,7 +265,7 @@ export const ManagementEstatesInvoices = () => {
                 Jeśli faktura zostanie umieszczona w systemie, zostanie ona
                 wyświetlona w tym miejscu.
               </Text>
-            </Layout>
+            </>
           )}
         </Layout>
       </Layout>

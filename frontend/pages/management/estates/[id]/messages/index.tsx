@@ -1,4 +1,4 @@
-import { ManagementEstatesIDMessages } from '../../../../../modules/management-estates/messages';
+import { ManagementEstatesIDMessages } from '../../../../../modules/management-estates/estates/messages';
 
 export const ManagementEstatesIDMessagesPage = () => {
   return <ManagementEstatesIDMessages />;

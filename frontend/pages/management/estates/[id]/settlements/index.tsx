@@ -1,4 +1,4 @@
-import { ManagementEstateSettlement } from '../../../../../modules/management-estates/settlements';
+import { ManagementEstateSettlement } from '../../../../../modules/management-estates/estates/settlements';
 
 export const ManagementEstateSettlementsPage = () => {
   return <ManagementEstateSettlement />;

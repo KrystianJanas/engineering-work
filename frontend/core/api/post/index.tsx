@@ -1,14 +1,12 @@
 import toast from 'react-hot-toast';
 
-import axios from 'axios';
+import api from '~/api/api';
 
 export const postQuery = async (pageEndpoint: string, data: any) => {
   try {
-    return await axios
-      .post(`http://localhost:3001/api/${pageEndpoint}`, data)
-      .catch((e) => {
-        toast.error(e.response.data?.message);
-      });
+    return await api.post(`${pageEndpoint}`, data).catch((e) => {
+      toast.error(e.response.data?.message);
+    });
   } catch (error) {
     console.error(error);
   }
@@ -17,7 +15,7 @@ export const postQuery = async (pageEndpoint: string, data: any) => {
 
 export const postFileQuery = async (endpoint: string, formData: FormData) => {
   try {
-    return await axios.post(`http://localhost:3001/api/${endpoint}`, formData, {
+    return await api.post(`${endpoint}`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },

@@ -1,3 +1,4 @@
+import { AnnouncementsModel } from '~/models/announcements.model';
 import {
   PersonLoginIdModel,
   PersonLoginIdModelInitialState,
@@ -21,8 +22,8 @@ export interface AnnouncementModel {
 }
 
 export interface AnnouncementEdit {
-  announcement: AnnouncementModel;
-  onSubmit: (data: AnnouncementModel) => void;
+  announcement?: AnnouncementsModel;
+  onSubmit: (data: AnnouncementsModel) => void;
 }
 
 export interface AnnouncementConversationsModel {

@@ -1,10 +1,11 @@
-import api from '~/components/contexts/api';
+import api from '~/api/api';
 
 export const getData = async (
   pageEndpoint: string,
   restEndpoint?: string,
   page?: number,
-  perPage?: number
+  perPage?: number,
+  params?: any
 ) => {
   try {
     if (restEndpoint && restEndpoint.length > 0) {
@@ -12,6 +13,7 @@ export const getData = async (
         params: {
           page,
           perPage,
+          ...params,
         },
       });
       return data;
@@ -20,6 +22,7 @@ export const getData = async (
       params: {
         page,
         perPage,
+        ...params,
       },
     });
     return data;

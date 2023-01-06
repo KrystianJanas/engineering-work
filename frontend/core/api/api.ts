@@ -1,7 +1,4 @@
 import Axios from 'axios';
-import Cookies from 'universal-cookie';
-
-const cookie = new Cookies();
 
 const api = Axios.create({
   headers: { 'Content-type': 'application/json', Accept: 'application/json' },
@@ -10,11 +7,14 @@ const api = Axios.create({
 
 export const setAuthorization = (accessToken: string): void => {
   if (accessToken && accessToken.length > 0) {
-    cookie.set('token', accessToken);
-
     api.defaults.headers.common = {
       ...api.defaults.headers.common,
       Authorization: `Bearer ${accessToken}`,
+    };
+  } else {
+    api.defaults.headers.common = {
+      ...api.defaults.headers.common,
+      Authorization: ``,
     };
   }
 };

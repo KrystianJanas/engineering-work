@@ -1,6 +1,5 @@
 import toast from 'react-hot-toast';
 
-import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 
 import { deleteQuery } from '~/api/delete';
@@ -24,12 +23,6 @@ import { EstateModel, EstatesModelInitialState } from '~/models/estates.model';
 import { getEstatesOptions } from '~/renterOptions';
 import { getRem } from '~/styles/utils';
 
-const StyledText = styled(Text)`
-  &:hover {
-    cursor: pointer;
-  }
-`;
-
 export const ManagementEstatesRenter = () => {
   const router = useRouter();
   const { personID } = useAuth();
@@ -38,7 +31,10 @@ export const ManagementEstatesRenter = () => {
     useGetData<EstateModel>(
       EstatesModelInitialState,
       'estates',
-      `${router.query.id}`
+      `${router.query.id}`,
+      0,
+      0,
+      { personID, typeView: 'view' }
     );
 
   const { activity, setActivity } = useActivity();
@@ -58,7 +54,18 @@ export const ManagementEstatesRenter = () => {
       `estate/${router.query.id}` // estate id here
     );
 
+  const redirectedFunction = () => {
+    if (router.isReady) {
+      router.push('/management/estates');
+    }
+  };
+
   if (isLoadingEstate || isLoadingEstateInvitations) {
+    return <SpinnerLoading />;
+  }
+
+  if (!isLoadingEstate && !dataEstate) {
+    redirectedFunction();
     return <SpinnerLoading />;
   }
 

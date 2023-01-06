@@ -27,7 +27,10 @@ export const ManagementEstatesIDMessages = () => {
   const { data, isLoading } = useGetData<EstateModel>(
     EstatesModelInitialState,
     'estates',
-    `${router.query.id}`
+    `${router.query.id}`,
+    0,
+    0,
+    { personID, typeView: 'view' }
   );
 
   const { data: dataMessages, isLoading: isLoadingMessages } = useGetData<
@@ -48,12 +51,7 @@ export const ManagementEstatesIDMessages = () => {
     return <SpinnerLoading />;
   }
 
-  if (
-    !(
-      data.person._id === personID ||
-      data.renter.find((rent) => rent._id === personID)
-    )
-  ) {
+  if (!data && !isLoading) {
     redirectedFunction();
     return <SpinnerLoading />;
   }
@@ -96,39 +94,41 @@ export const ManagementEstatesIDMessages = () => {
         minWidth={500}
       >
         <Layout display="flex" direction="column" flex={1}>
-          <Layout marginBottom={15}>
-            <Text textAlign="center">
-              Wiadomości posortowane: <b>od najnowszej</b>.
-            </Text>
-          </Layout>
           {dataMessages.length > 0 && dataMessages[0].content.length > 0 ? (
-            <Layout
-              display="flex"
-              direction="column"
-              overflowY="auto"
-              height={525}
-              padding={[0, 5]}
-            >
-              {dataMessages.map((message) => (
-                <Layout
-                  key={message._id}
-                  display="flex"
-                  justifyContent="center"
-                >
-                  <MessageCardComponent
-                    boxShadow="0 0 4px var(--border-black)"
-                    borderRadius="0"
-                    person={message.person.name}
-                    data={message.created_at}
-                    content={message.content}
-                    additional={{
-                      estate_owner: data.person._id,
-                      personID: message.person._id || '',
-                    }}
-                  />
-                </Layout>
-              ))}
-            </Layout>
+            <>
+              <Layout marginBottom={15}>
+                <Text textAlign="center">
+                  Wiadomości posegregowane: <b>od najnowszej</b>.
+                </Text>
+              </Layout>
+              <Layout
+                display="flex"
+                direction="column"
+                overflowY="auto"
+                height={525}
+                padding={[0, 5]}
+              >
+                {dataMessages.map((message) => (
+                  <Layout
+                    key={message._id}
+                    display="flex"
+                    justifyContent="center"
+                  >
+                    <MessageCardComponent
+                      boxShadow="0 0 4px var(--border-black)"
+                      borderRadius="0"
+                      person={message.person.name}
+                      data={message.created_at}
+                      content={message.content}
+                      additional={{
+                        estate_owner: data.person._id,
+                        personID: message.person._id || '',
+                      }}
+                    />
+                  </Layout>
+                ))}
+              </Layout>
+            </>
           ) : (
             <>
               <Text textAlign="center" size={getRem(16)} width="100%">

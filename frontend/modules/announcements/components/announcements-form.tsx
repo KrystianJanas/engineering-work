@@ -1,21 +1,25 @@
-import { MenuItem, TextField } from '@mui/material';
+import { Autocomplete, TextField } from '@mui/material';
 import Link from 'next/link';
 
+import { Text } from '~/components/atoms/typography';
 import { Button } from '~/components/compounds/Button';
+import { CITIES } from '~/components/constants/CITIES.constants';
+import { STATES } from '~/components/constants/STATES.contants';
 import { Layout } from '~/components/molecules/layout';
 import { useForm } from '~/hooks/useForm';
 import { AnnouncementEdit } from '~/models/announcement.model';
-
-import { TypesEstates } from 'modules/management-estates/new/new.constants';
-
-import { AnnouncementsInitialState } from '../announcements-form.constants';
+import {
+  AnnouncementsModel,
+  AnnouncementsModelInitialState,
+} from '~/models/announcements.model';
+import { getRem } from '~/styles/utils';
 
 export const AnnouncementsForm = ({
   announcement,
   onSubmit,
 }: AnnouncementEdit) => {
-  const { handleChange, formData } = useForm(
-    announcement || AnnouncementsInitialState
+  const { handleChange, formData } = useForm<AnnouncementsModel>(
+    announcement || AnnouncementsModelInitialState
   );
 
   return (
@@ -33,6 +37,14 @@ export const AnnouncementsForm = ({
         wrap="wrap"
         gap="15px"
       >
+        <Layout display="flex" direction="column">
+          <Text textAlign="center" size={getRem(18)} weight={700}>
+            Formularz
+          </Text>
+          <Text textAlign="center" size={getRem(16)}>
+            {announcement ? 'Edycja' : 'Tworzenie nowego'} ogłoszenia
+          </Text>
+        </Layout>
         <Layout width={750}>
           <TextField
             id="outlined-basic"
@@ -41,46 +53,42 @@ export const AnnouncementsForm = ({
             fullWidth
             value={formData.title}
             onChange={(e) => handleChange('title', e.target.value)}
-            size="medium"
+            size="small"
           />
         </Layout>
-        <Layout width={750}>
+        <Layout display="flex" gap="25px" width={750}>
           <TextField
             id="outlined-basic"
             type="number"
-            label="Czynsz"
+            label="Czynsz (miesięcznie, w PLN)"
             variant="outlined"
             fullWidth
             value={formData.rent}
             onChange={(e) => handleChange('rent', +e.target.value)}
-            size="medium"
+            size="small"
           />
-        </Layout>
-        <Layout width={750}>
           <TextField
             id="outlined-basic"
             type="number"
-            label="Odstępne"
+            label="Odstępne (miesięcznie, w PLN)"
             variant="outlined"
             fullWidth
             value={formData.fee}
             onChange={(e) => handleChange('fee', +e.target.value)}
-            size="medium"
+            size="small"
           />
         </Layout>
-        <Layout width={750}>
+        <Layout display="flex" gap="25px" width={750}>
           <TextField
             id="outlined-basic"
             type="number"
-            label="Metraż nieruchomości"
+            label="Metraż nieruchomości (w m²)"
             variant="outlined"
             fullWidth
             value={formData.size}
             onChange={(e) => handleChange('size', +e.target.value)}
-            size="medium"
+            size="small"
           />
-        </Layout>
-        <Layout width={750}>
           <TextField
             id="outlined-basic"
             type="number"
@@ -89,41 +97,41 @@ export const AnnouncementsForm = ({
             fullWidth
             value={formData.rooms}
             onChange={(e) => handleChange('rooms', +e.target.value)}
-            size="medium"
+            size="small"
           />
         </Layout>
         <Layout width={750}>
-          <TextField
-            id="outlined-basic"
-            label="Lokalizacja"
-            variant="outlined"
-            fullWidth
+          <Autocomplete
+            size="small"
+            options={CITIES.map((city) => `${city.city}`)}
             value={formData.location}
-            onChange={(e) => handleChange('location', e.target.value)}
-            size="medium"
+            onChange={(event, newValue) => {
+              handleChange('location', newValue || '');
+            }}
+            renderInput={(params) => (
+              <TextField {...params} label="Miejscowość" />
+            )}
+            disablePortal
           />
         </Layout>
         <Layout width={750}>
-          <TextField
-            id="outlined-select-currency"
-            select
-            label="Stan wyposażenia nieruchomości"
+          <Autocomplete
+            size="small"
+            options={STATES}
             value={formData.state}
-            onChange={(e) => handleChange('state', e.target.value)}
-            fullWidth
-            size="medium"
-          >
-            {TypesEstates.map((option) => (
-              <MenuItem key={option.value} value={option.value}>
-                {option.label}
-              </MenuItem>
-            ))}
-          </TextField>
+            onChange={(event, newValue) => {
+              handleChange('state', newValue || '');
+            }}
+            renderInput={(params) => (
+              <TextField {...params} label="Wyposażenie / stan nieruchomości" />
+            )}
+            disablePortal
+          />
         </Layout>
         <Layout width={750}>
           <TextField
             id="outlined-multiline-static"
-            label="Opis"
+            label="Opis ogłoszenia"
             multiline
             rows={4}
             value={formData.description}

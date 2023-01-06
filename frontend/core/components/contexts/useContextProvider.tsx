@@ -4,7 +4,7 @@ import * as React from 'react';
 import { useRouter } from 'next/router';
 import Cookies from 'universal-cookie';
 
-import api, { setAuthorization } from '~/components/contexts/api';
+import api, { setAuthorization } from '~/api/api';
 
 const cookies = new Cookies();
 
@@ -70,13 +70,16 @@ export const AuthProvider = ({ children }: any) => {
   useEffect(() => {
     async function loadUserFromCookies() {
       const token = cookies.get('token');
+
       if (token) {
         setAuthorization(token);
+
         try {
           const { data } = await api.get('users/me');
           if (data) {
             setUser(data._id);
             setPersonID(data._id);
+
             await setCookies(token, data._id);
           } else {
             logout();

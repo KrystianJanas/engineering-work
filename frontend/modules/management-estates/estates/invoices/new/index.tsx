@@ -30,7 +30,10 @@ export const ManagementEstatesInvoicesNew = () => {
   const { data, isLoading } = useGetData<EstateModel>(
     EstatesModelInitialState,
     'estates',
-    `${router.query.id}`
+    `${router.query.id}`,
+    0,
+    0,
+    { personID, typeView: 'view' }
   );
 
   const { formData, handleChange } = useForm<InvoicesModel>(
@@ -50,7 +53,7 @@ export const ManagementEstatesInvoicesNew = () => {
     }
   };
 
-  if (!(data.person._id === personID)) {
+  if (!data && !isLoading) {
     redirectedFunction();
     return <SpinnerLoading />;
   }

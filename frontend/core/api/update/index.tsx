@@ -1,6 +1,6 @@
 import toast from 'react-hot-toast';
 
-import api from '~/components/contexts/api';
+import api from '~/api/api';
 
 export const updateQuery = async (pageEndpoint: string, data: any) => {
   try {
