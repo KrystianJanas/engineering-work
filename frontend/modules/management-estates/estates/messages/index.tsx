@@ -38,7 +38,10 @@ export const ManagementEstatesIDMessages = () => {
   >(
     [EstateMessagesModelInitialState],
     'estates',
-    `messages/${router.query.id}`
+    `messages/${router.query.id}`,
+    0,
+    0,
+    { personID, typeView: 'view' }
   );
 
   const redirectedFunction = () => {
@@ -51,7 +54,7 @@ export const ManagementEstatesIDMessages = () => {
     return <SpinnerLoading />;
   }
 
-  if (!data && !isLoading) {
+  if ((!data && !isLoading) || (!dataMessages && !isLoadingMessages)) {
     redirectedFunction();
     return <SpinnerLoading />;
   }

@@ -16,6 +16,10 @@ export const GetSelectedText = (name: string, color: string, href: string) => {
   const router = useRouter();
   const { logout } = useAuth();
 
+  const logoutFunction = async () => {
+    await logout();
+  };
+
   return (
     <StyledText
       weight={600}
@@ -25,7 +29,7 @@ export const GetSelectedText = (name: string, color: string, href: string) => {
       onClick={() => {
         if (router.isReady) {
           if (href === 'auth/logout') {
-            logout();
+            logoutFunction();
             return;
           }
           router.push(`/${href}`);

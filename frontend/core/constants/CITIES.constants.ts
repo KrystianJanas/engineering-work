@@ -1,6 +1,6 @@
 export const CITIES = [
   {
-    city: 'Rzeszow',
+    city: 'Rzeszów',
     zipCode: '35-310',
   },
   {

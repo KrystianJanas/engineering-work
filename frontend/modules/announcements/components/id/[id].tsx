@@ -41,7 +41,10 @@ export const Announcement = () => {
   const { data, isLoading } = useGetData<AnnouncementModel>(
     AnnouncementModelInitialState,
     'announcements',
-    `${router.query.id}`
+    `${router.query.id}`,
+    0,
+    0,
+    { personID, typeView: 'view' }
   );
 
   if (isLoading) {

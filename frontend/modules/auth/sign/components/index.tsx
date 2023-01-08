@@ -61,11 +61,12 @@ export const SignIn = ({ type }: SignTypes) => {
       }
 
       if (user) {
-        cookies.set('token', user.accessToken);
+        await cookies.set('token', user.accessToken);
         await login(user.user_id);
         toast.success('Pomyślnie zalogowano.');
       }
     }
+    return null;
   };
   const handleRegister = async (data: Sign, typeView: string) => {
     if (activity) {
@@ -73,7 +74,7 @@ export const SignIn = ({ type }: SignTypes) => {
     }
     setActivity(true);
     if (typeView === 'register') {
-      const { errors, success } = await signUp(
+      const { errors } = await signUp(
         data.login,
         data.password,
         data.rePassword

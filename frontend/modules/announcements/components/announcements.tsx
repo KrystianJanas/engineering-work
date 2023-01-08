@@ -1,15 +1,16 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
-import Link from 'next/link';
+import { Autocomplete, TextField } from '@mui/material';
 import { useRouter } from 'next/router';
 
 import { Text } from '~/components/atoms/typography';
-import { AddButton } from '~/components/compounds/AddButton/components/add-button';
 import { AnnouncementCard } from '~/components/compounds/Announcement-Card';
+import { Button } from '~/components/compounds/Button';
 import { Pagination } from '~/components/compounds/Pagination';
 import { SpinnerLoading } from '~/components/compounds/Spinner';
 import { useAuth } from '~/components/contexts/useContextProvider';
 import { Layout } from '~/components/molecules/layout';
+import { CITIES } from '~/constants/CITIES.constants';
 import { useGetData } from '~/hooks/useGetData';
 import { usePagination } from '~/hooks/usePagination/usePagination';
 import {
@@ -20,7 +21,10 @@ import {
 
 export const AnnouncementsView = () => {
   const router = useRouter();
-  const { isAuthenticated } = useAuth();
+  const { personID } = useAuth();
+
+  const [location, setLocation] = useState('');
+  const [rooms, setRooms] = useState(0);
 
   const {
     page,
@@ -36,10 +40,6 @@ export const AnnouncementsView = () => {
     if (!router.isReady) {
       return;
     }
-    if (!isAuthenticated) {
-      router.push('/auth/sign-in');
-      return;
-    }
     const actualQueryPage = Number(router.query.pageNum) || 1;
     router.push({
       query: {
@@ -50,13 +50,24 @@ export const AnnouncementsView = () => {
     setPage(actualQueryPage);
   }, [router.isReady]);
 
-  const { data, isLoading } = useGetData<AnnouncementsModelData>(
-    AnnouncementsModelDataInitialState,
-    'announcements',
-    '',
-    page,
-    perPage
-  );
+  const { data, isLoading, setUpdateState } =
+    useGetData<AnnouncementsModelData>(
+      AnnouncementsModelDataInitialState,
+      'announcements',
+      '',
+      page,
+      perPage,
+      {
+        personID,
+        typeView: 'view',
+        location: location.length > 2 ? location : undefined,
+        rooms: rooms > 0 ? rooms : undefined,
+      }
+    );
+
+  useEffect(() => {
+    setUpdateState(true);
+  }, [location, rooms]);
 
   if (isLoading) {
     return <SpinnerLoading />;
@@ -68,12 +79,58 @@ export const AnnouncementsView = () => {
 
   return (
     <Layout>
-      <Layout display="flex" justifyContent="center" marginTop={15}>
-        <Link href="announcements/new" passHref>
-          <a>
-            <AddButton />
-          </a>
-        </Link>
+      <Layout
+        display="flex"
+        direction="column"
+        alignItems="center"
+        gap="10px"
+        marginTop={15}
+      >
+        <Layout display="flex" direction="row" gap="25px">
+          <Layout width={250}>
+            <Autocomplete
+              size="small"
+              options={CITIES.map((city) => `${city.city}`)}
+              value={location}
+              onChange={(event, newValue) => {
+                setLocation(newValue || '');
+              }}
+              renderInput={(params) => (
+                <TextField {...params} label="Miejscowość" />
+              )}
+              disablePortal
+            />
+          </Layout>
+          <Layout width={125}>
+            <TextField
+              label="Liczba pokoi"
+              size="small"
+              type="number"
+              value={rooms === 0 ? '' : rooms}
+              onChange={(e) => {
+                const newValue = e.target.value;
+                if (
+                  newValue === '' ||
+                  (newValue[0] === '-' && newValue.length === 1)
+                ) {
+                  setRooms(Number(newValue));
+                } else if (
+                  // eslint-disable-next-line no-restricted-globals
+                  !isNaN(Number(newValue)) &&
+                  Number(newValue) >= 0
+                ) {
+                  setRooms(Number(newValue));
+                }
+              }}
+            />
+          </Layout>
+        </Layout>
+        <Layout display="flex">
+          <Button
+            text="Dodaj nowe ogłoszenie"
+            onSubmit={() => router.push('/announcements/new')}
+          />
+        </Layout>
       </Layout>
       <Layout
         display="flex"

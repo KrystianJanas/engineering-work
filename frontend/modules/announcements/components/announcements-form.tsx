@@ -3,9 +3,9 @@ import Link from 'next/link';
 
 import { Text } from '~/components/atoms/typography';
 import { Button } from '~/components/compounds/Button';
-import { CITIES } from '~/components/constants/CITIES.constants';
-import { STATES } from '~/components/constants/STATES.contants';
 import { Layout } from '~/components/molecules/layout';
+import { CITIES } from '~/constants/CITIES.constants';
+import { STATES } from '~/constants/STATES.contants';
 import { useForm } from '~/hooks/useForm';
 import { AnnouncementEdit } from '~/models/announcement.model';
 import {

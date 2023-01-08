@@ -43,15 +43,15 @@ export const ManagementEstatesInvoicesNew = () => {
   const [filename, setFilename] = useState('Nie wybrano pliku');
   const [file, setFile] = useState('');
 
-  if (isLoading) {
-    return <SpinnerLoading />;
-  }
-
   const redirectedFunction = () => {
     if (router.isReady) {
       router.push('/management/estates');
     }
   };
+
+  if (isLoading) {
+    return <SpinnerLoading />;
+  }
 
   if (!data && !isLoading) {
     redirectedFunction();

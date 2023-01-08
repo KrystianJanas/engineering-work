@@ -67,7 +67,7 @@ export const ManagementEstatesInvoices = () => {
     return <SpinnerLoading />;
   }
 
-  if (!data && !isLoading) {
+  if ((!data && !isLoading) || (!dataInvoices && !isLoadingInvoices)) {
     redirectedFunction();
     return <SpinnerLoading />;
   }

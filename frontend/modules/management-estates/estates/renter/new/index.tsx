@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import toast from 'react-hot-toast';
 
 import { TextField } from '@mui/material';
@@ -27,7 +27,7 @@ export const NewRenter = () => {
     `${router.query.id}`,
     0,
     0,
-    { personID, typeView: 'view' }
+    { personID, typeView: 'edit' }
   );
 
   const options = getEstatesOptions(
@@ -36,18 +36,7 @@ export const NewRenter = () => {
     personID.toString()
   );
 
-  const [helperText, setHelperText] = useState('');
   const [mail, setMail] = useState('');
-
-  useEffect(() => {
-    if (mail.length > 0) {
-      if (!validateEmail(mail)) {
-        setHelperText('Niepoprawny format adresu e-mail.');
-      } else if (helperText.length > 0) {
-        setHelperText('');
-      }
-    }
-  }, [mail]);
 
   const redirectedFunction = () => {
     if (router.isReady) {
@@ -61,7 +50,7 @@ export const NewRenter = () => {
   }
 
   const sendInvitation = async () => {
-    if (helperText.length === 0) {
+    if (validateEmail(mail)) {
       const response = await postQuery('estatesInvitations', {
         user_email: mail,
         estate_id: `${router.query.id}`,
@@ -109,8 +98,12 @@ export const NewRenter = () => {
               size="small"
               fullWidth
               type="email"
-              error={!!helperText}
-              helperText={helperText}
+              error={!validateEmail(mail) && mail.length >= 5}
+              helperText={
+                !validateEmail(mail) &&
+                mail.length >= 5 &&
+                'Niepoprawny format adresu e-mail.'
+              }
             />
           </Layout>
           <Layout>

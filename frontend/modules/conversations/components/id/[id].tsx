@@ -30,7 +30,10 @@ export const Conversation = () => {
   const { data, isLoading } = useGetData<MessageConversationType[]>(
     [MessageConversationTypeInitialState],
     'messages',
-    `${router.query.id}`
+    `${router.query.id}`,
+    0,
+    0,
+    { personID }
   );
 
   if (isLoading) {
@@ -74,9 +77,12 @@ export const Conversation = () => {
         </Text>
       </Layout>
       <Layout height={550} overflowY="auto" padding={[10]} marginBottom={25}>
-        <Text textAlign="center" size={getRem(16)}>
-          Wiadomości posegregowane: <b>od najnowszej</b>.
-        </Text>
+        {data.length > 0 && (
+          <Text textAlign="center" size={getRem(16)}>
+            Wiadomości posegregowane: <b>od najnowszej</b>.
+          </Text>
+        )}
+
         {data.map((message: MessageConversationType) => (
           <MessageCardComponent
             key={message._id}

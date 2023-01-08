@@ -48,14 +48,17 @@ export const ManagementEstateFixedCosts = () => {
     `${router.query.id}`,
     0,
     0,
-    { personID, typeView: 'view' }
+    { personID, typeView: 'edit' }
   );
 
   const { data: dataCosts, isLoading: isLoadingCosts } =
     useGetData<EstateCostsModel>(
       EstateCostsModelInitialState,
       'estates/costs',
-      `${router.query.id}`
+      `${router.query.id}`,
+      0,
+      0,
+      { personID, typeView: 'edit' }
     );
 
   useEffect(() => {
@@ -85,7 +88,7 @@ export const ManagementEstateFixedCosts = () => {
     return <SpinnerLoading />;
   }
 
-  if (!data && !isLoading) {
+  if ((!data && !isLoading) || (!dataCosts && !isLoadingCosts)) {
     redirectedFunction();
     return <SpinnerLoading />;
   }

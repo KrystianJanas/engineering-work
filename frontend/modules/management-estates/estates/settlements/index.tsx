@@ -66,7 +66,10 @@ export const ManagementEstateSettlement = () => {
     useGetData<EstateCostsModel>(
       EstateCostsModelInitialState,
       'estates/costs',
-      `${router.query.id}`
+      `${router.query.id}`,
+      0,
+      0,
+      { personID, typeView: 'view' }
     );
 
   const { data: dataSettlements, isLoading: isLoadingSettlements } = useGetData<
@@ -74,15 +77,22 @@ export const ManagementEstateSettlement = () => {
   >(
     [EstateSettlementsModelInitialState],
     'estates/settlements',
-    `${router.query.id}`
+    `${router.query.id}`,
+    0,
+    0,
+    { personID, typeView: 'view' }
   );
 
-  if (!data && !isLoading) {
-    redirectedFunction();
+  if (isLoading || isLoadingCosts || isLoadingSettlements) {
     return <SpinnerLoading />;
   }
 
-  if (isLoading || isLoadingCosts || isLoadingSettlements) {
+  if (
+    (!data && !isLoading) ||
+    (!dataCosts && !isLoadingCosts) ||
+    (!dataSettlements && !isLoadingSettlements)
+  ) {
+    redirectedFunction();
     return <SpinnerLoading />;
   }
 
@@ -146,7 +156,10 @@ export const ManagementEstateSettlement = () => {
                     direction="column"
                   >
                     <Layout display="flex" direction="row">
-                      <Layout flex={1} marginLeft={143.5}>
+                      <Layout
+                        flex={1}
+                        marginLeft={data.person._id === personID ? 143.5 : 0}
+                      >
                         <Text textAlign="center" size={getRem(16)}>
                           {parseDateSettlement(settlement.data)}
                         </Text>
@@ -156,17 +169,19 @@ export const ManagementEstateSettlement = () => {
                             `( zarządca nieruchomości )`}
                         </Text>
                       </Layout>
-                      <Button
-                        disabled={activity}
-                        text="Usuń rozliczenie"
-                        onSubmit={() => {
-                          setModalData({
-                            id: settlement._id,
-                            description: `Czy na pewno chcesz usunąć rozliczenie z daty: ${settlement.data} ?`,
-                          });
-                          setModalActive(true);
-                        }}
-                      />
+                      {data.person._id === personID && (
+                        <Button
+                          disabled={activity}
+                          text="Usuń rozliczenie"
+                          onSubmit={() => {
+                            setModalData({
+                              id: settlement._id,
+                              description: `Czy na pewno chcesz usunąć rozliczenie z daty: ${settlement.data} ?`,
+                            });
+                            setModalActive(true);
+                          }}
+                        />
+                      )}
                     </Layout>
                     &nbsp;
                     <Layout

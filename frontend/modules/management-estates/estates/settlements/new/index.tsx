@@ -47,7 +47,10 @@ export const SettlementNew = () => {
     useGetData<EstateSettlementNewModel>(
       EstateSettlementNewModelInitialState,
       'estates',
-      `settlements/thisMonth/${router.query.id}`
+      `settlements/thisMonth/${router.query.id}`,
+      0,
+      0,
+      { personID, typeView: 'view' }
     );
 
   const redirectedFunction = () => {

@@ -25,29 +25,32 @@ export const AuthProvider = ({ children }: any) => {
 
   const [personID, setPersonID] = useState(user);
 
-  const removeAllCookies = () => {
-    cookies.remove('user');
-    cookies.remove('token');
+  const removeAllCookies = async () => {
+    await cookies.remove('user');
+    await cookies.remove('token');
   };
 
-  const setCookies = (token: string, userID: string) => {
+  const setCookies = async (token: string, userID: string) => {
+    const tokenGet = await cookies.get('token');
+    const userGet = await cookies.get('user');
+
     if (token && token.length > 0) {
-      if (!cookies.get('token')) {
+      if (!tokenGet) {
         cookies.set('token', token);
-        // eslint-disable-next-line no-empty
       } else if (cookies.get('token') === token) {
+        // mam token, wiec nie tworze na nowo
       } else {
-        cookies.remove('token');
+        await cookies.remove('token');
         cookies.set('token', token);
       }
     }
     if (userID && userID.length > 0) {
-      if (!cookies.get('user')) {
+      if (!userGet) {
         cookies.set('user', userID);
-        // eslint-disable-next-line no-empty
       } else if (cookies.get('user') === userID) {
+        // mam userid, wiec nie tworze na nowo
       } else {
-        cookies.remove('user');
+        await cookies.remove('user');
         cookies.set('user', userID);
       }
     }

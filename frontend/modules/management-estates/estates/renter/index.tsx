@@ -27,16 +27,6 @@ export const ManagementEstatesRenter = () => {
   const router = useRouter();
   const { personID } = useAuth();
 
-  const { data: dataEstate, isLoading: isLoadingEstate } =
-    useGetData<EstateModel>(
-      EstatesModelInitialState,
-      'estates',
-      `${router.query.id}`,
-      0,
-      0,
-      { personID, typeView: 'view' }
-    );
-
   const { activity, setActivity } = useActivity();
   const { modalActive, setModalActive, modalData, setModalData } =
     useModalComponent();
@@ -47,11 +37,24 @@ export const ManagementEstatesRenter = () => {
     setModalData: setModalDataInvitation,
   } = useModalComponent();
 
+  const { data: dataEstate, isLoading: isLoadingEstate } =
+    useGetData<EstateModel>(
+      EstatesModelInitialState,
+      'estates',
+      `${router.query.id}`,
+      0,
+      0,
+      { personID, typeView: 'view' }
+    );
+
   const { data: dataEstateInvitations, isLoading: isLoadingEstateInvitations } =
     useGetData<EstateInvitationsModel[]>(
       [EstateInvitationsModelInitialState],
       'estatesInvitations',
-      `estate/${router.query.id}` // estate id here
+      `estate/${router.query.id}`,
+      0,
+      0,
+      { personID, typeView: 'view' }
     );
 
   const redirectedFunction = () => {
@@ -64,7 +67,10 @@ export const ManagementEstatesRenter = () => {
     return <SpinnerLoading />;
   }
 
-  if (!isLoadingEstate && !dataEstate) {
+  if (
+    (!dataEstate && !isLoadingEstate) ||
+    (!dataEstateInvitations && !isLoadingEstateInvitations)
+  ) {
     redirectedFunction();
     return <SpinnerLoading />;
   }

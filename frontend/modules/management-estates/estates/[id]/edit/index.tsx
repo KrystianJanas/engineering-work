@@ -17,9 +17,6 @@ export const ManagementEstatesEdit = () => {
   const router = useRouter();
   const { activity, setActivity } = useActivity();
 
-  // TODO: check person permissions -> is associated with this estate?
-  // person or renter...
-
   const { data, isLoading } = useGetData<EstateModel>(
     EstatesModelInitialState,
     'estates',
@@ -41,7 +38,6 @@ export const ManagementEstatesEdit = () => {
 
   if (!data && !isLoading) {
     redirectedFunction();
-    console.log('redirect');
     return <SpinnerLoading />;
   }
 

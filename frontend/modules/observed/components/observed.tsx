@@ -27,7 +27,7 @@ export const ObservedView = () => {
     onPreviousPage,
     onNextPage,
     perPage,
-  } = usePagination(1, 1);
+  } = usePagination(1, 5);
 
   useEffect(() => {
     if (!router.isReady) {

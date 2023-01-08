@@ -67,7 +67,10 @@ export const ManagementOtherEstates = () => {
   const { data, isLoading } = useGetData<EstateModel[]>(
     [EstatesModelInitialState],
     'estates',
-    `renter/${personID}/true`
+    `renter/${personID}/true`,
+    0,
+    0,
+    { personID, typeView: 'view' }
   ); // nieruchomości wynajmowane
 
   const { data: dataInvitations, isLoading: isLoadingInvitations } = useGetData<
@@ -75,11 +78,26 @@ export const ManagementOtherEstates = () => {
   >(
     [EstateInvitationsModelInitialState],
     'estatesInvitations',
-    `person/${personID}`
+    `person/${personID}`,
+    0,
+    0,
+    { personID, typeView: 'edit' }
   ); // zaproszenia do nieruchomości
+
+  const redirectedFunction = () => {
+    if (router.isReady) {
+      router.push('/management/estates');
+    }
+  };
 
   if (isLoading || isLoadingInvitations) {
     <SpinnerLoading />;
+  }
+
+  if (!data && !isLoading) {
+    // || (!dataInvitations && !isLoadingInvitations)
+    redirectedFunction();
+    return <SpinnerLoading />;
   }
 
   const confirmInvitation = async (

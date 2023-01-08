@@ -3,8 +3,8 @@ import toast from 'react-hot-toast';
 import { useRouter } from 'next/router';
 
 import { postQuery } from '~/api/post';
-import { testImageUrl } from '~/components/constants/GLOBAL.constants';
 import { useAuth } from '~/components/contexts/useContextProvider';
+import { testImageUrl } from '~/constants/GLOBAL.constants';
 
 import { AnnouncementsForm } from '../../../modules/announcements/components/announcements-form';
 import { AnnouncementsValidation } from '../../../modules/announcements/components/announcements.validation';

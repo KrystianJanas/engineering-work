@@ -4,8 +4,8 @@ import { useRouter } from 'next/router';
 
 import { updateQuery } from '~/api/update';
 import { SpinnerLoading } from '~/components/compounds/Spinner';
-import { testImageUrl } from '~/components/constants/GLOBAL.constants';
 import { useAuth } from '~/components/contexts/useContextProvider';
+import { testImageUrl } from '~/constants/GLOBAL.constants';
 import { useGetData } from '~/hooks/useGetData';
 import {
   AnnouncementsModel,

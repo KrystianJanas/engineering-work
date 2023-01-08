@@ -57,7 +57,10 @@ export const ManagementEstateIDDetails = () => {
     useGetData<EstateCostsModel>(
       EstateCostsModelInitialState,
       'estates/costs',
-      `${router.query.id}`
+      `${router.query.id}`,
+      0,
+      0,
+      { personID, typeView: 'view' }
     );
 
   if (isLoading || isLoadingCosts) {
@@ -141,7 +144,7 @@ export const ManagementEstateIDDetails = () => {
             </Text>
             {data.renter.map((renterPerson, index) => {
               return (
-                <Text size={getRem(16)}>
+                <Text key={renterPerson._id} size={getRem(16)}>
                   {index + 1}) {renterPerson.name}, telefon kontaktowy:{' '}
                   {renterPerson.phone_number || 'nie podano'}
                 </Text>
