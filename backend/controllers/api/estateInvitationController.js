@@ -1,6 +1,7 @@
 import EstateInvitation from "../../db/models/estateInvitation.js";
 import User from "../../db/models/user.js";
 import Person from "../../db/models/person.js";
+import Estate from "../../db/models/estate.js";
 
 class EstateInvitationController {
   async saveEstateInvitation(request, response) {
@@ -40,38 +41,44 @@ class EstateInvitationController {
   }
 
   async getPersonInvitationsToEstate(request, response) {
-    const personID = request.params.id.trim();
+    const personID = request.params.personID.trim();
     let estateInvitations;
+
     try {
       estateInvitations = await EstateInvitation.find({ person: personID }).populate("estate", ["_id", "location", "size", "rooms", "state", "fee", "rent", "caution"]).
       populate("person", ["_id", "name", "phone_number"]);
-    } catch (e) {
-    }
 
-    if (estateInvitations) {
-      response.status(200).json(estateInvitations);
-    } else {
-      response.status(404).json({
-        message: "Nie znaleziono zaproszeń do nieruchomości.",
-      });
+    } catch (e) {
+      response.status(404).json({message: "Nie znaleziono zaproszeń do nieruchomości.",});
     }
+    return response.status(200).json(estateInvitations);
   }
 
   async getEstateInvitations(request, response) {
     const estateID = request.params.id.trim();
-    let estateInvitations;
+    let estateInvitations, estate;
+
     try {
+
+      estate = await Estate.findOne({_id: estateID})
+          .populate("person", ["_id", "name", "phone_number"])
+          .populate("renter", ["_id", "name", "phone_number"]);
+
+      if(estate) {
+        if(estate.status===false) {
+          return response.status(404).json({message: "Nie znaleziono zaproszenia lub jest ono nieaktualne.",});
+        }
+      } else {
+        return response.status(404).json({message: "Nie znaleziono nieruchomości.",});
+      }
+
       estateInvitations = await EstateInvitation.find({ estate: estateID }).populate("person", ["_id", "name", "phone_number"]);
     } catch (e) {
+      return response.status(404).json({message: "Nie znaleziono zaproszeń do nieruchomości.",});
     }
 
-    if (estateInvitations) {
-      response.status(200).json(estateInvitations);
-    } else {
-      response.status(404).json({
-        message: "Nie znaleziono zaproszeń do nieruchomości.",
-      });
-    }
+    return response.status(200).json(estateInvitations);
+
   }
 
   async deleteEstateInvitation(request, response) {

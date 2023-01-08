@@ -28,14 +28,36 @@ class AnnouncementController {
 
   async getAnnouncements(request, response) {
     let announcements, announcementsPages, meta;
+    let requestQuery = request.query;
     try {
       const { page=1, perPage=10 } = request.query;
 
-      announcementsPages = await Announcement.find({ status: true });
+      if(!requestQuery.personID) {
+        return response.status(200).json();
+      }
 
-      announcements = await Announcement.find({ status: true })
-          .limit(perPage)
-          .skip((page-1) * perPage);
+      if (requestQuery.location && requestQuery.rooms) {
+        announcementsPages = await Announcement.find({ status: true, location: requestQuery.location, rooms: requestQuery.rooms});
+        announcements = await Announcement.find({ status: true, location: requestQuery.location, rooms: requestQuery.rooms})
+            .limit(perPage)
+            .skip((page-1) * perPage);
+      } else if (requestQuery.rooms) {
+        announcementsPages = await Announcement.find({ status: true, rooms: requestQuery.rooms});
+        announcements = await Announcement.find({ status: true, rooms: requestQuery.rooms})
+            .limit(perPage)
+            .skip((page-1) * perPage);
+      } else if(requestQuery.location) {
+        announcementsPages = await Announcement.find({ status: true, location: requestQuery.location});
+        announcements = await Announcement.find({ status: true, location: requestQuery.location})
+            .limit(perPage)
+            .skip((page-1) * perPage);
+      } else {
+        announcementsPages = await Announcement.find({ status: true});
+        announcements = await Announcement.find({ status: true})
+            .limit(perPage)
+            .skip((page-1) * perPage);
+      }
+
 
 
       meta = {
@@ -54,9 +76,28 @@ class AnnouncementController {
 
   async getAnnouncement(request, response) {
     const id = request.params.id;
+    const requestQuery = request.query;
+
     try{
+      if(!requestQuery.personID) {
+        return response.status(200).json();
+      }
+
       const announcement = await Announcement.findOne({ _id: id })
           .populate("person", ["_id", "name", "phone_number"]);
+
+      // if edit, check if owner_announcement === personID from query
+      if(requestQuery.typeView && requestQuery.typeView === 'edit') {
+        if (announcement.person._id.toString() === requestQuery.personID) {
+          return response.status(200).json(announcement);
+        } else {
+          return response.status(403).json("Nie masz uprawnień do przeglądania tego ogłoszenia!");
+        }
+      } else {
+        if(requestQuery.typeView && requestQuery.typeView === 'view') {
+            return response.status(200).json(announcement);
+        }
+      }
       response.status(200).json(announcement);
     } catch (error) {
       response.status(500).json({ message: error.message });

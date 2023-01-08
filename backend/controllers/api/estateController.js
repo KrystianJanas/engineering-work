@@ -46,17 +46,29 @@ class EstateController {
   async getEstate(request, response) {
     let estate;
     const id = request.params.id.trim();
+    const requestQuery = request.query;
+
+
     try {
       estate = await Estate.findOne({_id: id})
           .populate("person", ["_id", "name", "phone_number"])
           .populate("renter", ["_id", "name", "phone_number"]);
-    } catch (e) {
-    }
 
-    if (estate) {
-      response.status(200).json(estate);
-    } else {
-      response.status(404).json({ message: "Nie znaleziono nieruchomości." });
+      if(requestQuery.typeView && requestQuery.typeView === 'edit') {
+        if (estate.person._id.toString() === requestQuery.personID) {
+          return response.status(200).json(estate);
+        } else {
+          return response.status(403).json("Nie masz uprawnień do przeglądania tej nieruchomości!");
+        }
+      } else if (requestQuery.typeView && requestQuery.typeView === 'view') {
+        if (estate.person._id.toString() === requestQuery.personID || estate.renter.find((person) => person._id.toString() === requestQuery.personID)) {
+          return response.status(200).json(estate);
+        } else {
+          return response.status(403).json("Nie masz uprawnień do przeglądania tej nieruchomości!");
+        }
+      }
+    } catch (e) {
+      response.status(500).json({ message: e.message });
     }
   }
 
@@ -124,7 +136,8 @@ class EstateController {
         estate.updated_at = Date.now();
 
         await estate.save();
-        response.status(200).json(estate);
+        return response.status(200).json(estate);
+
       } else {
         return response.status(422).json({ message: "Nie znaleziono nieruchomości." });
       }

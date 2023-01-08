@@ -1,6 +1,6 @@
 import EstateSettlement from "../../db/models/estateSettlement.js";
 import EstateCost from "../../db/models/estateCost.js";
-import Observed from "../../db/models/observed.js";
+import Estate from "../../db/models/estate.js";
 
 class EstateSettlementController {
     async saveSettlement(request, response) {
@@ -43,33 +43,71 @@ class EstateSettlementController {
     }
 
     async getSettlements(request, response) {
-        let settlements;
+        let settlements, estate;
         const estate_id = request.params.id;
+        const requestQuery = request.query;
+
 
         try {
+            estate = await Estate.findOne({_id: estate_id})
+                .populate("person", ["_id", "name", "phone_number"])
+                .populate("renter", ["_id", "name", "phone_number"]);
+
             settlements = await EstateSettlement.find({ estate: estate_id }).sort({data: -1}).
             populate("person", ["_id", "name", "phone_number"]);
+
+            if(requestQuery.typeView && requestQuery.typeView === 'edit') {
+                if (estate.person._id.toString() === requestQuery.personID) {
+                    return response.status(200).json(settlements);
+                } else {
+                    return response.status(403).json("Nie masz uprawnień do przeglądania tej nieruchomości!");
+                }
+            } else if (requestQuery.typeView && requestQuery.typeView === 'view') {
+                if (estate.person._id.toString() === requestQuery.personID || estate.renter.find((person) => person._id.toString() === requestQuery.personID)) {
+                    return response.status(200).json(settlements);
+                } else {
+                    return response.status(403).json("Nie masz uprawnień do przeglądania tej nieruchomości!");
+                }
+            }
+
         } catch (error) {
             response.status(500).json({ message: error.message });
         }
-
-        return response.status(200).json(settlements);
     }
 
     async getSettlementInThisMonth(request, response) {
-        let settlement;
+        let settlement, estate;
         const estate_id = request.params.id;
+        const requestQuery = request.query;
+
         const dateYearMonth = new Date().toISOString().slice(0, 7);
 
+
         try {
+            estate = await Estate.findOne({_id: estate_id})
+                .populate("person", ["_id", "name", "phone_number"])
+                .populate("renter", ["_id", "name", "phone_number"]);
+
             settlement = await EstateSettlement.findOne({ estate: estate_id, data: dateYearMonth },
                 ['estate', 'person', 'created_at', 'data']);
-            if(settlement && settlement.estate) {
-                return response.status(200).json(settlement);
 
+
+            if(settlement && settlement.estate) {
+                if(requestQuery.typeView && requestQuery.typeView === 'edit') {
+                    if (estate.person._id.toString() === requestQuery.personID) {
+                        return response.status(200).json(settlement);
+                    } else {
+                        return response.status(403).json("Nie masz uprawnień do przeglądania tej nieruchomości!");
+                    }
+                } else if (requestQuery.typeView && requestQuery.typeView === 'view') {
+                    if (estate.person._id.toString() === requestQuery.personID || estate.renter.find((person) => person._id.toString() === requestQuery.personID)) {
+                        return response.status(200).json(settlement);
+                    } else {
+                        return response.status(403).json("Nie masz uprawnień do przeglądania tej nieruchomości!");
+                    }
+                }
             } else {
                 return response.sendStatus(204);
-
             }
         } catch (error) {
             response.status(500).json({ message: error.message });

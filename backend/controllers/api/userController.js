@@ -72,11 +72,18 @@ class UserController {
   async updatePassword(request, response) {
     const data = request.body;
 
-    const user = await User.findOne({ _id: data.user_id });
+    const person = await Person.findOne({ _id: data.personID });
+    if (person == null) {
+      return response
+          .status(404)
+          .send("Nie można znaleźć osoby, spróbuj ponownie.");
+    }
+
+    const user = await User.findOne({ _id: person.user });
     if (user == null) {
       return response
         .status(404)
-        .send("Error: we can't find user. Please log out and log in again.");
+        .send("Nie można znaleźć użytkownika, spróbuj ponownie.");
     }
 
     try {
@@ -87,7 +94,7 @@ class UserController {
         await user.save();
         response.status(200).json(user);
       } else {
-        response.status(404).send("Actually password is incorrect");
+        response.status(422).send('Aktualne hasło jest nieprawidłowe!');
       }
     } catch {
       response.status(500).send();

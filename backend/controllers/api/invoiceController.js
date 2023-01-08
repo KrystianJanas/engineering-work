@@ -8,13 +8,32 @@ class InvoiceController {
         if(request.files === null) {
             return response.status(400).json({message: "Nie znaleziono plików."});
         }
-        let estate, invoice, file;
+        let estate, estateToCheckPermissions, invoice, file;
         const data = request.body;
         const id = request.params.id.trim();
+        const requestQuery = request.query;
+
 
         try {
 
             estate = await Estate.findOne({_id: id})
+
+            estateToCheckPermissions = await Estate.findOne({_id: id})
+                .populate("person", ["_id", "name", "phone_number"])
+                .populate("renter", ["_id", "name", "phone_number"]);
+
+            if(requestQuery.typeView && requestQuery.typeView === 'edit') {
+                if (estateToCheckPermissions.person._id.toString() === requestQuery.personID) {
+                } else {
+                    return response.status(403).json("Nie masz uprawnień do przeglądania tej nieruchomości!");
+                }
+            } else if (requestQuery.typeView && requestQuery.typeView === 'view') {
+                if (estateToCheckPermissions.person._id.toString() === requestQuery.personID || estateToCheckPermissions.renter.find((person) => person._id.toString() === requestQuery.personID)) {
+                } else {
+                    return response.status(403).json("Nie masz uprawnień do przeglądania tej nieruchomości!");
+                }
+            }
+
             file = request.files.file;
 
             const fullName = `${id}_${data.datetime}.pdf`

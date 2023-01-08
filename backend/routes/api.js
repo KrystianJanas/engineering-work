@@ -22,11 +22,13 @@ function authenticate(req, res, next) {
     let token = req.headers.authorization;
 
     try {
-        if (!token) return res.sendStatus(403);
-            token = token.split(' ')[1];
+        if (!token) {
+            return res.sendStatus(403);
+        }
 
-            jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+        token = token.split(' ')[1];
 
+        jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
             if (err) return res.sendStatus(403);
 
             req.user = user;
@@ -47,80 +49,71 @@ router.delete("/people/:id", PeopleController.deletePerson);
 // autentykacja...????
 router.post("/auth", UserController.saveUser);
 router.post("/auth/login", UserController.getUser);
-router.post("/auth/updatePassword", UserController.updatePassword); // check, if it works - delete this comment
+router.put("/auth/updatePassword", authenticate, UserController.updatePassword); // check, if it works - delete this comment
 
 // ogłoszenia
 router.get("/announcements", authenticate, AnnouncementController.getAnnouncements);
-router.get("/announcements/:id", AnnouncementController.getAnnouncement);
-router.get(
-  "/announcements/person/:id/:status",
-  AnnouncementController.getAnnouncementsByPerson
-);
-router.post("/announcements", AnnouncementController.saveAnnouncement);
-router.put("/announcements/:id", AnnouncementController.updateAnnouncement);
-router.delete("/announcements/:id", AnnouncementController.deleteAnnouncement);
+router.get("/announcements/:id", authenticate, AnnouncementController.getAnnouncement);
+router.get("/announcements/person/:id/:status", AnnouncementController.getAnnouncementsByPerson);
+router.post("/announcements", authenticate, AnnouncementController.saveAnnouncement);
+router.put("/announcements/:id", authenticate, AnnouncementController.updateAnnouncement);
+router.delete("/announcements/:id", authenticate, AnnouncementController.deleteAnnouncement);
 
 // konwersacje
-router.get(
-  "/conversations/from/:id",
-  ConversationController.getConversationsFrom
-);
-router.get("/conversations/to/:id", ConversationController.getConversationsTo);
-router.get(
-  "/conversations/checkExistFrom/:announcement_id/:person_from",
-  ConversationController.getConversationsCheckExistFrom
-);
-router.get("/conversations/", ConversationController.getConversations);
-router.post("/conversations", ConversationController.saveConversation);
-router.delete("/conversations/:id", ConversationController.deleteConversation);
+router.get("/conversations/from/:id", authenticate, ConversationController.getConversationsFrom);
+router.get("/conversations/to/:id", authenticate, ConversationController.getConversationsTo);
+router.get("/conversations/checkExistFrom/:announcement_id/:person_from", authenticate, ConversationController.getConversationsCheckExistFrom);
+router.get("/conversations/", authenticate, ConversationController.getConversations);
+router.post("/conversations", authenticate, ConversationController.saveConversation);
+router.delete("/conversations/:id", authenticate, ConversationController.deleteConversation);
 
 // wiadomosci
-router.get("/messages/:id", MessageController.getMessages);
-router.post("/messages", MessageController.saveMessage);
+router.get("/messages/:id", authenticate, MessageController.getMessages);
+router.post("/messages", authenticate, MessageController.saveMessage);
 
 // obserwowane ogłoszenia
-router.get("/observed/:id", ObservedController.getObservedAnnouncements);
-router.post("/observed", ObservedController.saveObserved);
-router.delete("/observed/:id", ObservedController.deleteObserved);
+router.get("/observed/:id", authenticate, ObservedController.getObservedAnnouncements);
+router.post("/observed", authenticate, ObservedController.saveObserved);
+router.delete("/observed/:id", authenticate, ObservedController.deleteObserved);
 
 // nieruchomości
-router.get("/estates", EstateController.getEstates);
-router.get("/estates/:id", EstateController.getEstate);
-router.get("/estates/person/:id/:status", EstateController.getEstatesByPerson);
-router.get("/estates/renter/:id/:status", EstateController.getEstatesByRenter);
-router.post("/estates", EstateController.saveEstate);
-router.put("/estates/:id", EstateController.updateEstate);
-router.put("/estates/add_renter/:id", EstateController.addNewRenterToEstate);
-router.put("/estates/remove_renter/:id", EstateController.removeRenterFromEstate);
-router.delete("/estates/:id", EstateController.deleteEstate);
+router.get("/estates", authenticate, EstateController.getEstates);
+router.get("/estates/:id", authenticate, EstateController.getEstate);
+router.get("/estates/person/:id/:status", authenticate, EstateController.getEstatesByPerson);
+router.get("/estates/renter/:id/:status", authenticate, EstateController.getEstatesByRenter);
+router.post("/estates", authenticate, EstateController.saveEstate);
+router.put("/estates/:id", authenticate, EstateController.updateEstate);
+router.put("/estates/add_renter/:id", authenticate, EstateController.addNewRenterToEstate);
+router.put("/estates/remove_renter/:id", authenticate, EstateController.removeRenterFromEstate);
+router.delete("/estates/:id", authenticate, EstateController.deleteEstate);
 
 // nieruchomości -> wiadomości
-router.get("/estates/messages/:id", EstateMessageController.getMessages);
-router.post("/estates/messages", EstateMessageController.saveMessage);
+router.get("/estates/messages/:id", authenticate, EstateMessageController.getMessages);
+router.post("/estates/messages", authenticate, EstateMessageController.saveMessage);
 
 // nieruchomości -> koszty stałe
-router.get("/estates/costs/:id", EstateCostController.getCosts);
-router.post("/estates/costs", EstateCostController.saveCosts);
+router.get("/estates/costs/:id", authenticate, EstateCostController.getCosts);
+router.post("/estates/costs", authenticate, EstateCostController.saveCosts);
 
 // nieruchomości -> rozliczenia
-router.get("/estates/settlements/:id", EstateSettlementController.getSettlements);
-router.get("/estates/settlements/thisMonth/:id", EstateSettlementController.getSettlementInThisMonth);
-router.post("/estates/settlements", EstateSettlementController.saveSettlement);
-router.delete("/estates/settlements/:id", EstateSettlementController.deleteSettlement);
+router.get("/estates/settlements/:id", authenticate, EstateSettlementController.getSettlements);
+router.get("/estates/settlements/thisMonth/:id", authenticate, EstateSettlementController.getSettlementInThisMonth);
+router.post("/estates/settlements", authenticate, EstateSettlementController.saveSettlement);
+router.delete("/estates/settlements/:id", authenticate, EstateSettlementController.deleteSettlement);
 
 // nieruchomości -> faktury
-router.get("/estates/invoices/:id", InvoiceController.getInvoices);
-router.post("/estates/invoices/:id", InvoiceController.saveInvoice);
-router.delete("/estates/invoices/:id", InvoiceController.deleteInvoice);
-router.put("/estates/invoices/payment/:id", InvoiceController.updatePaymentRenterInvoice);
-router.get("/estates/invoices/download/:name", InvoiceController.downloadInvoice);
+router.get("/estates/invoices/:id", authenticate, InvoiceController.getInvoices);
+router.post("/estates/invoices/:id", authenticate, InvoiceController.saveInvoice);
+router.delete("/estates/invoices/:id", authenticate, InvoiceController.deleteInvoice);
+router.put("/estates/invoices/payment/:id", authenticate, InvoiceController.updatePaymentRenterInvoice);
+router.get("/estates/invoices/download/:name", authenticate, InvoiceController.downloadInvoice);
 
 
 
 
 // zaproszenia do nieruchomości
 router.get(
-  "/estatesInvitations/person/:id",
+  "/estatesInvitations/person/:personID",
   EstateInvitationController.getPersonInvitationsToEstate
 );
 router.get(

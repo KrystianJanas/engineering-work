@@ -22,12 +22,26 @@ class MessageController {
   async getMessages(request, response) {
     let messages;
     const id = request.params.id;
+    const requestQuery = request.query;
 
     try {
+
+      if(!requestQuery.personID) {
+        return response.status(200).json();
+      }
+
       messages = await Message.find({ conversation: id })
-        .populate("person", ["name"])
+        .populate("person", ["_id", "name"])
         .populate("announcement", ["title"])
           .sort({created_at: -1});
+
+      const messagesFind = messages.find((message) => message.person._id.toString() === requestQuery.personID );
+
+      if(messagesFind) {
+        console.log('mam wiadomosci')
+      } else {
+        console.log('nie mam wiadomosci')
+      }
     } catch (error) {
       response.status(500).json({ message: error.message });
     }
