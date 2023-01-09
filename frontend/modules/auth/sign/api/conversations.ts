@@ -1,5 +1,4 @@
-import axios from 'axios';
-
+import api from '~/api/api';
 import { validateEmail } from '~/mail.rules';
 
 export const signIn = async (login: string, password: string) => {
@@ -12,8 +11,8 @@ export const signIn = async (login: string, password: string) => {
   ) {
     if (password && password.length > 4) {
       try {
-        const response = await axios
-          .post('http://localhost:3001/api/auth/login', {
+        const response = await api
+          .post('auth/login', {
             login,
             password,
           })
@@ -48,8 +47,8 @@ export const signUp = async (
     if (password && password.length > 4) {
       if (rePassword && rePassword.length > 4 && password === rePassword) {
         try {
-          const response = await axios
-            .post('http://localhost:3001/api/auth', {
+          const response = await api
+            .post('auth', {
               login,
               password,
             })

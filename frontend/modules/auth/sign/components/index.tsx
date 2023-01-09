@@ -4,7 +4,6 @@ import styled from '@emotion/styled';
 import { Button, TextField } from '@mui/material';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import Cookies from 'universal-cookie';
 
 import { Text } from '~/components/atoms/typography';
 import { useAuth } from '~/components/contexts/useContextProvider';
@@ -40,7 +39,6 @@ const StyledLayout = styled(Layout)`
 `;
 
 export const SignIn = ({ type }: SignTypes) => {
-  const cookies = new Cookies();
   const { activity, setActivity } = useActivity();
 
   const router = useRouter();
@@ -61,7 +59,6 @@ export const SignIn = ({ type }: SignTypes) => {
       }
 
       if (user) {
-        await cookies.set('token', user.accessToken);
         await login(user.user_id);
         toast.success('Pomyślnie zalogowano.');
       }

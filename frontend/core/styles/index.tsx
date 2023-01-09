@@ -12,7 +12,6 @@ export const GlobalStyles = () => (
     <Global styles={stylesReset} />
     <Global styles={propertiesStyles} />
     <Global styles={baseStyles} />
-    {/* <Global styles={darkTheme} /> */}
     <Global styles={lightTheme} />
     <Global styles={colorsStyles} />
   </>

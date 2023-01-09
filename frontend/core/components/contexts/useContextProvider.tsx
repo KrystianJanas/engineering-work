@@ -26,32 +26,38 @@ export const AuthProvider = ({ children }: any) => {
   const [personID, setPersonID] = useState(user);
 
   const removeAllCookies = async () => {
-    await cookies.remove('user');
-    await cookies.remove('token');
+    await cookies.remove('_token');
+    if (cookies.get('_token')) {
+      cookies.remove('_token');
+    }
+    await cookies.remove('_user');
+    if (cookies.get('_user')) {
+      cookies.remove('_user');
+    }
   };
 
   const setCookies = async (token: string, userID: string) => {
-    const tokenGet = await cookies.get('token');
-    const userGet = await cookies.get('user');
+    const tokenGet = await cookies.get('_token');
+    const userGet = await cookies.get('_user');
 
     if (token && token.length > 0) {
       if (!tokenGet) {
-        cookies.set('token', token);
-      } else if (cookies.get('token') === token) {
+        cookies.set('_token', token);
+      } else if (cookies.get('_token') === token) {
         // mam token, wiec nie tworze na nowo
       } else {
-        await cookies.remove('token');
-        cookies.set('token', token);
+        await cookies.remove('_token');
+        cookies.set('_token', token);
       }
     }
     if (userID && userID.length > 0) {
       if (!userGet) {
-        cookies.set('user', userID);
-      } else if (cookies.get('user') === userID) {
+        cookies.set('_user', userID);
+      } else if (cookies.get('_user') === userID) {
         // mam userid, wiec nie tworze na nowo
       } else {
-        await cookies.remove('user');
-        cookies.set('user', userID);
+        await cookies.remove('_user');
+        cookies.set('_user', userID);
       }
     }
   };
@@ -66,13 +72,13 @@ export const AuthProvider = ({ children }: any) => {
   const login = async (id: string) => {
     setUser(id);
     setPersonID(id);
-    await setCookies('', id);
+    // await setCookies('', id);
     await router.push('/');
   };
 
   useEffect(() => {
     async function loadUserFromCookies() {
-      const token = cookies.get('token');
+      const token = cookies.get('_token');
 
       if (token) {
         setAuthorization(token);
@@ -94,7 +100,7 @@ export const AuthProvider = ({ children }: any) => {
             return;
           }
         }
-      } else if (cookies.get('user')) {
+      } else if (cookies.get('_user')) {
         await removeAllCookies();
       }
       setLoading(false);
