@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
+import { Layout } from '~/components/molecules/layout';
 import { getRem } from '~/styles/utils';
 
 import { PagesNav } from '../header.constants';
@@ -41,37 +42,57 @@ const StyledClickedNavLink = styled(Nav.Link)`
   margin: 0 15px;
 `;
 
+const StyledContainer = styled(Layout)`
+  @media (min-width: 0px) and (max-width: 768px) {
+    display: none;
+  }
+  text-align: center;
+`;
+
+const StyledContainerMobile = styled(Layout)`
+  @media (min-width: 769px) {
+    display: none;
+  }
+`;
+
 export const Header = () => {
   const { pathname } = useRouter();
 
   return (
-    <StyledNavbar collapseOnSelect expand="lg">
-      <Link href="/" passHref>
-        <Navbar.Brand>Serwis Nieruchomości</Navbar.Brand>
-      </Link>
-      <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-      <Navbar.Collapse id="responsive-navbar-nav">
-        <Nav className="me-auto">
-          {PagesNav.map((page) => (
-            <Link key={page.href} href={page.href} passHref>
-              {page.href === `/${pathname.split('/')[1]}` ? (
-                <StyledClickedNavLink>{page.pageName}</StyledClickedNavLink>
-              ) : (
-                <StyledNavLink>{page.pageName}</StyledNavLink>
-              )}
-            </Link>
-          ))}
-        </Nav>
-        <Nav>
-          <Link href="/management" passHref>
-            {pathname.includes('/management') ? (
-              <StyledClickedNavLink>Twoje konto</StyledClickedNavLink>
-            ) : (
-              <StyledNavLink>Twoje konto</StyledNavLink>
-            )}
+    <>
+      <StyledContainer>
+        <StyledNavbar collapseOnSelect expand="lg">
+          <Link href="/" passHref>
+            <Navbar.Brand>Serwis Nieruchomości</Navbar.Brand>
           </Link>
-        </Nav>
-      </Navbar.Collapse>
-    </StyledNavbar>
+          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+          <Navbar.Collapse id="responsive-navbar-nav">
+            <Nav className="me-auto">
+              {PagesNav.map((page) => (
+                <Link key={page.href} href={page.href} passHref>
+                  {page.href === `/${pathname.split('/')[1]}` ? (
+                    <StyledClickedNavLink>{page.pageName}</StyledClickedNavLink>
+                  ) : (
+                    <StyledNavLink>{page.pageName}</StyledNavLink>
+                  )}
+                </Link>
+              ))}
+            </Nav>
+            <Nav>
+              <Link href="/management" passHref>
+                {pathname.includes('/management') ? (
+                  <StyledClickedNavLink>Twoje konto</StyledClickedNavLink>
+                ) : (
+                  <StyledNavLink>Twoje konto</StyledNavLink>
+                )}
+              </Link>
+            </Nav>
+          </Navbar.Collapse>
+        </StyledNavbar>
+      </StyledContainer>
+      <StyledContainerMobile height={100}>
+        here mobiles...
+      </StyledContainerMobile>
+    </>
   );
 };
