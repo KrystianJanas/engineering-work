@@ -1,6 +1,10 @@
-export const port = process.env.PORT || 3001;
+import dotenv from "dotenv";
+dotenv.config();
+
+export const port = process.env.DATABASE_PORT;
+
 export const database = {
-  host: "rentalservice.1lke66g.mongodb.net",
-  user: "rentalservice",
-  password: "ZAQ!2wsx",
+    host: process.env.DATABASE_HOST,
+    user: process.env.DATABASE_USER,
+    password: process.env.DATABASE_PASSWORD,
 };
