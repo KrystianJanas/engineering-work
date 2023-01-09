@@ -5,6 +5,9 @@ class EstateCostController {
     async saveCosts(request, response) {
         const data = request.body;
 
+        const datePoland = new Date();
+        datePoland.setHours(datePoland.getHours() + 1);
+
         let costFind;
         let cost;
         try {
@@ -20,7 +23,7 @@ class EstateCostController {
                 costFind.water_fixedCosts = data.water_fixedCosts || costFind.water_fixedCosts;
                 costFind.water_costPerOne = data.water_costPerOne || costFind.water_costPerOne;
 
-                costFind.updated_at = Date.now();
+                costFind.updated_at = datePoland;
 
                 await costFind.save();
                 response.status(200).json(costFind);
@@ -37,6 +40,9 @@ class EstateCostController {
 
                     water_fixedCosts: data.water_fixedCosts,
                     water_costPerOne: data.water_costPerOne,
+
+                    created_at: datePoland,
+                    updated_at: datePoland,
                 });
                 await cost.save();
                 response.status(200).json(cost);

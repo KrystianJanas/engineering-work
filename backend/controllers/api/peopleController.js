@@ -4,6 +4,9 @@ class PeopleController {
   async savePerson(request, response) {
     const data = request.body;
 
+    const datePoland = new Date();
+    datePoland.setHours(datePoland.getHours() + 1);
+
     let person;
     try {
       person = new Person({
@@ -13,6 +16,8 @@ class PeopleController {
         phone_number: data.phone_number,
         avatar_url: data.avatar_url,
         user: data.user,
+        created_at: datePoland,
+        updated_at: datePoland,
       });
       await person.save();
     } catch (error) {
@@ -47,6 +52,9 @@ class PeopleController {
     const id = request.params.id;
     const data = request.body;
 
+    const datePoland = new Date();
+    datePoland.setHours(datePoland.getHours() + 1);
+
     try {
       const person = await Person.findOne({ _id: id });
       if (person) {
@@ -56,7 +64,7 @@ class PeopleController {
         person.phone_number = data.phone_number || person.phone_number;
         person.avatar_url = data.avatar_url || person.avatar_url;
 
-        person.updated_at = Date.now();
+        person.updated_at = datePoland;
 
         await person.save();
         response.status(200).json(person);

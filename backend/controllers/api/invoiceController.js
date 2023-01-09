@@ -1,4 +1,3 @@
-import Announcement from "../../db/models/announcement.js";
 import Estate from "../../db/models/estate.js";
 import EstateInvoice from "../../db/models/estateInvoice.js";
 import path from "path";
@@ -13,6 +12,8 @@ class InvoiceController {
         const id = request.params.id.trim();
         const requestQuery = request.query;
 
+        const datePoland = new Date();
+        datePoland.setHours(datePoland.getHours() + 1);
 
         try {
 
@@ -54,6 +55,8 @@ class InvoiceController {
                 paid_renters: [],
                 invoice_name: fullName,
                 description: data.description,
+                created_at: datePoland,
+                updated_at: datePoland,
             });
             await invoice.save();
 
@@ -86,11 +89,14 @@ class InvoiceController {
         const id = request.params.id;
         const data = request.body;
 
+        const datePoland = new Date();
+        datePoland.setHours(datePoland.getHours() + 1);
+
         try {
             const invoice = await EstateInvoice.findOne({ _id: id });
             if (invoice) {
-                invoice.paid_renters = [...invoice.paid_renters, data.person_id]
-                invoice.updated_at = Date.now();
+                invoice.paid_renters = [...invoice.paid_renters, data.person_id];
+                invoice.updated_at = datePoland;
 
                 await invoice.save();
                 console.log(invoice)
@@ -106,11 +112,14 @@ class InvoiceController {
     async deleteInvoice(request, response) {
         const id = request.params.id;
 
+        const datePoland = new Date();
+        datePoland.setHours(datePoland.getHours() + 1);
+
         try {
             const invoice = await EstateInvoice.findOne({ _id: id });
             if (invoice) {
                 invoice.status = false;
-                invoice.updated_at = Date.now();
+                invoice.updated_at = datePoland;
 
                 await invoice.save();
                 response.sendStatus(204);

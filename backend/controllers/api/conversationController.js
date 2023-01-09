@@ -4,12 +4,17 @@ class ConversationController {
   async saveConversation(request, response) {
     const data = request.body;
 
+    const datePoland = new Date();
+    datePoland.setHours(datePoland.getHours() + 1);
+
     let conversation;
     try {
       conversation = new Conversation({
         announcement: data.announcement,
         person_from: data.person_from,
         person_to: data.person_to,
+        created_at: datePoland,
+        updated_at: datePoland,
       });
       await conversation.save();
     } catch (error) {

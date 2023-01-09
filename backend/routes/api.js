@@ -23,19 +23,19 @@ function authenticate(req, res, next) {
 
     try {
         if (!token) {
-            return res.sendStatus(403);
+            return res.sendStatus(401);
         }
 
         token = token.split(' ')[1];
 
         jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
-            if (err) return res.sendStatus(403);
+            if (err) return res.sendStatus(401);
 
             req.user = user;
             next();
         });
     } catch(err) {
-        if (err) return res.sendStatus(403);
+        if (err) return res.sendStatus(401);
     }
 }
 
@@ -135,15 +135,15 @@ router.post("/upload/pictures", UploadController.saveImage);
 router.get('/users/me', (req, res) => {
     let token = req.headers.authorization;
     try {
-        if (!token) return res.sendStatus(403);
+        if (!token) return res.sendStatus(401);
         token = token.split(' ')[1];
 
         jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
-            if (err) return res.sendStatus(403);
+            if (err) return res.sendStatus(401);
             res.json(user);
         })
     } catch(err) {
-        return res.sendStatus(403);
+        return res.sendStatus(401);
     }
 });
 

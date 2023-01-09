@@ -9,7 +9,7 @@ class UserController {
     try {
       const user = await User.findOne({ login: request.body.login });
       if (user) {
-        return response.status(400).send("User is already exist!");
+        return response.status(400).send("Wygląda na to, że taki użytkownik już istnieje.");
       }
     } catch {
       return response.status(500).send();
@@ -42,12 +42,12 @@ class UserController {
   async getUser(request, response) {
     const user = await User.findOne({ login: request.body.login });
     if (user == null) {
-      return response.status(404).send("Username or password is incorrect");
+      return response.status(404).send("Adres e-mail lub hasło jest nieprawidłowe.");
     }
 
     const person = await Person.findOne({ user: user._id });
     if (person == null) {
-      return response.status(404).send("Cannot find person associated to user");
+      return response.status(404).send("Nie można znaleźć konta osoby przypisanego do użytkownika.");
     }
 
     try {
@@ -56,13 +56,19 @@ class UserController {
           { login: request.body.login, _id: person._id },
           process.env.ACCESS_TOKEN_SECRET
         );
+
+        response.cookie('_token', accessToken, {httpOnly: false});
+        response.cookie('_user', person._id, {httpOnly: false});
+
+
         response.status(200).json({
           accessToken: accessToken,
           user_id: user._id,
           person_id: person._id,
         });
+
       } else {
-        response.status(404).send("Username or password is incorrect");
+        response.status(404).send("Adres e-mail lub hasło jest nieprawidłowe.");
       }
     } catch {
       response.status(500).send();

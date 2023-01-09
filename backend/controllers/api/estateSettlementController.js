@@ -6,6 +6,9 @@ class EstateSettlementController {
     async saveSettlement(request, response) {
         const data = request.body;
 
+        const datePoland = new Date();
+        datePoland.setHours(datePoland.getHours() + 1);
+
         let cost, costFind;
         try {
             costFind = await EstateCost.findOne({ estate: data.estate_id });
@@ -33,6 +36,7 @@ class EstateSettlementController {
                     gas_fixed_costs: costFind.gas_fixedCosts,
                     water_fixed_costs: costFind.water_fixedCosts,
 
+                    created_at: datePoland,
                 });
                 await cost.save();
                 response.status(200).json(cost);

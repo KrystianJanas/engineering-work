@@ -11,6 +11,10 @@ class EstateInvitationController {
     let estateInvitation_check;
     let user;
     let person;
+
+    const datePoland = new Date();
+    datePoland.setHours(datePoland.getHours() + 1);
+
     try {
       user = await User.findOne({login: data.user_email});
       if(user) {
@@ -28,6 +32,7 @@ class EstateInvitationController {
             estateInvitation = new EstateInvitation({
               estate: data.estate_id,
               person: person_id,
+              created_at: datePoland,
             });
             await estateInvitation.save();
             return response.status(200).json({message: "Jeśli użytkownik z podanym adresem email istnieje, zostanie do niego wysłane zaproszenie."});
@@ -92,7 +97,7 @@ class EstateInvitationController {
       } else {
         return response
           .status(422)
-          .json({ message: "Estate invitation not found" });
+          .json({ message: "Nie znaleziono zaproszenia." });
       }
     } catch (error) {
       return response.status(422).json({ message: error.message });

@@ -6,17 +6,7 @@ class UploadController {
             return response.status(400).json({message: "Nie znaleziono plików."});
         }
 
-        let i;
-
         const file = request.files.file;
-
-        // console.log(' ')
-        // console.log(file)
-        // console.log(' ')
-        //
-        // console.log("body: ",request.body)
-        //
-        // console.log("-----")
 
         console.log(file.name.slice(-4))
         if(file.name.slice(-4).includes('.png') || file.name.slice(-4).includes('.jpg') || file.name.slice(-4).includes('.jpeg')) {
@@ -45,8 +35,6 @@ class UploadController {
         if(request.files === null) {
             return response.status(400).json({message: "Nie znaleziono plików."});
         }
-
-        let i;
 
         const file = request.files.file;
 

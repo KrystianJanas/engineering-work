@@ -7,6 +7,9 @@ class EstateController {
   async saveEstate(request, response) {
     const data = request.body;
 
+    const datePoland = new Date();
+    datePoland.setHours(datePoland.getHours() + 1);
+
     let estate;
     try {
       estate = new Estate({
@@ -22,6 +25,8 @@ class EstateController {
         rent: data.rent,
         images: data.images,
         renter: data.renter,
+        created_at: datePoland,
+        updated_at: datePoland,
       });
       await estate.save();
     } catch (error) {
@@ -117,6 +122,9 @@ class EstateController {
     const id = request.params.id;
     const data = request.body;
 
+    const datePoland = new Date();
+    datePoland.setHours(datePoland.getHours() + 1);
+
     try {
       const estate = await Estate.findOne({ _id: id });
       if (estate) {
@@ -133,7 +141,7 @@ class EstateController {
 
         estate.renter = data.renter || estate.renter;
 
-        estate.updated_at = Date.now();
+        estate.updated_at = datePoland;
 
         await estate.save();
         return response.status(200).json(estate);
@@ -150,15 +158,14 @@ class EstateController {
     const id = request.params.id;
     const data = request.body;
 
-    // check:
-    // 1. czy jest dodany do nieruchomosci juz jako renter
-    // 2. czy jest dodany do estateInvitations jako oczekujacy?...
+    const datePoland = new Date();
+    datePoland.setHours(datePoland.getHours() + 1);
 
     try {
       const estate = await Estate.findOne({ _id: id });
       if (estate) {
-        estate.renter = [...estate.renter, data.person_id]
-        estate.updated_at = Date.now();
+        estate.renter = [...estate.renter, data.person_id];
+        estate.updated_at = datePoland;
 
         await estate.save();
         response.sendStatus(204);
@@ -197,11 +204,14 @@ class EstateController {
   async deleteEstate(request, response) {
     const id = request.params.id;
 
+    const datePoland = new Date();
+    datePoland.setHours(datePoland.getHours() + 1);
+
     try {
       const estate = await Estate.findOne({ _id: id });
       if (estate) {
         estate.status = false;
-        estate.updated_at = Date.now();
+        estate.updated_at = datePoland;
 
         await estate.save();
 

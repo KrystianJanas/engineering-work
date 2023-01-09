@@ -4,6 +4,9 @@ class MessageController {
   async saveMessage(request, response) {
     const data = request.body;
 
+    const datePoland = new Date();
+    datePoland.setHours(datePoland.getHours() + 1);
+
     let message;
     try {
       message = new Message({
@@ -11,6 +14,7 @@ class MessageController {
         announcement: data.announcement,
         person: data.person,
         content: data.content,
+        created_at: datePoland,
       });
       await message.save();
     } catch (error) {

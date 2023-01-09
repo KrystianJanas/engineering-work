@@ -4,6 +4,9 @@ class AnnouncementController {
   async saveAnnouncement(request, response) {
     const data = request.body;
 
+    const datePoland = new Date();
+    datePoland.setHours(datePoland.getHours() + 1);
+
     let announcement;
     try {
       announcement = new Announcement({
@@ -17,6 +20,8 @@ class AnnouncementController {
         fee: data.fee,
         rent: data.rent,
         images: data.images,
+        created_at: datePoland,
+        updated_at: datePoland,
       });
       await announcement.save();
 
@@ -125,6 +130,9 @@ class AnnouncementController {
     const id = request.params.id;
     const data = request.body;
 
+    const datePoland = new Date();
+    datePoland.setHours(datePoland.getHours() + 1);
+
     try {
       const announcement = await Announcement.findOne({ _id: id });
       if (announcement) {
@@ -138,7 +146,7 @@ class AnnouncementController {
         announcement.rent = data.rent || announcement.rent;
         announcement.images = data.images || announcement.images;
 
-        announcement.updated_at = Date.now();
+        announcement.updated_at = datePoland;
 
         await announcement.save();
         response.status(200).json(announcement);

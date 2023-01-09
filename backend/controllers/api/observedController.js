@@ -6,6 +6,9 @@ class ObservedController {
 
     const data = request.body;
 
+    const datePoland = new Date();
+    datePoland.setHours(datePoland.getHours() + 1);
+
     try {
       observed = await Observed.find({
         announcement: data.announcement,
@@ -19,6 +22,7 @@ class ObservedController {
         observed = new Observed({
           announcement: data.announcement,
           person: data.person,
+          created_at: datePoland,
         });
         await observed.save();
         response.status(201).json(observed);
