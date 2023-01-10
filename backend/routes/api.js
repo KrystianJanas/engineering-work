@@ -39,14 +39,14 @@ function authenticate(req, res, next) {
     }
 }
 
-// ludzie
+// osoby
 router.get("/people", PeopleController.getPeople);
 router.get("/people/:id", PeopleController.getPerson);
 router.post("/people", PeopleController.savePerson);
 router.put("/people/:id", PeopleController.updatePerson);
 router.delete("/people/:id", PeopleController.deletePerson);
 
-// autentykacja...????
+// logowanie, rejestracja, zmiana hasła
 router.post("/auth", UserController.saveUser);
 router.post("/auth/login", UserController.getUser);
 router.put("/auth/updatePassword", authenticate, UserController.updatePassword); // check, if it works - delete this comment
@@ -59,7 +59,7 @@ router.post("/announcements", authenticate, AnnouncementController.saveAnnouncem
 router.put("/announcements/:id", authenticate, AnnouncementController.updateAnnouncement);
 router.delete("/announcements/:id", authenticate, AnnouncementController.deleteAnnouncement);
 
-// konwersacje
+// konwersacje (czesc ogolna wiadomosci)
 router.get("/conversations/from/:id", authenticate, ConversationController.getConversationsFrom);
 router.get("/conversations/to/:id", authenticate, ConversationController.getConversationsTo);
 router.get("/conversations/checkExistFrom/:announcement_id/:person_from", authenticate, ConversationController.getConversationsCheckExistFrom);
@@ -67,7 +67,7 @@ router.get("/conversations/", authenticate, ConversationController.getConversati
 router.post("/conversations", authenticate, ConversationController.saveConversation);
 router.delete("/conversations/:id", authenticate, ConversationController.deleteConversation);
 
-// wiadomosci
+// wiadomosci (wewnatrz konwersacji)
 router.get("/messages/:id", authenticate, MessageController.getMessages);
 router.post("/messages", authenticate, MessageController.saveMessage);
 
@@ -76,7 +76,7 @@ router.get("/observed/:id", authenticate, ObservedController.getObservedAnnounce
 router.post("/observed", authenticate, ObservedController.saveObserved);
 router.delete("/observed/:id", authenticate, ObservedController.deleteObserved);
 
-// nieruchomości
+// nieruchomości - sekcja ogolna
 router.get("/estates", authenticate, EstateController.getEstates);
 router.get("/estates/:id", authenticate, EstateController.getEstate);
 router.get("/estates/person/:id/:status", authenticate, EstateController.getEstatesByPerson);
@@ -109,28 +109,13 @@ router.put("/estates/invoices/payment/:id", authenticate, InvoiceController.upda
 router.get("/estates/invoices/download/:name", authenticate, InvoiceController.downloadInvoice);
 
 
-
-
 // zaproszenia do nieruchomości
-router.get(
-  "/estatesInvitations/person/:personID",
-  EstateInvitationController.getPersonInvitationsToEstate
-);
-router.get(
-    "/estatesInvitations/estate/:id",
-    EstateInvitationController.getEstateInvitations
-);
-router.post(
-  "/estatesInvitations",
-  EstateInvitationController.saveEstateInvitation
-);
-router.delete(
-  "/estatesInvitations/:id",
-  EstateInvitationController.deleteEstateInvitation
-);
+router.get("/estatesInvitations/person/:personID", EstateInvitationController.getPersonInvitationsToEstate);
+router.get("/estatesInvitations/estate/:id", EstateInvitationController.getEstateInvitations);
+router.post("/estatesInvitations", EstateInvitationController.saveEstateInvitation);
+router.delete("/estatesInvitations/:id", EstateInvitationController.deleteEstateInvitation);
 
 router.post("/upload/pictures", UploadController.saveImage);
-
 
 router.get('/users/me', (req, res) => {
     let token = req.headers.authorization;
