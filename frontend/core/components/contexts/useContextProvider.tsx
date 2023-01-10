@@ -25,17 +25,6 @@ export const AuthProvider = ({ children }: any) => {
 
   const [personID, setPersonID] = useState(user);
 
-  const removeAllCookies = async () => {
-    await cookies.remove('_token');
-    if (cookies.get('_token')) {
-      cookies.remove('_token');
-    }
-    await cookies.remove('_user');
-    if (cookies.get('_user')) {
-      cookies.remove('_user');
-    }
-  };
-
   const setCookies = async (token: string, userID: string) => {
     const tokenGet = await cookies.get('_token');
     const userGet = await cookies.get('_user');
@@ -43,8 +32,8 @@ export const AuthProvider = ({ children }: any) => {
     if (token && token.length > 0) {
       if (!tokenGet) {
         cookies.set('_token', token);
-      } else if (cookies.get('_token') === token) {
-        // mam token, wiec nie tworze na nowo
+      } else if (cookies.get('_token') !== token) {
+        // tu powinno wykryc useEffecta i wylogowac uzytkownika.
       } else {
         await cookies.remove('_token');
         cookies.set('_token', token);
@@ -53,8 +42,9 @@ export const AuthProvider = ({ children }: any) => {
     if (userID && userID.length > 0) {
       if (!userGet) {
         cookies.set('_user', userID);
-      } else if (cookies.get('_user') === userID) {
-        // mam userid, wiec nie tworze na nowo
+      } else if (cookies.get('_user') !== userID) {
+        await cookies.remove('_user');
+        cookies.set('_user', userID);
       } else {
         await cookies.remove('_user');
         cookies.set('_user', userID);
@@ -63,16 +53,16 @@ export const AuthProvider = ({ children }: any) => {
   };
 
   const logout = async () => {
-    setAuthorization('');
-    setUser('');
-    await removeAllCookies();
-    await router.push('/auth/sign-in');
+    const data = await api.get('logout');
+    if (data && data.status === 204) {
+      setAuthorization('');
+      setUser('');
+    }
   };
 
   const login = async (id: string) => {
     setUser(id);
     setPersonID(id);
-    // await setCookies('', id);
     await router.push('/');
   };
 
@@ -101,7 +91,7 @@ export const AuthProvider = ({ children }: any) => {
           }
         }
       } else if (cookies.get('_user')) {
-        await removeAllCookies();
+        await logout();
       }
       setLoading(false);
     }

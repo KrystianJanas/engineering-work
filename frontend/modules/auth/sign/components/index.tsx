@@ -59,7 +59,7 @@ export const SignIn = ({ type }: SignTypes) => {
       }
 
       if (user) {
-        await login(user.user_id);
+        await login(user.person_id);
         toast.success('Pomyślnie zalogowano.');
       }
     }

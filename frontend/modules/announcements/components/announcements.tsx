@@ -95,6 +95,7 @@ export const AnnouncementsView = () => {
               onChange={(event, newValue) => {
                 setLocation(newValue || '');
               }}
+              noOptionsText="Nie znaleziono dopasowanych wyników..."
               renderInput={(params) => (
                 <TextField {...params} label="Miejscowość" />
               )}

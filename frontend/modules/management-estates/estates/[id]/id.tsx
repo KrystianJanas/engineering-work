@@ -106,6 +106,7 @@ export const ManagementEstateIDDetails = () => {
         padding={[10, 20]}
         boxShadow="0 0 5px 1px var(--border-black)"
         borderRadius="8px"
+        minWidth="850px"
       >
         <Text textAlign="center" size={getRem(20)}>
           {data.title}

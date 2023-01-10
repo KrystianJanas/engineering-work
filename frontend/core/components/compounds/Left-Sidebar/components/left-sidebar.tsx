@@ -22,7 +22,7 @@ export const LeftSidebar = ({ options }: LeftSidebarTypes) => {
   const filteredOptions = options.filter((option) => option.href.length > 0);
 
   return (
-    <Layout width={300} display="flex" direction="column" marginLeft={25}>
+    <Layout minWidth="215px" display="flex" direction="column" marginLeft={25}>
       <Layout marginBottom={25}>
         {getSelectedItem()?.name !== getSelectedItem()?.placeholder && (
           <>

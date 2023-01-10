@@ -62,7 +62,7 @@ export const ManagementEstateFixedCosts = () => {
     );
 
   useEffect(() => {
-    if (dataCosts) {
+    if (dataCosts && dataCosts.estate?.length > 0) {
       setCurrent({
         fixed_costs: dataCosts.current_fixedCosts,
         cost_per_one: dataCosts.current_costPerOne,
@@ -133,6 +133,7 @@ export const ManagementEstateFixedCosts = () => {
         boxShadow="0 0 5px 1px var(--border-black)"
         display="flex"
         direction="column"
+        minWidth="850px"
       >
         <Layout display="flex" direction="row" justifyContent="space-between">
           <StyledLayout>

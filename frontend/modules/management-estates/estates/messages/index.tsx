@@ -94,7 +94,7 @@ export const ManagementEstatesIDMessages = () => {
         boxShadow="0 0 5px 1px var(--border-black)"
         display="flex"
         direction="column"
-        minWidth={500}
+        minWidth="850px"
       >
         <Layout display="flex" direction="column" flex={1}>
           {dataMessages.length > 0 && dataMessages[0].content.length > 0 ? (

@@ -1,8 +1,10 @@
-import { Autocomplete, TextField } from '@mui/material';
+import { useState } from 'react';
+
+import { Autocomplete, TextField, Button } from '@mui/material';
 import Link from 'next/link';
 
 import { Text } from '~/components/atoms/typography';
-import { Button } from '~/components/compounds/Button';
+import { Button as ButtonSend } from '~/components/compounds/Button';
 import { Layout } from '~/components/molecules/layout';
 import { CITIES } from '~/constants/CITIES.constants';
 import { STATES } from '~/constants/STATES.contants';
@@ -21,6 +23,15 @@ export const AnnouncementsForm = ({
   const { handleChange, formData } = useForm<AnnouncementsModel>(
     announcement || AnnouncementsModelInitialState
   );
+
+  const [files, setFiles] = useState([]);
+  const [uploadPercentage, setUploadPercentage] = useState(0);
+
+  const onChange = (e: any) => {
+    if (e.target.files) {
+      setFiles(e.target.files);
+    }
+  };
 
   return (
     <Layout display="flex" justifyContent="center" marginTop={15}>
@@ -108,6 +119,7 @@ export const AnnouncementsForm = ({
             onChange={(event, newValue) => {
               handleChange('location', newValue || '');
             }}
+            noOptionsText="Nie znaleziono dopasowanych wyników..."
             renderInput={(params) => (
               <TextField {...params} label="Miejscowość" />
             )}
@@ -122,6 +134,7 @@ export const AnnouncementsForm = ({
             onChange={(event, newValue) => {
               handleChange('state', newValue || '');
             }}
+            noOptionsText="Nie znaleziono dopasowanych wyników..."
             renderInput={(params) => (
               <TextField {...params} label="Wyposażenie / stan nieruchomości" />
             )}
@@ -139,8 +152,20 @@ export const AnnouncementsForm = ({
             fullWidth
           />
         </Layout>
-        <Layout width={750}>
-          / here add option to choose default profile photo to our estate s \
+        <Layout width={750} display="flex" justifyContent="center">
+          {/* / here add option to choose default profile photo to our estate s \ */}
+          <Button variant="outlined" component="label">
+            {files && files.length > 0
+              ? `${files.length} dodanych zdjęć do nieruchomości`
+              : 'Przyciśnij tutaj, aby dodać zdjęcia do nieruchomości'}
+            <input
+              multiple
+              hidden
+              accept="image/*"
+              type="file"
+              onChange={onChange}
+            />
+          </Button>
         </Layout>
         <Layout width={250} display="flex" wrap="wrap" gap="15px">
           <Link
@@ -150,12 +175,16 @@ export const AnnouncementsForm = ({
             passHref
           >
             <a>
-              <Button text="Anuluj" onSubmit={() => null} />
+              <ButtonSend text="Anuluj" onSubmit={() => null} />
             </a>
           </Link>
-          <Button
+          <ButtonSend
             text="Zatwierdź zmiany"
-            onSubmit={() => (onSubmit ? onSubmit(formData) : null)}
+            onSubmit={() => {
+              if (onSubmit) {
+                onSubmit(formData, files);
+              }
+            }}
           />
         </Layout>
       </Layout>

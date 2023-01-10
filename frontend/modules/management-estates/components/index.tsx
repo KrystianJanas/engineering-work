@@ -42,7 +42,7 @@ export const ManagementEstates = () => {
             onClick={() => router.push('/management/estates/new')}
           />
         </Layout>
-        {data && data.length > 0 ? (
+        {data && data.length > 0 && data[0]._id.length > 0 ? (
           <Layout display="flex" direction="column" alignItems="center">
             {data.map((estate) => (
               <StyledLayout

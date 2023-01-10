@@ -178,6 +178,7 @@ export const ManagementEstatesInvoices = () => {
         boxShadow="0 0 5px 1px var(--border-black)"
         display="flex"
         direction="column"
+        minWidth="850px"
       >
         {data.person._id === personID && (
           <Layout display="flex" justifyContent="center">

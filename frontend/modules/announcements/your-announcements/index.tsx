@@ -56,8 +56,12 @@ export const YourAnnouncements = () => {
     <Layout display="flex" direction="row" minWidth="100%" paddingTop={15}>
       <LeftSidebar options={options[1]} />
       <Layout width="100%">
-        {(activeAnnouncements && activeAnnouncements.length > 0) ||
-        (desactiveAnnouncements && desactiveAnnouncements.length > 0) ? (
+        {(activeAnnouncements &&
+          activeAnnouncements.length > 0 &&
+          activeAnnouncements[0]._id.length > 0) ||
+        (desactiveAnnouncements &&
+          desactiveAnnouncements.length > 0 &&
+          desactiveAnnouncements[0]._id.length > 0) ? (
           <>
             <Layout display="flex" justifyContent="center" gap="50px">
               <StyledText
@@ -128,7 +132,7 @@ export const YourAnnouncements = () => {
             <Text>&nbsp;</Text>
             <Text>
               Jeśli chcesz dodać nowe ogłoszenie,{' '}
-              <Link href="announcements/new" passHref>
+              <Link href="/announcements/new" passHref>
                 <StyledB>przyciśnij tutaj</StyledB>
               </Link>
               .

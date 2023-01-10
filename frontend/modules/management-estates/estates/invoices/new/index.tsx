@@ -122,8 +122,6 @@ export const ManagementEstatesInvoicesNew = () => {
         display="flex"
         direction="column"
       >
-        {/* invoice_name: string; */}
-        {/* description: string; */}
         <Layout
           display="flex"
           direction="column"

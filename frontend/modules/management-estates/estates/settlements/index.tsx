@@ -92,6 +92,14 @@ export const ManagementEstateSettlement = () => {
     (!dataCosts && !isLoadingCosts) ||
     (!dataSettlements && !isLoadingSettlements)
   ) {
+    console.log('data: ', data, ', isLoading: ', isLoading);
+    console.log('dataCosts: ', dataCosts, ', isLoadingCosts: ', isLoadingCosts);
+    console.log(
+      'dataSettlements: ',
+      dataSettlements,
+      ', isLoadingSettlements: ',
+      isLoadingSettlements
+    );
     redirectedFunction();
     return <SpinnerLoading />;
   }
@@ -128,8 +136,9 @@ export const ManagementEstateSettlement = () => {
         marginRight={15}
         marginBottom={15}
         padding={[10, 20, 20, 20]}
+        minWidth="950px"
       >
-        {dataCosts && (
+        {dataCosts && dataCosts.estate?.length > 0 && (
           <Layout display="flex" justifyContent="center">
             <Button
               text="Dodaj nowe odczyty liczników"
@@ -142,9 +151,11 @@ export const ManagementEstateSettlement = () => {
           </Layout>
         )}
 
-        {dataCosts ? (
+        {dataCosts && dataCosts.estate?.length > 0 ? (
           <Layout marginTop={15}>
-            {dataSettlements.length > 0 ? (
+            {dataSettlements &&
+            dataSettlements.length > 0 &&
+            dataSettlements[0]._id.length > 0 ? (
               <Layout display="flex" direction="column" gap="25px">
                 {dataSettlements.map((settlement) => (
                   <Layout
@@ -200,9 +211,11 @@ export const ManagementEstateSettlement = () => {
                         <Text>
                           Prognozowany koszt:{' '}
                           <i>
-                            {Number(settlement.current_use) *
-                              Number(settlement.current_cost_one) +
-                              Number(settlement.current_fixed_costs)}{' '}
+                            {(
+                              Number(settlement.current_use) *
+                                Number(settlement.current_cost_one) +
+                              Number(settlement.current_fixed_costs)
+                            ).toFixed(2)}{' '}
                             PLN
                           </i>
                         </Text>
@@ -227,9 +240,11 @@ export const ManagementEstateSettlement = () => {
                         <Text>
                           Prognozowany koszt:{' '}
                           <i>
-                            {Number(settlement.gas_use) *
-                              Number(settlement.gas_cost_one) +
-                              Number(settlement.gas_fixed_costs)}{' '}
+                            {(
+                              Number(settlement.gas_use) *
+                                Number(settlement.gas_cost_one) +
+                              Number(settlement.gas_fixed_costs)
+                            ).toFixed(2)}{' '}
                             PLN
                           </i>
                         </Text>
@@ -254,9 +269,11 @@ export const ManagementEstateSettlement = () => {
                         <Text>
                           Prognozowany koszt:{' '}
                           <i>
-                            {Number(settlement.water_use) *
-                              Number(settlement.water_cost_one) +
-                              Number(settlement.water_fixed_costs)}{' '}
+                            {(
+                              Number(settlement.water_use) *
+                                Number(settlement.water_cost_one) +
+                              Number(settlement.water_fixed_costs)
+                            ).toFixed(2)}{' '}
                             PLN
                           </i>
                         </Text>
@@ -277,15 +294,17 @@ export const ManagementEstateSettlement = () => {
                       Łączna szacunkowa kwota rachunków za prąd, gaz i wodę:{' '}
                     </Text>
                     <Text textAlign="center" size={getRem(16)} weight={700}>
-                      {Number(settlement.current_use) *
-                        Number(settlement.current_cost_one) +
+                      {(
+                        Number(settlement.current_use) *
+                          Number(settlement.current_cost_one) +
                         Number(settlement.current_fixed_costs) +
                         (Number(settlement.gas_use) *
                           Number(settlement.gas_cost_one) +
                           Number(settlement.gas_fixed_costs)) +
                         (Number(settlement.water_use) *
                           Number(settlement.water_cost_one) +
-                          Number(settlement.water_fixed_costs))}{' '}
+                          Number(settlement.water_fixed_costs))
+                      ).toFixed(2)}{' '}
                       PLN
                     </Text>
                   </Layout>

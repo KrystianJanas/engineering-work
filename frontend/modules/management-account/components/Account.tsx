@@ -147,6 +147,7 @@ export const Account = () => {
                     CITIES.find((city) => city.city === newValue)?.zipCode || ''
                   );
                 }}
+                noOptionsText="Nie znaleziono dopasowanych wyników..."
                 renderInput={(params) => (
                   <TextField {...params} placeholder="Miejscowość" />
                 )}

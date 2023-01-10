@@ -23,7 +23,7 @@ export interface AnnouncementModel {
 
 export interface AnnouncementEdit {
   announcement?: AnnouncementsModel;
-  onSubmit: (data: AnnouncementsModel) => void;
+  onSubmit: (data: AnnouncementsModel, files: any) => void;
 }
 
 export interface AnnouncementConversationsModel {

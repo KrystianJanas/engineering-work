@@ -132,6 +132,7 @@ export const ManagementEstatesRenter = () => {
       <Layout
         background="var(--background-white)"
         width="100%"
+        minWidth="850px"
         borderRadius="8px"
         marginRight={15}
         padding={[10, 20]}

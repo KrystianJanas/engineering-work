@@ -201,7 +201,7 @@ export const ManagementOtherEstates = () => {
 
         {!view ? (
           <Layout width="100%">
-            {data && data.length > 0 ? (
+            {data && data.length > 0 && data[0]._id.length > 0 ? (
               <Layout display="flex" direction="column" alignItems="center">
                 {data.map((estate) => (
                   <StyledLayout
@@ -269,7 +269,9 @@ export const ManagementOtherEstates = () => {
             borderRadius="10px"
             marginRight={15}
           >
-            {dataInvitations.length > 0 ? (
+            {dataInvitations &&
+            dataInvitations.length > 0 &&
+            dataInvitations[0]._id.length > 0 ? (
               dataInvitations.map((invitation) => {
                 return (
                   <Layout key={invitation.estate._id} margin={[20, 0]}>

@@ -27,9 +27,17 @@ export const AnnouncementsNewPage = () => {
     }
   };
 
+  // const uploadImage = async (e: any, formDataToApi: any) => {
+  //   // const response = await postFileQuery('upload/pictures', formDataToApi);
+  //   // if (response) {
+  //   //   console.log(response.data.message);
+  //   // }
+  //   console.log(formDataToApi);
+  // };
+
   return (
     <AnnouncementsForm
-      onSubmit={({ _id, person, images, ...rest }) => {
+      onSubmit={({ _id, person, images, ...rest }, files) => {
         const dataToApi: any = {
           person: personID,
           images: [testImageUrl, testImageUrl], // TODO: convert pictures array to string array list
@@ -43,7 +51,17 @@ export const AnnouncementsNewPage = () => {
           return toast.error(error);
         }
 
-        return postAnnouncements(dataToApi);
+        console.log('files here new: ', files);
+
+        // for (let i = 0; i < e.target.files.length; i += 1) {
+        //   const formDataToApi = new FormData();
+        //   formDataToApi.append('estate_id', 'tustringnieruchomosciid');
+        //   formDataToApi.append('file', e.target.files[i]);
+        //   // uploadImage(e, formDataToApi);
+        //   // send it after `zatwierdz zmiany` button
+        // }
+
+        // return postAnnouncements(dataToApi);
       }}
     />
   );

@@ -55,7 +55,7 @@ export const AnnouncementEditPage = () => {
   return (
     <AnnouncementsForm
       announcement={data}
-      onSubmit={({ _id, person, images, ...rest }) => {
+      onSubmit={({ _id, person, images, ...rest }, files) => {
         const dataToApi: any = {
           person: personID,
           images: [testImageUrl, testImageUrl], // TODO: convert pictures array to string array list

@@ -129,6 +129,7 @@ export const ManagementEstatesForm = ({
             onChange={(event, newValue) => {
               handleChange('location', newValue || '');
             }}
+            noOptionsText="Nie znaleziono dopasowanych wyników..."
             renderInput={(params) => (
               <TextField {...params} label="Miejscowość" />
             )}
@@ -143,6 +144,7 @@ export const ManagementEstatesForm = ({
             onChange={(event, newValue) => {
               handleChange('state', newValue || '');
             }}
+            noOptionsText="Nie znaleziono dopasowanych wyników..."
             renderInput={(params) => (
               <TextField {...params} label="Wyposażenie / stan nieruchomości" />
             )}
