@@ -65,14 +65,11 @@ class EstateCostController {
             costs = await EstateCost.findOne({ estate: estate_id });
 
             if(requestQuery.typeView && requestQuery.typeView === 'edit') {
-                if (estate.person._id.toString() === requestQuery.personID) {
-                    return response.status(200).json(costs);
-                } else {
+                if (estate.person._id.toString() !== requestQuery.personID) {
                     return response.status(403).json("Nie masz uprawnień do przeglądania tej nieruchomości!");
                 }
             } else if (requestQuery.typeView && requestQuery.typeView === 'view') {
                 if (estate.person._id.toString() === requestQuery.personID || estate.renter.find((person) => person._id.toString() === requestQuery.personID)) {
-                    return response.status(200).json(costs);
                 } else {
                     return response.status(403).json("Nie masz uprawnień do przeglądania tej nieruchomości!");
                 }
@@ -81,6 +78,8 @@ class EstateCostController {
         } catch (error) {
             response.status(500).json({ message: error.message });
         }
+
+        return response.status(200).json(costs || []);
     }
 }
 

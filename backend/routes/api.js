@@ -147,4 +147,11 @@ router.get('/users/me', (req, res) => {
     }
 });
 
+router.get('/logout', (req, res) => {
+    res.clearCookie('_user');
+    res.clearCookie('_token');
+
+    res.status(204).json();
+});
+
 export default router;

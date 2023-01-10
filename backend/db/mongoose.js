@@ -1,18 +1,9 @@
 import { connect } from "mongoose";
-import { database } from "../config.js";
+import { settings } from "../config.js";
 
-// db connect
 connect(
-  "mongodb+srv://" +
-    database.user +
-    ":" +
-    database.password +
-    "@" +
-    database.host +
-    "/?retryWrites=true&w=majority",
+  "mongodb://"+settings.host+":"+settings.port+"/"+settings.database+"?retryWrites=true&w=majority",
   { useNewUrlParser: true, useUnifiedTopology: true }
 )
-  .then(() => {
-    console.log("mongoose is connected!");
-  })
+  .then(() => console.log("MongoDB is connected."))
   .catch((error) => console.log(error));

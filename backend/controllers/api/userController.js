@@ -15,12 +15,17 @@ class UserController {
       return response.status(500).send();
     }
 
+    const datePoland = new Date();
+    datePoland.setHours(datePoland.getHours() + 1);
+
     // let's create an account
     try {
       const hashedPassword = await hash(request.body.password, 10);
       const user = new User({
         login: request.body.login,
         password: hashedPassword,
+        created_at: datePoland,
+        updated_at: datePoland,
       });
       await user.save();
 
@@ -31,6 +36,8 @@ class UserController {
         zip_code: "",
         phone_number: "",
         avatar_url: "",
+        created_at: datePoland,
+        updated_at: datePoland,
       });
       await person.save();
       response.status(201).send();
@@ -57,8 +64,10 @@ class UserController {
           process.env.ACCESS_TOKEN_SECRET
         );
 
+        console.log('person._id: ',person._id.toString())
+
         response.cookie('_token', accessToken, {httpOnly: false});
-        response.cookie('_user', person._id, {httpOnly: false});
+        response.cookie('_user', person._id.toString(), {httpOnly: false});
 
 
         response.status(200).json({

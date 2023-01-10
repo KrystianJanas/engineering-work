@@ -1,11 +1,11 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-export const port = process.env.DATABASE_PORT;
+export const port = process.env.NODE_PORT;
 
-export const database = {
-    host: process.env.DATABASE_HOST,
-    user: process.env.DATABASE_USER,
-    password: process.env.DATABASE_PASSWORD,
+export const settings = {
+    host: process.env.MONGODB_HOST,
+    port: process.env.MONGODB_PORT,
+    database: process.env.MONGODB_DATABASE,
 };
 

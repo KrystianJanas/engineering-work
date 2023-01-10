@@ -119,11 +119,11 @@ class AnnouncementController {
         person,
         status,
       });
-      response.status(200).json(announcements);
-
     } catch (error) {
       response.status(500).json({ message: error.message });
     }
+
+    response.status(200).json(announcements || []);
   }
 
   async updateAnnouncement(request, response) {

@@ -51,7 +51,6 @@ class EstateSettlementController {
         const estate_id = request.params.id;
         const requestQuery = request.query;
 
-
         try {
             estate = await Estate.findOne({_id: estate_id})
                 .populate("person", ["_id", "name", "phone_number"])
@@ -61,14 +60,11 @@ class EstateSettlementController {
             populate("person", ["_id", "name", "phone_number"]);
 
             if(requestQuery.typeView && requestQuery.typeView === 'edit') {
-                if (estate.person._id.toString() === requestQuery.personID) {
-                    return response.status(200).json(settlements);
-                } else {
+                if (estate.person._id.toString() !== requestQuery.personID) {
                     return response.status(403).json("Nie masz uprawnień do przeglądania tej nieruchomości!");
                 }
             } else if (requestQuery.typeView && requestQuery.typeView === 'view') {
                 if (estate.person._id.toString() === requestQuery.personID || estate.renter.find((person) => person._id.toString() === requestQuery.personID)) {
-                    return response.status(200).json(settlements);
                 } else {
                     return response.status(403).json("Nie masz uprawnień do przeglądania tej nieruchomości!");
                 }
@@ -77,6 +73,7 @@ class EstateSettlementController {
         } catch (error) {
             response.status(500).json({ message: error.message });
         }
+        return response.status(200).json(settlements || []);
     }
 
     async getSettlementInThisMonth(request, response) {
@@ -98,14 +95,11 @@ class EstateSettlementController {
 
             if(settlement && settlement.estate) {
                 if(requestQuery.typeView && requestQuery.typeView === 'edit') {
-                    if (estate.person._id.toString() === requestQuery.personID) {
-                        return response.status(200).json(settlement);
-                    } else {
+                    if (estate.person._id.toString() !== requestQuery.personID) {
                         return response.status(403).json("Nie masz uprawnień do przeglądania tej nieruchomości!");
                     }
                 } else if (requestQuery.typeView && requestQuery.typeView === 'view') {
                     if (estate.person._id.toString() === requestQuery.personID || estate.renter.find((person) => person._id.toString() === requestQuery.personID)) {
-                        return response.status(200).json(settlement);
                     } else {
                         return response.status(403).json("Nie masz uprawnień do przeglądania tej nieruchomości!");
                     }
@@ -116,6 +110,8 @@ class EstateSettlementController {
         } catch (error) {
             response.status(500).json({ message: error.message });
         }
+        return response.status(200).json(settlement || []);
+
     }
 
     async deleteSettlement(request, response) {
