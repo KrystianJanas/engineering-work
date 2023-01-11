@@ -102,7 +102,7 @@ export const AnnouncementsView = () => {
               disablePortal
             />
           </Layout>
-          <Layout width={125}>
+          <Layout width={140}>
             <TextField
               label="Liczba pokoi"
               size="small"

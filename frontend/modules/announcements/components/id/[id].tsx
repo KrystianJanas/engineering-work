@@ -3,7 +3,6 @@ import { FloatingLabel } from 'react-bootstrap';
 import toast from 'react-hot-toast';
 
 import styled from '@emotion/styled';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Form from 'react-bootstrap/Form';
 
@@ -14,7 +13,7 @@ import { Images } from '~/components/compounds/Images';
 import { SpinnerLoading } from '~/components/compounds/Spinner';
 import { useAuth } from '~/components/contexts/useContextProvider';
 import { Layout } from '~/components/molecules/layout';
-import { parseData, parseHour } from '~/hooks/useDateParser';
+import { makeFullDataHour } from '~/hooks/useDateParser';
 import { useGetData } from '~/hooks/useGetData';
 import {
   AnnouncementModel,
@@ -29,6 +28,15 @@ const StyledLayout = styled(Layout)`
     border: 2px solid rgba(18, 185, 172, 0.5);
     cursor: pointer;
   }
+`;
+
+const StyledChip = styled(Layout)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 10px;
+  border-radius: 8px;
+  border: 2px solid var(--background-medium-blue);
 `;
 
 export const Announcement = () => {
@@ -94,11 +102,6 @@ export const Announcement = () => {
       alignItems="center"
       marginTop={25}
     >
-      <Layout display="flex" justifyContent="left">
-        <Link href="/announcements" passHref>
-          <Text size={getRem(16)}>(( Powrót do tabeli ogłoszeń ))</Text>
-        </Link>
-      </Layout>
       <Layout
         display="flex"
         width="70%"
@@ -114,30 +117,53 @@ export const Announcement = () => {
           </Text>
         </Layout>
 
-        <Layout marginLeft="auto" marginRight="auto" marginTop="5">
-          <Images images={data.images} maxWidth="510px" />
+        <Layout
+          display="flex"
+          marginLeft="auto"
+          marginRight="auto"
+          marginTop="5"
+        >
+          <Images
+            images={data.images}
+            imageURL="/uploads/pictures/"
+            maxWidth="600px"
+          />
         </Layout>
-        <Layout display="flex" margin={[10, 25]} direction="column">
-          <Text size={getRem(12)}>
-            <b>Liczba pokoi:</b> {data.rooms}
-          </Text>
-          <Text size={getRem(12)}>
-            <b>Wielkość nieruchomości:</b> {data.size} m^2
-          </Text>
-          <Text size={getRem(12)}>
-            <b>Wyposażenie:</b> {data.state}
-          </Text>
+        <Layout display="flex" margin={[10, 25]} direction="column" gap="10px">
+          <Layout display="flex" flex="wrap" gap="10px">
+            <StyledChip>
+              <Text size={getRem(12)}>
+                <b>Liczba pokoi:</b> {data.rooms}
+              </Text>
+            </StyledChip>
+            <StyledChip>
+              <Text size={getRem(12)}>
+                <b>Wielkość nieruchomości:</b> {data.size} m²
+              </Text>
+            </StyledChip>
+            <StyledChip>
+              <Text size={getRem(12)}>
+                <b>Wyposażenie:</b> {data.state}
+              </Text>
+            </StyledChip>
+            <StyledChip>
+              <Text size={getRem(12)}>
+                <b>Lokalizacja:</b> {data.location}
+              </Text>
+            </StyledChip>
+          </Layout>
 
-          <Text size={getRem(12)}>
-            <b>Lokalizacja:</b> {data.location}
-          </Text>
-          <Layout marginTop={10}>
-            <Text size={getRem(12)}>
-              <b>Odstępne:</b> {data.fee}zł / miesiąc
-            </Text>
-            <Text size={getRem(12)}>
-              <b>Czynsz:</b> {data.rent}zł / miesiąc
-            </Text>
+          <Layout display="flex" flex="wrap" gap="10px">
+            <StyledChip>
+              <Text size={getRem(12)}>
+                <b>Odstępne:</b> {data.fee}zł / miesiąc
+              </Text>
+            </StyledChip>
+            <StyledChip>
+              <Text size={getRem(12)}>
+                <b>Czynsz:</b> {data.rent}zł / miesiąc
+              </Text>
+            </StyledChip>
           </Layout>
         </Layout>
         <Layout display="flex" margin={[10, 25]} direction="column">
@@ -153,11 +179,7 @@ export const Announcement = () => {
           marginLeft="auto"
         >
           <Text color="rgb(100, 100, 100)" size={getRem(11)}>
-            <b>Ogłoszenie dodane:</b> {parseData(data.created_at)} -&nbsp;
-            {parseHour(data.created_at)}
-          </Text>
-          <Text color="rgb(100, 100, 100)" size={getRem(11)}>
-            <b>Liczba wyświetleń ogłoszenia:</b> {data.views}
+            <b>Ogłoszenie dodane:</b> {makeFullDataHour(data.created_at, '')}
           </Text>
         </Layout>
       </Layout>

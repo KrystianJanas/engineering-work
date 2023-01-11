@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Image } from 'react-bootstrap';
 
 import styled from '@emotion/styled';
 import { ArrowLeftOutlined, ArrowRightOutlined } from '@mui/icons-material';
@@ -12,14 +13,20 @@ const StyledLayout = styled(Layout)`
   }
 `;
 
+const StyledImage = styled(Image)`
+  border-radius: 6px;
+`;
+
 export const Images = ({
   images,
   maxWidth,
   maxHeight,
+  imageURL,
 }: {
   images: string[];
   maxWidth?: string;
   maxHeight?: string;
+  imageURL?: string;
 }) => {
   const [image, setImage] = useState(0);
 
@@ -38,16 +45,30 @@ export const Images = ({
   return images.length > 0 ? (
     <Layout display="flex" direction="row" alignItems="center" gap="25px">
       <StyledLayout onClick={() => downImage()}>
-        <ArrowLeftOutlined sx={{ width: '50px', height: '50px' }} />
+        <ArrowLeftOutlined
+          sx={{
+            width: '50px',
+            height: '50px',
+            color: 'rgba(0, 0, 0, 0.4)',
+            ':hover': { color: 'rgba(0, 0, 0, 1)' },
+          }}
+        />
       </StyledLayout>
       <Layout
         maxWidth={maxWidth && maxWidth}
         maxHeight={maxHeight && maxHeight}
       >
-        <img src={images[image]} alt="" />
-      </Layout>
+        <StyledImage src={`${imageURL || ''}${images[image]}`} alt="" />
+      </Layout>{' '}
       <StyledLayout onClick={() => upImage()}>
-        <ArrowRightOutlined sx={{ width: '50px', height: '50px' }} />
+        <ArrowRightOutlined
+          sx={{
+            width: '50px',
+            height: '50px',
+            color: 'rgba(0, 0, 0, 0.4)',
+            ':hover': { color: 'rgba(0, 0, 0, 1)' },
+          }}
+        />
       </StyledLayout>
     </Layout>
   ) : (

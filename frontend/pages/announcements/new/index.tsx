@@ -2,9 +2,9 @@ import toast from 'react-hot-toast';
 
 import { useRouter } from 'next/router';
 
-import { postQuery } from '~/api/post';
+import { postFileQuery, postQuery } from '~/api/post';
 import { useAuth } from '~/components/contexts/useContextProvider';
-import { testImageUrl } from '~/constants/GLOBAL.constants';
+import { parseDataUploadFiles } from '~/hooks/useDateParser';
 
 import { AnnouncementsForm } from '../../../modules/announcements/components/announcements-form';
 import { AnnouncementsValidation } from '../../../modules/announcements/components/announcements.validation';
@@ -14,33 +14,51 @@ export const AnnouncementsNewPage = () => {
 
   const router = useRouter();
 
-  const postAnnouncements = async (data: any) => {
+  const uploadImage = async (formDataToApi: any, id: string) => {
+    const response = await postFileQuery(
+      `upload/pictures/${id}`,
+      formDataToApi
+    );
+    if (response) {
+      console.log(response.data.message);
+      return 'null';
+    }
+    console.log(formDataToApi);
+  };
+
+  const postAnnouncements = async (data: any, files: any) => {
     const result = await postQuery('announcements', data);
 
     if (result && result.status === 201) {
-      await router.push('/announcements');
-      toast.success('Pozytywnie stworzono nowe ogłoszenie.');
-    } else {
-      toast.error(
-        'Coś poszło nie tak... Spróbuj przeładować stronę i dodać dane ponownie.'
-      );
-    }
-  };
+      const announcementID = result.data._id;
 
-  // const uploadImage = async (e: any, formDataToApi: any) => {
-  //   // const response = await postFileQuery('upload/pictures', formDataToApi);
-  //   // if (response) {
-  //   //   console.log(response.data.message);
-  //   // }
-  //   console.log(formDataToApi);
-  // };
+      for (let i = 0; i <= files.length; i += 1) {
+        if (i === files.length) {
+          router.push('/announcements');
+          toast.success('Pozytywnie stworzono nowe ogłoszenie.');
+          return;
+        }
+        const formDataToApi = new FormData();
+        formDataToApi.append('file', files[i]);
+        formDataToApi.append(
+          'datetime',
+          parseDataUploadFiles(new Date().toLocaleString())
+        );
+        // eslint-disable-next-line no-await-in-loop
+        await uploadImage(formDataToApi, announcementID);
+      }
+    }
+    toast.error(
+      'Coś poszło nie tak... Spróbuj przeładować stronę i dodać dane ponownie.'
+    );
+  };
 
   return (
     <AnnouncementsForm
       onSubmit={({ _id, person, images, ...rest }, files) => {
         const dataToApi: any = {
           person: personID,
-          images: [testImageUrl, testImageUrl], // TODO: convert pictures array to string array list
+          images: [], // TODO: convert pictures array to string array list
           ...rest,
         };
 
@@ -51,17 +69,7 @@ export const AnnouncementsNewPage = () => {
           return toast.error(error);
         }
 
-        console.log('files here new: ', files);
-
-        // for (let i = 0; i < e.target.files.length; i += 1) {
-        //   const formDataToApi = new FormData();
-        //   formDataToApi.append('estate_id', 'tustringnieruchomosciid');
-        //   formDataToApi.append('file', e.target.files[i]);
-        //   // uploadImage(e, formDataToApi);
-        //   // send it after `zatwierdz zmiany` button
-        // }
-
-        // return postAnnouncements(dataToApi);
+        return postAnnouncements(dataToApi, files);
       }}
     />
   );

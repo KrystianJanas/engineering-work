@@ -156,9 +156,14 @@ export const AnnouncementCard = ({
               boxShadow="0 0 3px #ccc"
               display="flex"
             >
-              {announcement.images ? (
+              {announcement.images &&
+              announcement.images.length > 0 &&
+              announcement.images[0].length > 0 ? (
                 <StyledImage
-                  src={announcement.images[0] || default_avatar_url}
+                  src={
+                    `uploads/pictures/${announcement.images[0]}` ||
+                    default_avatar_url
+                  }
                   aria-hidden
                   alt=""
                 />

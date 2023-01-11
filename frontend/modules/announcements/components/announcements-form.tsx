@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import toast from 'react-hot-toast';
 
 import { Autocomplete, TextField, Button } from '@mui/material';
 import Link from 'next/link';
@@ -25,11 +26,15 @@ export const AnnouncementsForm = ({
   );
 
   const [files, setFiles] = useState([]);
-  const [uploadPercentage, setUploadPercentage] = useState(0);
 
   const onChange = (e: any) => {
     if (e.target.files) {
-      setFiles(e.target.files);
+      if (e.target.files.length <= 6) {
+        setFiles(e.target.files);
+      } else {
+        toast.error('Możesz dodać maksymalnie 6 zdjęć.');
+        setFiles([]);
+      }
     }
   };
 
@@ -156,7 +161,7 @@ export const AnnouncementsForm = ({
           {/* / here add option to choose default profile photo to our estate s \ */}
           <Button variant="outlined" component="label">
             {files && files.length > 0
-              ? `${files.length} dodanych zdjęć do nieruchomości`
+              ? `Załączono ${files.length} szt. zdjęć do nieruchomości`
               : 'Przyciśnij tutaj, aby dodać zdjęcia do nieruchomości'}
             <input
               multiple
