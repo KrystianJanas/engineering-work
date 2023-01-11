@@ -115,7 +115,7 @@ router.get("/estatesInvitations/estate/:id", EstateInvitationController.getEstat
 router.post("/estatesInvitations", EstateInvitationController.saveEstateInvitation);
 router.delete("/estatesInvitations/:id", EstateInvitationController.deleteEstateInvitation);
 
-router.post("/upload/pictures", UploadController.saveImage);
+router.post("/upload/pictures/:id", UploadController.saveImage);
 
 router.get('/users/me', (req, res) => {
     let token = req.headers.authorization;
