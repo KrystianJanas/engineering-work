@@ -68,18 +68,14 @@ export const ObservedView = () => {
         padding={[10, 0]}
       >
         {data.announcements.length > 0 ? (
-          data.announcements.map(
-            (
-              announcement: any // todo: lets typing it
-            ) => (
-              <AnnouncementCard
-                typeView="observed"
-                key={announcement.created_at}
-                announcement={announcement.announcement}
-                rest={announcement}
-              />
-            )
-          )
+          data.announcements.map((announcement: any) => (
+            <AnnouncementCard
+              typeView="observed"
+              key={announcement.created_at}
+              announcement={announcement.announcement}
+              rest={announcement}
+            />
+          ))
         ) : (
           <Layout display="flex" justifyContent="center">
             <Text>

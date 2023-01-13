@@ -24,7 +24,7 @@ const StyledNavLink = styled(Nav.Link)`
   font-size: ${getRem(18)};
   line-height: 28px;
 
-  margin: 0 15px;
+  padding-right: 15px;
 
   &:hover {
     color: var(--text-green);
@@ -39,60 +39,55 @@ const StyledClickedNavLink = styled(Nav.Link)`
   font-size: ${getRem(18)};
   line-height: 28px;
 
-  margin: 0 15px;
+  padding-right: 15px;
 `;
 
-const StyledContainer = styled(Layout)`
-  @media (min-width: 0px) and (max-width: 768px) {
-    display: none;
-  }
+const StyledLayout = styled(Layout)`
   text-align: center;
 `;
 
-const StyledContainerMobile = styled(Layout)`
-  @media (min-width: 769px) {
-    display: none;
-  }
+const StyledNavbarBrand = styled(Navbar.Brand)`
+  padding-left: 15px;
+`;
+
+const StyledNav = styled(Nav)`
+  margin-left: 25px;
+  gap: 20px;
 `;
 
 export const Header = () => {
   const { pathname } = useRouter();
 
   return (
-    <>
-      <StyledContainer>
-        <StyledNavbar collapseOnSelect expand="lg">
-          <Link href="/" passHref>
-            <Navbar.Brand>Serwis Nieruchomości</Navbar.Brand>
-          </Link>
-          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-          <Navbar.Collapse id="responsive-navbar-nav">
-            <Nav className="me-auto">
-              {PagesNav.map((page) => (
-                <Link key={page.href} href={page.href} passHref>
-                  {page.href === `/${pathname.split('/')[1]}` ? (
-                    <StyledClickedNavLink>{page.pageName}</StyledClickedNavLink>
-                  ) : (
-                    <StyledNavLink>{page.pageName}</StyledNavLink>
-                  )}
-                </Link>
-              ))}
-            </Nav>
-            <Nav>
-              <Link href="/management" passHref>
-                {pathname.includes('/management') ? (
-                  <StyledClickedNavLink>Twoje konto</StyledClickedNavLink>
+    <StyledLayout>
+      <StyledNavbar collapseOnSelect expand="lg">
+        <Link href="/" passHref>
+          <StyledNavbarBrand>Serwis Nieruchomości</StyledNavbarBrand>
+        </Link>
+        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+        <Navbar.Collapse id="responsive-navbar-nav">
+          <StyledNav className="me-auto">
+            {PagesNav.map((page) => (
+              <Link key={page.href} href={page.href} passHref>
+                {page.href === `/${pathname.split('/')[1]}` ? (
+                  <StyledClickedNavLink>{page.pageName}</StyledClickedNavLink>
                 ) : (
-                  <StyledNavLink>Twoje konto</StyledNavLink>
+                  <StyledNavLink>{page.pageName}</StyledNavLink>
                 )}
               </Link>
-            </Nav>
-          </Navbar.Collapse>
-        </StyledNavbar>
-      </StyledContainer>
-      <StyledContainerMobile height={100}>
-        here mobiles...
-      </StyledContainerMobile>
-    </>
+            ))}
+          </StyledNav>
+          <Nav>
+            <Link href="/management" passHref>
+              {pathname.includes('/management') ? (
+                <StyledClickedNavLink>Panel zarządzania</StyledClickedNavLink>
+              ) : (
+                <StyledNavLink>Panel zarządzania</StyledNavLink>
+              )}
+            </Link>
+          </Nav>
+        </Navbar.Collapse>
+      </StyledNavbar>
+    </StyledLayout>
   );
 };

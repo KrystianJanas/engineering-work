@@ -2,10 +2,11 @@ import { useState } from 'react';
 import { Image } from 'react-bootstrap';
 
 import styled from '@emotion/styled';
-import { ArrowLeftOutlined, ArrowRightOutlined } from '@mui/icons-material';
 
 import { Text } from '~/components/atoms/typography';
+import { Button } from '~/components/compounds/Button';
 import { Layout } from '~/components/molecules/layout';
+import { getRem } from '~/styles/utils';
 
 const StyledLayout = styled(Layout)`
   &:hover {
@@ -43,37 +44,23 @@ export const Images = ({
   };
 
   return images.length > 0 ? (
-    <Layout display="flex" direction="row" alignItems="center" gap="25px">
-      <StyledLayout onClick={() => downImage()}>
-        <ArrowLeftOutlined
-          sx={{
-            width: '50px',
-            height: '50px',
-            color: 'rgba(0, 0, 0, 0.4)',
-            ':hover': { color: 'rgba(0, 0, 0, 1)' },
-          }}
-        />
-      </StyledLayout>
+    <Layout display="flex" direction="column" alignItems="center" gap="5px">
       <Layout
         maxWidth={maxWidth && maxWidth}
         maxHeight={maxHeight && maxHeight}
       >
         <StyledImage src={`${imageURL || ''}${images[image]}`} alt="" />
-      </Layout>{' '}
-      <StyledLayout onClick={() => upImage()}>
-        <ArrowRightOutlined
-          sx={{
-            width: '50px',
-            height: '50px',
-            color: 'rgba(0, 0, 0, 0.4)',
-            ':hover': { color: 'rgba(0, 0, 0, 1)' },
-          }}
-        />
-      </StyledLayout>
+      </Layout>
+      <Layout display="flex" direction="row" gap="25px">
+        <Button text="Poprzednie zdjęcie" onSubmit={downImage} />{' '}
+        <Button text="Następne zdjęcie" onSubmit={upImage} />
+      </Layout>
     </Layout>
   ) : (
     <Layout>
-      <Text>Brak dostępnych zdjęć.</Text>
+      <Text color="var(--text-black)" size={getRem(16)}>
+        Brak dostępnych zdjęć nieruchomości.
+      </Text>
     </Layout>
   );
 };

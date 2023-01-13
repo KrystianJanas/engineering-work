@@ -5,7 +5,6 @@ import { useRouter } from 'next/router';
 import { updateQuery } from '~/api/update';
 import { SpinnerLoading } from '~/components/compounds/Spinner';
 import { useAuth } from '~/components/contexts/useContextProvider';
-import { testImageUrl } from '~/constants/GLOBAL.constants';
 import { useGetData } from '~/hooks/useGetData';
 import {
   AnnouncementsModel,
@@ -16,8 +15,6 @@ import { AnnouncementsForm } from '../../../modules/announcements/components/ann
 import { AnnouncementsValidation } from '../../../modules/announcements/components/announcements.validation';
 
 export const AnnouncementEditPage = () => {
-  // todo: make protection: if you're not owner this announcement, you are redirect ...
-
   const router = useRouter();
   const { personID } = useAuth();
 
@@ -58,7 +55,6 @@ export const AnnouncementEditPage = () => {
       onSubmit={({ _id, person, images, ...rest }, files) => {
         const dataToApi: any = {
           person: personID,
-          images: [testImageUrl, testImageUrl], // TODO: convert pictures array to string array list
           ...rest,
         };
 

@@ -25,9 +25,6 @@ export const ManagementEstateIDDetails = () => {
   const { personID } = useAuth();
   const router = useRouter();
 
-  // TODO: check person permissions -> is associated with this estate?
-  // person or renter...
-
   const { modalActive, setModalActive, modalData, setModalData } =
     useModalComponent();
 

@@ -32,18 +32,20 @@ const CustomApp = ({ Component, pageProps }: AppProps) => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Head>
-        <title>{pageTitle}</title>
-      </Head>
-      <Toaster />
-      <GlobalStyles />
-      <AuthProvider>
-        <ProtectRoute>
-          {!pathname.toString().includes('auth') && <Header />}
+      <div style={{ minWidth: '1200px', minHeight: '100vh' }}>
+        <Head>
+          <title>{pageTitle}</title>
+        </Head>
+        <Toaster />
+        <GlobalStyles />
+        <AuthProvider>
+          <ProtectRoute>
+            {!pathname.toString().includes('auth') && <Header />}
 
-          <Component {...pageProps} />
-        </ProtectRoute>
-      </AuthProvider>
+            <Component {...pageProps} />
+          </ProtectRoute>
+        </AuthProvider>
+      </div>
     </QueryClientProvider>
   );
 };

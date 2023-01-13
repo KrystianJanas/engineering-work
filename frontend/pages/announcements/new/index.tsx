@@ -15,15 +15,7 @@ export const AnnouncementsNewPage = () => {
   const router = useRouter();
 
   const uploadImage = async (formDataToApi: any, id: string) => {
-    const response = await postFileQuery(
-      `upload/pictures/${id}`,
-      formDataToApi
-    );
-    if (response) {
-      console.log(response.data.message);
-      return 'null';
-    }
-    console.log(formDataToApi);
+    await postFileQuery(`upload/pictures/${id}`, formDataToApi);
   };
 
   const postAnnouncements = async (data: any, files: any) => {
@@ -58,11 +50,9 @@ export const AnnouncementsNewPage = () => {
       onSubmit={({ _id, person, images, ...rest }, files) => {
         const dataToApi: any = {
           person: personID,
-          images: [], // TODO: convert pictures array to string array list
+          images: [],
           ...rest,
         };
-
-        console.log(dataToApi);
 
         const { error } = AnnouncementsValidation(dataToApi);
         if (error) {

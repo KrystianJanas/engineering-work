@@ -16,7 +16,7 @@ import { ModalComponent } from '~/components/compounds/ModalComponent';
 import { useModalComponent } from '~/components/compounds/ModalComponent/useModalComponent';
 import { useAuth } from '~/components/contexts/useContextProvider';
 import { Layout } from '~/components/molecules/layout';
-import { default_avatar_url } from '~/constants/GLOBAL.constants';
+import { defaultAvatarURL } from '~/constants/GLOBAL.constants';
 import { parseData, parseHour } from '~/hooks/useDateParser';
 import { AnnouncementsModel } from '~/models/announcements.model';
 import { getRem } from '~/styles/utils';
@@ -161,14 +161,14 @@ export const AnnouncementCard = ({
               announcement.images[0].length > 0 ? (
                 <StyledImage
                   src={
-                    `uploads/pictures/${announcement.images[0]}` ||
-                    default_avatar_url
+                    `/uploads/pictures/${announcement.images[0]}` ||
+                    defaultAvatarURL
                   }
                   aria-hidden
                   alt=""
                 />
               ) : (
-                <StyledImage src="no-image-icon.png" aria-hidden alt="" />
+                <StyledImage src="/no-image-icon.png" aria-hidden alt="" />
               )}
             </Layout>
 

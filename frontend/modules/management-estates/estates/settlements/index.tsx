@@ -92,14 +92,6 @@ export const ManagementEstateSettlement = () => {
     (!dataCosts && !isLoadingCosts) ||
     (!dataSettlements && !isLoadingSettlements)
   ) {
-    console.log('data: ', data, ', isLoading: ', isLoading);
-    console.log('dataCosts: ', dataCosts, ', isLoadingCosts: ', isLoadingCosts);
-    console.log(
-      'dataSettlements: ',
-      dataSettlements,
-      ', isLoadingSettlements: ',
-      isLoadingSettlements
-    );
     redirectedFunction();
     return <SpinnerLoading />;
   }
