@@ -22,38 +22,19 @@ export interface AnnouncementsModel {
   status?: boolean;
 }
 
-// export const AnnouncementsModelInitialState: AnnouncementsModel = {
-//   _id: '',
-//   person: '',
-//   title: '',
-//   description: '',
-//   location: '',
-//   state: '',
-//   size: 0,
-//   rooms: 0,
-//   fee: 0,
-//   rent: 0,
-//   images: [],
-//   views: 0,
-//   created_at: '',
-//   updated_at: '',
-//
-//   status: false,
-// };
-
 export const AnnouncementsModelInitialState: AnnouncementsModel = {
-  _id: '58723523635',
-  person: '32526262346246',
-  title: 'Testowy tytuł ogłoszenia',
-  description: 'Testowy opis dla tego ogłoszenia',
-  location: 'Rzeszów',
-  state: 'Nieruchomość nieumeblowana',
-  size: 50,
-  rooms: 3,
-  fee: 300,
-  rent: 250,
+  _id: '',
+  person: '',
+  title: '',
+  description: '',
+  location: '',
+  state: '',
+  size: 0,
+  rooms: 0,
+  fee: 0,
+  rent: 0,
   images: [],
-  views: 150,
+  views: 0,
   created_at: '',
   updated_at: '',
 

@@ -23,11 +23,15 @@ export const Images = ({
   maxWidth,
   maxHeight,
   imageURL,
+  deletePossibility,
+  deletePossibilityAction,
 }: {
   images: string[];
   maxWidth?: string;
   maxHeight?: string;
   imageURL?: string;
+  deletePossibility?: boolean;
+  deletePossibilityAction?: () => void;
 }) => {
   const [image, setImage] = useState(0);
 
@@ -51,9 +55,28 @@ export const Images = ({
       >
         <StyledImage src={`${imageURL || ''}${images[image]}`} alt="" />
       </Layout>
-      <Layout display="flex" direction="row" gap="25px">
-        <Button text="Poprzednie zdjęcie" onSubmit={downImage} />{' '}
-        <Button text="Następne zdjęcie" onSubmit={upImage} />
+      <Layout display="flex" direction="column" gap="10px">
+        <Layout display="flex" direction="row" gap="25px">
+          <Button text="Poprzednie zdjęcie" onSubmit={downImage} />
+          <Layout display="flex" direction="column">
+            <Layout marginTop="auto" marginBottom="auto">{`( ${image + 1} z ${
+              images.length
+            } )`}</Layout>
+          </Layout>
+          <Button text="Następne zdjęcie" onSubmit={upImage} />
+        </Layout>
+        {deletePossibility && (
+          <Layout display="flex" justifyContent="center">
+            <Button
+              text="Usuń wszystkie zdjęcia z nieruchomości"
+              onSubmit={() => {
+                if (deletePossibilityAction) {
+                  deletePossibilityAction();
+                }
+              }}
+            />
+          </Layout>
+        )}
       </Layout>
     </Layout>
   ) : (

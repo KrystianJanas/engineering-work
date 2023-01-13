@@ -9,14 +9,14 @@ import { parseDataUploadFiles } from '~/hooks/useDateParser';
 import { AnnouncementsForm } from '../../../modules/announcements/components/announcements-form';
 import { AnnouncementsValidation } from '../../../modules/announcements/components/announcements.validation';
 
+export const uploadImage = async (formDataToApi: any, id: string) => {
+  await postFileQuery(`upload/pictures/${id}`, formDataToApi);
+};
+
 export const AnnouncementsNewPage = () => {
   const { personID } = useAuth();
 
   const router = useRouter();
-
-  const uploadImage = async (formDataToApi: any, id: string) => {
-    await postFileQuery(`upload/pictures/${id}`, formDataToApi);
-  };
 
   const postAnnouncements = async (data: any, files: any) => {
     const result = await postQuery('announcements', data);
@@ -26,7 +26,7 @@ export const AnnouncementsNewPage = () => {
 
       for (let i = 0; i <= files.length; i += 1) {
         if (i === files.length) {
-          router.push('/announcements');
+          router.push(`/announcements/${announcementID}`);
           toast.success('Pozytywnie stworzono nowe ogłoszenie.');
           return;
         }

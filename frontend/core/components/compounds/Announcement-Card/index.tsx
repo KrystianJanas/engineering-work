@@ -17,7 +17,7 @@ import { useModalComponent } from '~/components/compounds/ModalComponent/useModa
 import { useAuth } from '~/components/contexts/useContextProvider';
 import { Layout } from '~/components/molecules/layout';
 import { defaultAvatarURL } from '~/constants/GLOBAL.constants';
-import { parseData, parseHour } from '~/hooks/useDateParser';
+import { makeFullDataHour } from '~/hooks/useDateParser';
 import { AnnouncementsModel } from '~/models/announcements.model';
 import { getRem } from '~/styles/utils';
 
@@ -117,14 +117,13 @@ export const AnnouncementCard = ({
     }
   };
 
-  let date = `dodano ${parseData(
-    announcement.created_at || ''
-  )} - godzina ${parseHour(announcement.created_at || '')}`;
+  let date = makeFullDataHour(announcement.created_at || '', 'dodano');
 
   if (noObserved) {
-    date += `, zakończono ${parseData(
-      announcement.updated_at || ''
-    )} - godzina ${parseHour(announcement.updated_at || '')}`;
+    date += `, ${makeFullDataHour(
+      announcement.created_at || '',
+      'zakończono'
+    )}`;
   }
 
   return (
@@ -181,14 +180,14 @@ export const AnnouncementCard = ({
               {announcement.state && (
                 <Layout display="flex">
                   <Text color="black" size={getRem(14)}>
-                    # {announcement.state}
+                    &rarr; {announcement.state}
                   </Text>
                 </Layout>
               )}
               {announcement.size && (
                 <Layout display="flex" flex={1}>
                   <Text color="black" size={getRem(14)}>
-                    # {announcement.size} m^2
+                    &rarr; {announcement.size} m²
                   </Text>
                 </Layout>
               )}

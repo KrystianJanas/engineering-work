@@ -6,6 +6,7 @@ import Link from 'next/link';
 
 import { Text } from '~/components/atoms/typography';
 import { Button as ButtonSend } from '~/components/compounds/Button';
+import { Images } from '~/components/compounds/Images';
 import { Layout } from '~/components/molecules/layout';
 import { CITIES } from '~/constants/CITIES.constants';
 import { STATES } from '~/constants/STATES.contants';
@@ -157,25 +158,61 @@ export const AnnouncementsForm = ({
             fullWidth
           />
         </Layout>
-        <Layout width={750} display="flex" justifyContent="center">
-          {/* / here add option to choose default profile photo to our estate s \ */}
-          <Button variant="outlined" component="label">
-            {files && files.length > 0
-              ? `Załączono ${files.length} szt. zdjęć do nieruchomości`
-              : 'Przyciśnij tutaj, aby dodać zdjęcia do nieruchomości'}
-            <input
-              multiple
-              hidden
-              accept="image/*"
-              type="file"
-              onChange={onChange}
-            />
-          </Button>
+        <Layout
+          width={750}
+          display="flex"
+          direction="column"
+          justifyContent="center"
+          gap="10px"
+        >
+          {formData.images.length > 0 && (
+            <>
+              <Text
+                size={getRem(16)}
+                color="var(--text-black)"
+                textAlign="center"
+              >
+                Aktualne zdjęcia nieruchomości:
+              </Text>
+              <Layout display="flex" justifyContent="center">
+                <Images
+                  images={formData.images}
+                  imageURL="/uploads/pictures/"
+                  maxWidth="600px"
+                  deletePossibility
+                  deletePossibilityAction={() => {
+                    handleChange('images', []);
+                  }}
+                />
+              </Layout>
+            </>
+          )}
+          {formData.images.length > 0 ? (
+            <Text textAlign="center" color="var(--text-black)" weight={600}>
+              Aby dodać nowe zdjęcia do nieruchomości, usuń najpierw
+              dotychczasowe.
+            </Text>
+          ) : (
+            <Button variant="outlined" component="label">
+              {files && files.length > 0
+                ? `Załączono ${files.length} szt. zdjęć do nieruchomości`
+                : 'Przyciśnij tutaj, aby dodać zdjęcia do nieruchomości'}
+              <input
+                multiple
+                hidden
+                accept="image/*"
+                type="file"
+                onChange={onChange}
+              />
+            </Button>
+          )}
         </Layout>
         <Layout width={250} display="flex" wrap="wrap" gap="15px">
           <Link
             href={{
-              pathname: `/announcements`,
+              pathname: announcement
+                ? `/management/announcements`
+                : `/announcements`,
             }}
             passHref
           >
