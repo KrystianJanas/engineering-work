@@ -149,7 +149,7 @@ class AnnouncementController {
         announcement.updated_at = datePoland;
 
         await announcement.save();
-        response.status(200).json(announcement);
+        response.status(201).json(announcement);
       } else {
         return response.status(422).json({ message: "Ogłoszenie nie zostało znalezione."});
       }
