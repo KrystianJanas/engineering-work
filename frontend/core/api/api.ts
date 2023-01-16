@@ -28,12 +28,11 @@ const cookies = new Cookies();
 
 api.interceptors.response.use(
   (res) => res,
-  (err) => {
+  async (err) => {
     if (err.response?.status === 401) {
       if (cookies.get('_token')) {
-        cookies.remove('_token');
-        cookies.remove('_user');
-
+        await api.get('logout');
+        setAuthorization('');
         window.location.reload();
       }
     }
