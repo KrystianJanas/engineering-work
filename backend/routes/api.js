@@ -23,13 +23,19 @@ function authenticate(req, res, next) {
 
     try {
         if (!token) {
+            res.redirect('/auth/sign-in')
             return res.sendStatus(401);
         }
 
         token = token.split(' ')[1];
 
         jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
-            if (err) return res.sendStatus(401);
+            if (err) {
+                return res.sendStatus(401)
+            }
+
+            res.cookie('_token', token, {httpOnly: false});
+            res.cookie('_user', user._id.toString(), {httpOnly: false});
 
             req.user = user;
             next();

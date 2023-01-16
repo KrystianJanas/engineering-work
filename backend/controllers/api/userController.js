@@ -64,8 +64,6 @@ class UserController {
           process.env.ACCESS_TOKEN_SECRET
         );
 
-        console.log('person._id: ',person._id.toString())
-
         response.cookie('_token', accessToken, {httpOnly: false});
         response.cookie('_user', person._id.toString(), {httpOnly: false});
 
