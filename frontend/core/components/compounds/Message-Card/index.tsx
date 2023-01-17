@@ -1,8 +1,11 @@
+import React from 'react';
+
 import styled from '@emotion/styled';
 import Link from 'next/link';
 
 import { Text } from '~/components/atoms/typography';
 import { Layout } from '~/components/molecules/layout';
+import { defaultAvatarURL } from '~/constants/GLOBAL.constants';
 import { useDateParser } from '~/hooks/useDateParser';
 import { ConversationTypes } from '~/models/conversation.model';
 
@@ -48,14 +51,19 @@ export const ConversationCard = ({
           justifyContent="center"
           alignItems="center"
         >
-          {conversation.announcement.images[0] ? (
+          {conversation.announcement.images &&
+          conversation.announcement.images[0] &&
+          conversation.announcement.images[0].length > 0 ? (
             <StyledImage
-              src={conversation.announcement.images[0]}
+              src={
+                `/uploads/pictures/${conversation.announcement.images[0]}` ||
+                defaultAvatarURL
+              }
               aria-hidden
               alt=""
             />
           ) : (
-            <StyledImage src="no-image-icon.png" aria-hidden alt="" />
+            <StyledImage src="/no-image-icon.png" aria-hidden alt="" />
           )}
         </Layout>
         <Layout display="flex" direction="column">
