@@ -71,7 +71,6 @@ export const AnnouncementEditPage = () => {
       onSubmit={({ _id, person, images, ...rest }, files) => {
         const dataToApi: any = {
           person: personID,
-          images: [],
           ...rest,
         };
 
