@@ -28,7 +28,6 @@ function authenticate(req, res, next) {
         }
 
         token = token.split(' ')[1];
-
         jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
             if (err) {
                 return res.sendStatus(401)
@@ -128,7 +127,7 @@ router.get('/users/me', (req, res) => {
     try {
         if (!token) return res.sendStatus(401);
         token = token.split(' ')[1];
-
+        
         jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
             if (err) return res.sendStatus(401);
             res.json(user);

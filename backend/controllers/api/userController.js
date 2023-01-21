@@ -42,7 +42,7 @@ class UserController {
       await person.save();
       response.status(201).send();
     } catch {
-      response.status(500).send();
+      response.status(422).send();
     }
   }
 
@@ -78,7 +78,7 @@ class UserController {
         response.status(404).send("Adres e-mail lub hasło jest nieprawidłowe.");
       }
     } catch {
-      response.status(500).send();
+      response.status(400).send();
     }
   }
 
