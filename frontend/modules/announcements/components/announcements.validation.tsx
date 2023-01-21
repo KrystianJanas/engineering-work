@@ -30,8 +30,7 @@ export const AnnouncementsValidation = (data: AnnouncementModel) => {
   }
   if (data.location.trim().length < 4 || data.location.trim().length >= 48) {
     return {
-      error:
-        'Lokalizacja nie powinna być krótsza niż 4 znaki i dłuższa niż 48 znaków.',
+      error: 'Nie wybrano lokalizacji nieruchomości.',
     };
   }
   if (data.state.length <= 0) {

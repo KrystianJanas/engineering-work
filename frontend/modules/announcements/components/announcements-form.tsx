@@ -77,21 +77,22 @@ export const AnnouncementsForm = ({
           <TextField
             id="outlined-basic"
             type="number"
-            label="Czynsz (miesięcznie, w PLN)"
-            variant="outlined"
-            fullWidth
-            value={formData.rent}
-            onChange={(e) => handleChange('rent', +e.target.value)}
-            size="small"
-          />
-          <TextField
-            id="outlined-basic"
-            type="number"
             label="Odstępne (miesięcznie, w PLN)"
             variant="outlined"
             fullWidth
             value={formData.fee}
             onChange={(e) => handleChange('fee', +e.target.value)}
+            size="small"
+          />
+
+          <TextField
+            id="outlined-basic"
+            type="number"
+            label="Czynsz (miesięcznie, w PLN)"
+            variant="outlined"
+            fullWidth
+            value={formData.rent}
+            onChange={(e) => handleChange('rent', +e.target.value)}
             size="small"
           />
         </Layout>

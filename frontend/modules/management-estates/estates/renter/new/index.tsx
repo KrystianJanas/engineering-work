@@ -74,6 +74,7 @@ export const NewRenter = () => {
         borderRadius="8px"
         marginRight={15}
         padding={[10, 20]}
+        boxShadow="0 0 5px 1px rgba(0, 0, 0, 0.24)"
       >
         <Layout
           display="flex"

@@ -69,10 +69,18 @@ export const AnnouncementEditPage = () => {
     <AnnouncementsForm
       announcement={data}
       onSubmit={({ _id, person, images, ...rest }, files) => {
-        const dataToApi: any = {
+        let dataToApi: any = {
           person: personID,
           ...rest,
         };
+
+        if (files.length > 0) {
+          dataToApi = {
+            person: personID,
+            images: [],
+            ...rest,
+          };
+        }
 
         const { error } = AnnouncementsValidation(dataToApi);
         if (error) {
