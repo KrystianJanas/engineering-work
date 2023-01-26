@@ -3,11 +3,11 @@ import { css } from '@emotion/react';
 export const colorsStyles = css`
   :root {
     --white: #ffffff;
+    --black: #000;
 
     --background-white: #ffffff;
 
     --background-white-medium-transparent: rgba(0, 0, 0, 0.7);
-
     --background-light-grey: #d2d2d2;
     --background-light-blue: #12b9ac;
     --background-medium-blue: #0e9186;
