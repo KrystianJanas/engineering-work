@@ -113,7 +113,6 @@ router.delete("/estates/invoices/:id", authenticate, InvoiceController.deleteInv
 router.put("/estates/invoices/payment/:id", authenticate, InvoiceController.updatePaymentRenterInvoice);
 router.get("/estates/invoices/download/:name", authenticate, InvoiceController.downloadInvoice);
 
-
 // zaproszenia do nieruchomości
 router.get("/estatesInvitations/person/:personID", EstateInvitationController.getPersonInvitationsToEstate);
 router.get("/estatesInvitations/estate/:id", EstateInvitationController.getEstateInvitations);
@@ -127,7 +126,7 @@ router.get('/users/me', (req, res) => {
     try {
         if (!token) return res.sendStatus(401);
         token = token.split(' ')[1];
-        
+
         jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
             if (err) return res.sendStatus(401);
             res.json(user);
