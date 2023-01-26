@@ -159,7 +159,7 @@ export const ManagementEstateIDDetails = () => {
             <Text size={getRem(16)}>{data.info}</Text>
           </Layout>
         )}
-        {dataCosts ? (
+        {dataCosts && dataCosts.current_fixedCosts > 0 ? (
           <Layout>
             &nbsp;
             <Text weight={700} size={getRem(16)}>
