@@ -45,22 +45,26 @@ class AnnouncementController {
         announcementsPages = await Announcement.find({ status: true, location: requestQuery.location, rooms: requestQuery.rooms});
         announcements = await Announcement.find({ status: true, location: requestQuery.location, rooms: requestQuery.rooms})
             .limit(perPage)
-            .skip((page-1) * perPage);
+            .skip((page-1) * perPage)
+            .sort({created_at: -1});
       } else if (requestQuery.rooms) {
         announcementsPages = await Announcement.find({ status: true, rooms: requestQuery.rooms});
         announcements = await Announcement.find({ status: true, rooms: requestQuery.rooms})
             .limit(perPage)
-            .skip((page-1) * perPage);
+            .skip((page-1) * perPage)
+            .sort({created_at: -1});
       } else if(requestQuery.location) {
         announcementsPages = await Announcement.find({ status: true, location: requestQuery.location});
         announcements = await Announcement.find({ status: true, location: requestQuery.location})
             .limit(perPage)
-            .skip((page-1) * perPage);
+            .skip((page-1) * perPage)
+            .sort({created_at: -1});
       } else {
         announcementsPages = await Announcement.find({ status: true});
         announcements = await Announcement.find({ status: true})
             .limit(perPage)
-            .skip((page-1) * perPage);
+            .skip((page-1) * perPage)
+            .sort({created_at: -1});
       }
 
 
