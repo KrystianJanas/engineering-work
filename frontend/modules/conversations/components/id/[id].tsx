@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { FloatingLabel } from 'react-bootstrap';
 import toast from 'react-hot-toast';
 
+import styled from '@emotion/styled';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Form from 'react-bootstrap/Form';
 
@@ -19,6 +21,14 @@ import {
   MessageConversationType,
   MessageConversationTypeInitialState,
 } from '~/types/messages.types';
+
+const StyledText = styled(Text)`
+  text-decoration: none;
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
 
 export const Conversation = () => {
   const router = useRouter();
@@ -71,10 +81,12 @@ export const Conversation = () => {
       marginTop={15}
     >
       <Layout display="flex" justifyContent="center">
-        <Text size={getRem(22)} weight={700}>
-          {data[0]?.announcement.title ||
-            'Błąd: Nie znaleziono danych dotyczących tego ogłoszenia.'}
-        </Text>
+        <Link href={`/announcements/${data[0]?.announcement._id}`}>
+          <StyledText size={getRem(22)} weight={700}>
+            {data[0]?.announcement.title ||
+              'Błąd: Nie znaleziono danych dotyczących tego ogłoszenia.'}
+          </StyledText>
+        </Link>
       </Layout>
       <Layout height={550} overflowY="auto" padding={[10]} marginBottom={25}>
         {data.length > 0 && (
