@@ -96,6 +96,17 @@ export const ManagementEstatesIDMessages = () => {
         direction="column"
         minWidth="850px"
       >
+        <Text textAlign="center" size={getRem(20)}>
+          {data.title}
+          {!data.title.includes(data.location) && `, ${data.location}`}
+        </Text>
+        <Layout
+          background="var(--border-grey)"
+          width="100%"
+          height="2px"
+          borderRadius="2px"
+          marginBottom={10}
+        />
         <Layout display="flex" direction="column" flex={1}>
           {dataMessages.length > 0 && dataMessages[0].content.length > 0 ? (
             <>

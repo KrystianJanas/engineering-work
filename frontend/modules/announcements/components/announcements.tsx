@@ -69,6 +69,10 @@ export const AnnouncementsView = () => {
     setUpdateState(true);
   }, [location, rooms]);
 
+  useEffect(() => {
+    setMaxPage(0);
+  }, [data]);
+
   if (isLoading) {
     return <SpinnerLoading />;
   }

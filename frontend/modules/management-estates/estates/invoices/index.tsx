@@ -180,6 +180,17 @@ export const ManagementEstatesInvoices = () => {
         direction="column"
         minWidth="850px"
       >
+        <Text textAlign="center" size={getRem(20)}>
+          {data.title}
+          {!data.title.includes(data.location) && `, ${data.location}`}
+        </Text>
+        <Layout
+          background="var(--border-grey)"
+          width="100%"
+          height="2px"
+          borderRadius="2px"
+          marginBottom={15}
+        />
         {data.person._id === personID && (
           <Layout display="flex" justifyContent="center">
             <Button

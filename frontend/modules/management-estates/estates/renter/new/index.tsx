@@ -76,6 +76,18 @@ export const NewRenter = () => {
         padding={[10, 20]}
         boxShadow="0 0 5px 1px rgba(0, 0, 0, 0.24)"
       >
+        <Text textAlign="center" size={getRem(20)}>
+          {data.title}
+          {!data.title.includes(data.location) && `, ${data.location}`}
+        </Text>
+        <Layout
+          background="var(--border-grey)"
+          width="100%"
+          height="2px"
+          borderRadius="2px"
+          marginTop={5}
+          marginBottom={15}
+        />
         <Layout
           display="flex"
           direction="column"

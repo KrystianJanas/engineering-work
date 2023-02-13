@@ -1,5 +1,6 @@
 import toast from 'react-hot-toast';
 
+import styled from '@emotion/styled';
 import { Autocomplete, TextField } from '@mui/material';
 import Link from 'next/link';
 
@@ -16,6 +17,10 @@ import {
 import { getRem } from '~/styles/utils';
 
 import { ManagementEstatesFormValidation } from '../new.validation';
+
+const StyledButton = styled(Button)`
+  text-decoration: none;
+`;
 
 export const ManagementEstatesForm = ({
   estate,
@@ -48,6 +53,16 @@ export const ManagementEstatesForm = ({
         wrap="wrap"
         gap="15px"
       >
+        <Text textAlign="center" size={getRem(20)}>
+          {estate?.title}
+          {!estate?.title.includes(estate?.location) && `, ${estate?.location}`}
+        </Text>
+        <Layout
+          background="var(--border-grey)"
+          width="100%"
+          height="2px"
+          borderRadius="2px"
+        />
         <Layout display="flex" direction="column">
           <Text textAlign="center" size={getRem(18)} weight={700}>
             Formularz
@@ -172,7 +187,7 @@ export const ManagementEstatesForm = ({
             passHref
           >
             <a>
-              <Button text="Anuluj" onSubmit={() => null} />
+              <StyledButton text="Anuluj" onSubmit={() => null} />
             </a>
           </Link>
           <Button text="Zatwierdź zmiany" onSubmit={() => onValidate()} />

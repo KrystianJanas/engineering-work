@@ -130,6 +130,17 @@ export const ManagementEstateSettlement = () => {
         padding={[10, 20, 20, 20]}
         minWidth="950px"
       >
+        <Text textAlign="center" size={getRem(20)}>
+          {data.title}
+          {!data.title.includes(data.location) && `, ${data.location}`}
+        </Text>
+        <Layout
+          background="var(--border-grey)"
+          width="100%"
+          height="2px"
+          borderRadius="2px"
+          marginBottom={15}
+        />
         {dataCosts && dataCosts.estate?.length > 0 && (
           <Layout display="flex" justifyContent="center">
             <Button

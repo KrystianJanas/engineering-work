@@ -138,6 +138,18 @@ export const ManagementEstatesRenter = () => {
         padding={[10, 20]}
         boxShadow="0 0 5px 1px var(--border-black)"
       >
+        <Text textAlign="center" size={getRem(20)}>
+          {dataEstate.title}
+          {!dataEstate.title.includes(dataEstate.location) &&
+            `, ${dataEstate.location}`}
+        </Text>
+        <Layout
+          background="var(--border-grey)"
+          width="100%"
+          height="2px"
+          borderRadius="2px"
+          marginBottom={15}
+        />
         <Layout display="flex" justifyContent="center" marginBottom={20}>
           <AddButton
             text="Dodaj lokatora"

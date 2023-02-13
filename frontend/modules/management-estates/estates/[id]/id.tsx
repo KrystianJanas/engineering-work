@@ -100,6 +100,7 @@ export const ManagementEstateIDDetails = () => {
         background="var(--background-white)"
         width="100%"
         marginRight={15}
+        marginBottom={15}
         padding={[10, 20]}
         boxShadow="0 0 5px 1px var(--border-black)"
         borderRadius="8px"
@@ -107,7 +108,14 @@ export const ManagementEstateIDDetails = () => {
       >
         <Text textAlign="center" size={getRem(20)}>
           {data.title}
+          {!data.title.includes(data.location) && `, ${data.location}`}
         </Text>
+        <Layout
+          background="var(--border-grey)"
+          width="100%"
+          height="2px"
+          borderRadius="2px"
+        />
         &nbsp;
         <Text weight={700} size={getRem(16)}>
           Kontakt z zarządcą nieruchomości
