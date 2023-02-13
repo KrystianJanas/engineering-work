@@ -42,9 +42,7 @@ class MessageController {
       const messagesFind = messages.find((message) => message.person._id.toString() === requestQuery.personID );
 
       if(messagesFind) {
-        console.log('mam wiadomosci')
       } else {
-        console.log('nie mam wiadomosci')
       }
     } catch (error) {
       response.status(500).json({ message: error.message });
